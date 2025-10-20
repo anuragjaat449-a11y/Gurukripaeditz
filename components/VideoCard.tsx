@@ -89,6 +89,8 @@ const VideoCard: React.FC<VideoCardProps> = ({ video, videoNumber, onWatchClick 
               src={thumbnailUrl} 
               alt={`Thumbnail for Video ${videoNumber}`}
               onError={handleImageError}
+              loading="lazy"
+              decoding="async"
             />
           )}
           <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -99,8 +101,8 @@ const VideoCard: React.FC<VideoCardProps> = ({ video, videoNumber, onWatchClick 
         </a>
       </div>
       <div className="p-4 pt-2 text-center flex-grow flex flex-col justify-between">
-        <h3 className="font-semibold text-brand-maroon dark:text-brand-gold mb-2 text-xl flex items-center justify-center">
-          Video #{videoNumber}
+        <h3 className="font-semibold text-brand-maroon dark:text-brand-gold mb-2 text-xl">
+          {`Video #${videoNumber}`}
         </h3>
         <div className="flex justify-center items-center space-x-3">
           <button 

@@ -1,11 +1,13 @@
 
+
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { VIDEOS } from './constants';
 import VideoCard from './components/VideoCard';
-import LoadingScreen from './components/LoadingScreen';
+import IntroAnimation from './components/IntroAnimation';
 import ThemeToggle from './components/ThemeToggle';
 import VideoPlayerModal from './components/VideoPlayerModal';
 import GiftModal from './components/GiftModal';
+
 
 const QUOTES = [
   { text: "Meditation is the journey from the head to the heart.", author: "Sant Rajinder Singh Ji Maharaj" },
@@ -20,7 +22,7 @@ const QUOTES = [
 
 // --- Main App Component ---
 const App: React.FC = () => {
-  const [isLoading, setIsLoading] = useState(true);
+  const [showIntro, setShowIntro] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
   const audioRef = useRef<HTMLAudioElement>(null);
   const [playingVideoId, setPlayingVideoId] = useState<string | null>(null);
@@ -47,22 +49,20 @@ const App: React.FC = () => {
   const toggleTheme = () => {
     setTheme(prevTheme => (prevTheme === 'dark' ? 'light' : 'dark'));
   };
-
-  useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 2500);
-    return () => clearTimeout(timer);
-  }, []);
-
-  useEffect(() => {
-    if (!isLoading && audioRef.current) {
-      audioRef.current.volume = 0.3;
-      audioRef.current.play().catch(error => {
-        console.warn("Background music autoplay was prevented by the browser.");
-      });
-    }
-  }, [isLoading]);
   
   useEffect(() => {
+    if (audioRef.current) {
+        audioRef.current.volume = 0.3;
+        // Autoplay is handled by the browser, we request it, but it might be blocked.
+        audioRef.current.play().catch(() => {
+            console.warn("Background music autoplay was prevented. User interaction is required to start audio.");
+        });
+    }
+  }, []);
+  
+  useEffect(() => {
+    if(showIntro) return; // Don't start quote interval during intro
+
     const quoteInterval = setInterval(() => {
       setIsQuoteVisible(false); // Start fade out
       setTimeout(() => {
@@ -72,7 +72,7 @@ const App: React.FC = () => {
     }, 7000); // Change quote every 7 seconds
 
     return () => clearInterval(quoteInterval);
-  }, []);
+  }, [showIntro]);
 
   useEffect(() => {
     if (audioRef.current) {
@@ -81,7 +81,12 @@ const App: React.FC = () => {
   }, [isMuted]);
 
   const toggleMute = () => {
-    setIsMuted(prevMuted => !prevMuted);
+    setIsMuted(prevMuted => {
+      if (prevMuted && audioRef.current?.paused) {
+         audioRef.current?.play().catch(e => console.warn("Could not play audio", e));
+      }
+      return !prevMuted;
+    });
   };
   
   const handleWatchVideo = (videoId: string) => {
@@ -124,12 +129,12 @@ const App: React.FC = () => {
   }, [playingVideoId, isGiftModalOpen, handleClosePlayer, closeGiftModal]);
 
 
-  if (isLoading) {
-    return <LoadingScreen />;
+  if (showIntro) {
+    return <IntroAnimation onFinish={() => setShowIntro(false)} />;
   }
 
   return (
-    <div className="min-h-screen text-gray-800 dark:text-white">
+    <div className="min-h-screen text-gray-800 dark:text-white" style={{animation: 'fade-in-up 0.8s ease-out both'}}>
       <audio 
         ref={audioRef} 
         src="https://cdn.pixabay.com/audio/2022/11/22/audio_2c4a4033b0.mp3" 
@@ -175,7 +180,7 @@ const App: React.FC = () => {
         <div className="header-flourish right text-brand-maroon dark:text-brand-gold">
             <svg viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M50.7,76.8c-2.5-2.8-5.5-4.8-8.8-6.1C33.6,67.2,26,62,20.2,55.1c-4.2-5-6.5-11.2-6.5-17.8c0-5.4,1.4-10.4,4-14.7 C21.4,17.9,26.4,14,32.1,11.5c2.6-1.1,5.3-1.8,8.2-1.8c2.9,0,5.7,0.6,8.2,1.8c5.8,2.4,10.7,6.3,14.4,11.1 c2.6,3.4,4,7.4,4,11.7c0,3.3-0.7,6.4-2.1,9.2c-2.1,4.2-5.4,7.5-9.4,9.6c-4.4,2.3-9.3,3.4-14.4,3.4c-2.4,0-4.8-0.3-7-0.8 c-4-1-7.6-2.9-10.7-5.5" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeMiterlimit="10"></path></svg>
         </div>
-        <div className="container mx-auto text-center px-4">
+        <div className="container mx-auto text-center px-4 relative">
           <h1 className="text-4xl md:text-6xl tracking-widest text-brand-maroon dark:text-brand-gold title-decorative">GURU KRIPA SHORTZ</h1>
           <p className="text-lg mt-2 tracking-wider text-black/60 dark:text-white/80">VIDEOS</p>
            <div className="h-16 flex items-center justify-center mt-2">

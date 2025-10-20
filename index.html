@@ -45,18 +45,36 @@
         0%, 100% { transform: scale(1); }
         50% { transform: scale(1.02); }
       }
-      @keyframes rotate-divider {
-        from { transform: rotate(0deg); }
-        to { transform: rotate(360deg); }
-      }
       @keyframes fade-in-up {
         from { opacity: 0; transform: translateY(20px) scale(0.98); }
         to { opacity: 1; transform: translateY(0) scale(1); }
       }
-      @keyframes pulse-gold-aura {
-        0%, 100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.4), 0 0 40px rgba(255, 215, 0, 0.2), 0 8px 32px 0 rgba(0, 0, 0, 0.37); }
-        50% { box-shadow: 0 0 35px rgba(255, 215, 0, 0.6), 0 0 60px rgba(255, 215, 0, 0.4), 0 8px 32px 0 rgba(0, 0, 0, 0.37); }
+      @keyframes fade-out-down {
+        from { opacity: 1; transform: translateY(0) scale(1); }
+        to { opacity: 0; transform: translateY(20px) scale(0.98); }
       }
+
+      /* --- NEW: Intro Animation Keyframes --- */
+      @keyframes intro-container-fade-out { from { opacity: 1; } to { opacity: 0; } }
+      @keyframes intro-text-fade {
+        0% { opacity: 0; transform: translateY(15px); }
+        15% { opacity: 1; transform: translateY(0); }
+        85% { opacity: 1; transform: translateY(0); }
+        100% { opacity: 0; transform: translateY(-15px); }
+      }
+      @keyframes intro-logo-enter {
+          from { opacity: 0; transform: scale(0.85); }
+          to { opacity: 1; transform: scale(1); }
+      }
+      @keyframes intro-logo-exit {
+          from { opacity: 1; transform: scale(1); }
+          to { opacity: 0; transform: scale(0.85); }
+      }
+      @keyframes intro-title-enter {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+      }
+      
 
       /* --- Theme Agnostic Body & Background Setup --- */
       #root { position: relative; z-index: 0; }
@@ -85,13 +103,18 @@
       .clouds{ background:transparent url(https://www.script-tutorials.com/demos/360/images/clouds.png) repeat top center; animation:move-clouds-back 200s linear infinite; z-index: -1; opacity: 0.7; }
 
       /* --- Glassmorphism Card Theming --- */
-      .card-container { position: relative; perspective: 1000px; }
+      .card-container { 
+        position: relative; 
+        perspective: 1000px; 
+        contain: layout style paint; /* Performance optimization */
+      }
       .glass-card {
         transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         background: rgba(255, 255, 255, 0.4);
-        backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+        backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); /* Reduced blur for performance */
         border: 1px solid rgba(128, 0, 0, 0.2);
         box-shadow: 0 8px 32px 0 rgba(128, 0, 0, 0.15);
+        will-change: transform, box-shadow; /* Performance optimization */
       }
       .dark .glass-card {
         background: rgba(255, 255, 255, 0.1);
@@ -103,7 +126,7 @@
         box-shadow: 0 20px 40px rgba(128, 0, 0, 0.2), 0 0 20px rgba(128, 0, 0, 0.2);
       }
       .dark .card-container:hover .glass-card {
-        animation: pulse-gold-aura 2.5s ease-in-out infinite;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 30px rgba(255, 215, 0, 0.6); /* Replaced animation with a transition */
       }
       .card-container::before {
         content: ''; position: absolute; inset: -2px; border-radius: 10px;
@@ -190,7 +213,6 @@
       }
 
       /* --- ORNATE Divider --- */
-      .ornamental-divider { animation: rotate-divider 30s linear infinite; }
       .ornamental-divider .pulse-center { animation: pulse 3s ease-in-out infinite; }
 
       /* --- Unchanged LoadingScreen Styles --- */
