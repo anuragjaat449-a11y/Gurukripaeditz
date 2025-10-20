@@ -1,0 +1,5 @@
+{
+  "name": "Guru Kripa Shortz Viewer",
+  "description": "A web application to browse, watch, and get download links for videos from the Guru Kripa Shortz channel, built with React and Tailwind CSS.",
+  "requestFramePermissions": []
+}

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GURU KRIPA SHORTZ - Videos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Cinzel+Decorative:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        darkMode: 'class', // Enable class-based dark mode
+        theme: {
+          extend: {
+            fontFamily: {
+              'sans': ['Poppins', 'sans-serif'],
+              'serif': ['Cinzel', 'serif'],
+              'serif-decorative': ['Cinzel Decorative', 'serif'],
+            },
+            colors: {
+              'brand-maroon': '#800000',
+              'brand-gold': '#FFD700',
+              'brand-cream': '#FFF8E1',
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      /* --- Animation Keyframes --- */
+      @keyframes move-twink-back { from {background-position:0 0;} to {background-position:-10000px 5000px;} }
+      @keyframes move-clouds-back { from {background-position:0 0;} to {background-position:10000px 0;} }
+      @keyframes move-nebula-back { from {background-position:0 0;} to {background-position:-2000px 1000px;} } /* Slower nebula effect */
+      @keyframes gradient-animate {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+      @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+      }
+      @keyframes subtle-pulse-title {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.02); }
+      }
+      @keyframes rotate-divider {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+      @keyframes fade-in-up {
+        from { opacity: 0; transform: translateY(20px) scale(0.98); }
+        to { opacity: 1; transform: translateY(0) scale(1); }
+      }
+      @keyframes pulse-gold-aura {
+        0%, 100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.4), 0 0 40px rgba(255, 215, 0, 0.2), 0 8px 32px 0 rgba(0, 0, 0, 0.37); }
+        50% { box-shadow: 0 0 35px rgba(255, 215, 0, 0.6), 0 0 60px rgba(255, 215, 0, 0.4), 0 8px 32px 0 rgba(0, 0, 0, 0.37); }
+      }
+
+      /* --- Theme Agnostic Body & Background Setup --- */
+      #root { position: relative; z-index: 0; }
+      
+      .starry-background { display: none; }
+      .dark .starry-background { display: block; position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: -1; }
+      
+      .light-pattern-background {
+        position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+        z-index: -2;
+        background-image: url('https://www.toptal.com/designers/subtlepatterns/uploads/mandala.png');
+        background-repeat: repeat;
+        opacity: 0.2;
+        display: block;
+      }
+      .dark .light-pattern-background { display: none; }
+
+      body { background-color: #FFF8E1; /* brand-cream */ }
+      .dark body { background-color: transparent; }
+
+      /* --- Starry Night Background (Enhanced) --- */
+      .stars, .twinkling, .clouds, .nebula { position:absolute; top:0; left:0; right:0; bottom:0; width:100%; height:100%; display:block; transform: translateZ(0); will-change: background-position; }
+      .stars { background:#000 url(https://www.script-tutorials.com/demos/360/images/stars.png) repeat top center; z-index: -4; }
+      .nebula { background:transparent url(https://www.script-tutorials.com/demos/360/images/clouds.png) repeat top center; z-index: -3; animation:move-nebula-back 400s linear infinite; opacity: 0.5; }
+      .twinkling{ background:transparent url(https://www.script-tutorials.com/demos/360/images/twinkling.png) repeat top center; animation:move-twink-back 200s linear infinite; z-index: -2; }
+      .clouds{ background:transparent url(https://www.script-tutorials.com/demos/360/images/clouds.png) repeat top center; animation:move-clouds-back 200s linear infinite; z-index: -1; opacity: 0.7; }
+
+      /* --- Glassmorphism Card Theming --- */
+      .card-container { position: relative; perspective: 1000px; }
+      .glass-card {
+        transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        background: rgba(255, 255, 255, 0.4);
+        backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+        border: 1px solid rgba(128, 0, 0, 0.2);
+        box-shadow: 0 8px 32px 0 rgba(128, 0, 0, 0.15);
+      }
+      .dark .glass-card {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+      }
+      .card-container:hover .glass-card {
+        transform: translateY(-10px) scale(1.03);
+        box-shadow: 0 20px 40px rgba(128, 0, 0, 0.2), 0 0 20px rgba(128, 0, 0, 0.2);
+      }
+      .dark .card-container:hover .glass-card {
+        animation: pulse-gold-aura 2.5s ease-in-out infinite;
+      }
+      .card-container::before {
+        content: ''; position: absolute; inset: -2px; border-radius: 10px;
+        background: linear-gradient(135deg, #800000, #FFD700);
+        z-index: -1; opacity: 0; transition: opacity 0.4s ease;
+        filter: blur(5px);
+      }
+      .dark .card-container::before { background: linear-gradient(135deg, #FFD700, #B8860B); }
+      .card-container:hover::before { opacity: 0.8; }
+      
+      /* Thumbnail Shimmer Effect */
+      .thumbnail-link::after {
+          content: ''; position: absolute; top: 0; left: -150%; width: 100%; height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+          transition: left 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+          pointer-events: none;
+      }
+      .card-container:hover .thumbnail-link::after { left: 150%; }
+
+
+      /* --- DYNAMIC Header --- */
+      .header-bg {
+        background: linear-gradient(-45deg, #fff8e1, #ffe4b5, #800000, #a52a2a);
+        background-size: 400% 400%;
+        animation: gradient-animate 15s ease infinite;
+        position: relative;
+        overflow: hidden;
+      }
+      .dark .header-bg {
+        background: linear-gradient(-45deg, #000000, #2d0000, #ffd700, #4b0000);
+        background-size: 400% 400%;
+        animation: gradient-animate 15s ease infinite;
+      }
+      .header-flourish {
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        opacity: 0.3;
+        pointer-events: none;
+      }
+      .header-flourish.left { top: -10px; left: -10px; }
+      .header-flourish.right { top: -10px; right: -10px; transform: scaleX(-1); }
+
+      .title-decorative {
+        font-family: 'Cinzel Decorative', serif;
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.5), 0 0 10px rgba(128,0,0,0.3), 0 2px 2px rgba(0,0,0,0.2);
+        animation: subtle-pulse-title 6s ease-in-out infinite;
+      }
+      .dark .title-decorative {
+        text-shadow: 0 0 8px rgba(255, 215, 0, 0.6), 0 0 20px rgba(255, 215, 0, 0.4), 0 2px 2px rgba(0,0,0,0.5);
+      }
+
+      /* --- REIMAGINED Buttons --- */
+      .btn-premium, .btn-premium-secondary {
+        position: relative; overflow: hidden;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+      }
+      .btn-premium::after, .btn-premium-secondary::after {
+        content: ''; position: absolute; top: 0;
+        left: -150%; width: 100%; height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+        transition: left 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+      }
+      .btn-premium:hover::after, .btn-premium-secondary:hover::after { left: 150%; }
+
+      .btn-premium { background: linear-gradient(145deg, #8B0000, #B22222); border: 1px solid #800000; color: #fff; }
+      .dark .btn-premium { background: linear-gradient(145deg, rgba(255, 215, 0, 0.8), rgba(200, 160, 0, 0.8)); border: 1px solid rgba(255, 215, 0, 0.9); }
+      .btn-premium:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 0 25px rgba(128, 0, 0, 0.7); background: linear-gradient(145deg, #A52A2A, #CD5C5C); }
+      .dark .btn-premium:hover { box-shadow: 0 0 25px rgba(255, 215, 0, 0.8), 0 0 10px rgba(255, 255, 255, 0.3); background: linear-gradient(145deg, rgba(255, 225, 50, 0.9), rgba(220, 180, 20, 0.9)); }
+      
+      .btn-premium-secondary { background: rgba(128, 0, 0, 0.08); border: 1px solid rgba(128, 0, 0, 0.5); color: #800000; }
+      .dark .btn-premium-secondary { background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 215, 0, 0.5); color: #FFD700; }
+      .btn-premium-secondary:hover { transform: translateY(-3px); background: rgba(128, 0, 0, 0.15); box-shadow: 0 0 15px rgba(128, 0, 0, 0.4); }
+      .dark .btn-premium-secondary:hover { background: rgba(255, 255, 255, 0.25); box-shadow: 0 0 15px rgba(255, 215, 0, 0.6); }
+
+      .btn-disabled {
+        background: #e0e0e0 !important; color: #a0a0a0 !important;
+        cursor: not-allowed; box-shadow: none !important; transform: none !important;
+      }
+      .dark .btn-disabled {
+        background: rgba(40, 40, 40, 0.5) !important; color: rgba(255, 255, 255, 0.4) !important;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      /* --- ORNATE Divider --- */
+      .ornamental-divider { animation: rotate-divider 30s linear infinite; }
+      .ornamental-divider .pulse-center { animation: pulse 3s ease-in-out infinite; }
+
+      /* --- Unchanged LoadingScreen Styles --- */
+      .logo-container { position: relative; overflow: hidden; border-radius: 50%; display: inline-block; }
+      @keyframes shimmer { 0% { transform: translateX(-100%) skewX(-15deg); } 100% { transform: translateX(100%) skewX(-15deg); } }
+      .logo-container::after {
+        content: ''; position: absolute; top: 0; left: 0; width: 50%; height: 100%;
+        background: linear-gradient( to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0) 100% );
+        animation: shimmer 2.5s infinite linear; transform: translateX(-100%) skewX(-15deg);
+      }
+      .loading-logo { animation: pulse 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+
+      /* --- Video Player Modal --- */
+      .video-responsive { position: relative; overflow: hidden; padding-top: 56.25%; /* 16:9 */ }
+      .video-responsive iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+    </style>
+    <script type="importmap">
+      {
+        "imports": {
+          "react/": "https://aistudiocdn.com/react@^19.2.0/",
+          "react": "https://aistudiocdn.com/react@^19.2.0",
+          "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+          "@google/genai": "https://aistudiocdn.com/@google/genai@^0.20.0/dist/index.min.js"
+        }
+      }
+    </script>
+  </head>
+  <body class="font-sans">
+    <div class="light-pattern-background"></div>
+    <div class="starry-background">
+      <div class="stars"></div>
+      <div class="nebula"></div>
+      <div class="twinkling"></div>
+      <div class="clouds"></div>
+    </div>
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
