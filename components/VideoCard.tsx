@@ -4,6 +4,7 @@ import type { Video } from '../constants';
 interface VideoCardProps {
   video: Video;
   videoNumber: number;
+  onWatch: (videoId: string) => void;
 }
 
 // Helper function to convert a Google Drive 'view' URL to a direct download URL.
@@ -19,7 +20,7 @@ const getDirectDownloadUrl = (url: string | undefined): string | undefined => {
 };
 
 
-const VideoCard: React.FC<VideoCardProps> = ({ video, videoNumber }) => {
+const VideoCard: React.FC<VideoCardProps> = ({ video, videoNumber, onWatch }) => {
   const [isVideoInvalid, setIsVideoInvalid] = useState(false);
   const [isImageLoaded, setIsImageLoaded] = useState(false);
   const [downloadState, setDownloadState] = useState<'idle' | 'starting' | 'complete'>('idle');
@@ -72,7 +73,7 @@ const VideoCard: React.FC<VideoCardProps> = ({ video, videoNumber }) => {
   const handleWatch = (e: React.MouseEvent) => {
     e.preventDefault();
     if (isVideoInvalid) return;
-    window.open(`https://www.youtube.com/watch?v=${video.id}`, '_blank', 'noopener,noreferrer');
+    onWatch(video.id);
   };
 
 
@@ -82,7 +83,7 @@ const VideoCard: React.FC<VideoCardProps> = ({ video, videoNumber }) => {
         <div
           onClick={handleWatch}
           className={`thumbnail-link block w-full p-0 text-left overflow-hidden rounded-md relative border-2 border-brand-maroon/20 dark:border-brand-gold/30 group-hover:border-brand-maroon/80 dark:group-hover:border-brand-gold/80 transition-colors aspect-video ${!isVideoInvalid ? 'cursor-pointer' : 'cursor-default'}`}
-          aria-label={isVideoInvalid ? `Video ${videoNumber} is unavailable` : `Watch Video ${videoNumber} on YouTube`}
+          aria-label={isVideoInvalid ? `Video ${videoNumber} is unavailable` : `Watch Video ${videoNumber}`}
         >
           {isVideoInvalid ? (
              <div className="w-full h-full bg-black/5 dark:bg-black/30 flex flex-col items-center justify-center text-center p-4 text-brand-maroon/70 dark:text-brand-gold/70">
@@ -159,24 +160,20 @@ const VideoCard: React.FC<VideoCardProps> = ({ video, videoNumber }) => {
                 </>
               ) : (
                 <>
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                     <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
                   </svg>
-                  <span className="ml-2">Download</span>
+                  <span>Download</span>
                 </>
               )}
             </a>
           ) : (
-            <button
-              disabled
-              title="Download link is not available for this video"
-              className="flex-1 inline-flex items-center justify-center py-2 px-4 rounded-md text-sm font-bold btn-disabled"
-            >
-               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
-              </svg>
-              <span className="ml-2">Not Available</span>
-            </button>
+             <button className="flex-1 btn-disabled inline-flex items-center justify-center py-2 px-4 rounded-md text-sm font-bold" disabled>
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+                </svg>
+                <span>N/A</span>
+             </button>
           )}
         </div>
       </div>

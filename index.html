@@ -13,6 +13,21 @@
         darkMode: 'class', // Enable class-based dark mode
         theme: {
           extend: {
+            animation: {
+              'gentle-bounce': 'gentle-bounce 2s ease-in-out infinite',
+            },
+            keyframes: {
+              'gentle-bounce': {
+                '0%, 100%': { 
+                  transform: 'translateY(0)',
+                  'animation-timing-function': 'cubic-bezier(0.8, 0, 1, 1)' 
+                },
+                '50%': { 
+                  transform: 'translateY(-20%)',
+                  'animation-timing-function': 'cubic-bezier(0, 0, 0.2, 1)' 
+                },
+              }
+            },
             fontFamily: {
               'sans': ['Poppins', 'sans-serif'],
               'serif': ['Cinzel', 'serif'],
@@ -54,6 +69,17 @@
         to { opacity: 0; transform: translateY(20px) scale(0.98); }
       }
 
+      /* Rating modal pop-up animations */
+      @keyframes pop-in-from-top {
+        from { opacity: 0; transform: translateY(-10px) scale(0.95); }
+        to { opacity: 1; transform: translateY(0) scale(1); }
+      }
+      @keyframes pop-out-to-top {
+        from { opacity: 1; transform: translateY(0) scale(1); }
+        to { opacity: 0; transform: translateY(-10px) scale(0.95); }
+      }
+
+
       /* --- NEW: Intro Animation Keyframes --- */
       @keyframes intro-container-fade-out { from { opacity: 1; } to { opacity: 0; } }
       @keyframes intro-text-fade {
@@ -75,6 +101,41 @@
           to { opacity: 1; transform: translateY(0); }
       }
       
+      /* --- ENHANCED Intro Animation Keyframes --- */
+      @keyframes intro-bg-zoom {
+        from { transform: scale(1); }
+        to { transform: scale(1.1); }
+      }
+      @keyframes divine-light-pulse {
+        0%, 100% { opacity: 0.6; transform: scale(0.95); }
+        50% { opacity: 1; transform: scale(1.05); }
+      }
+      @keyframes svg-draw {
+        to { stroke-dashoffset: 0; }
+      }
+      @keyframes subtle-glow {
+        0%, 100% { text-shadow: 0 0 8px rgba(255, 215, 0, 0.4); }
+        50% { text-shadow: 0 0 16px rgba(255, 215, 0, 0.8), 0 0 24px rgba(255, 215, 0, 0.6); }
+      }
+
+      /* --- NEW: Diya Flame Flicker --- */
+      @keyframes flicker {
+        0%, 100% { transform: scaleY(1) skewX(0); opacity: 1; }
+        25% { transform: scaleY(1.05) skewX(2deg); opacity: 0.95; }
+        50% { transform: scaleY(0.95) skewX(-1deg); opacity: 0.9; }
+        75% { transform: scaleY(1.02) skewX(1deg); opacity: 1; }
+      }
+
+      /* --- NEW: Third Eye Glow --- */
+      @keyframes third-eye-glow-light {
+        0%, 100% { filter: drop-shadow(0 0 2px rgba(128, 0, 0, 0.2)); }
+        50% { filter: drop-shadow(0 0 6px rgba(128, 0, 0, 0.7)) drop-shadow(0 0 10px rgba(128, 0, 0, 0.5)); }
+      }
+      @keyframes third-eye-glow-dark {
+        0%, 100% { filter: drop-shadow(0 0 2px rgba(255, 215, 0, 0.4)); }
+        50% { filter: drop-shadow(0 0 10px rgba(255, 215, 0, 1)) drop-shadow(0 0 18px rgba(255, 215, 0, 0.7)); }
+      }
+
 
       /* --- Theme Agnostic Body & Background Setup --- */
       #root { position: relative; z-index: 0; }
@@ -213,7 +274,16 @@
       }
 
       /* --- ORNATE Divider --- */
-      .ornamental-divider .pulse-center { animation: pulse 3s ease-in-out infinite; }
+      .third-eye-glow-effect {
+        animation-name: third-eye-glow-light;
+        animation-duration: 5s;
+        animation-timing-function: ease-in-out;
+        animation-delay: 2.5s;
+        animation-iteration-count: infinite;
+      }
+      .dark .third-eye-glow-effect {
+        animation-name: third-eye-glow-dark;
+      }
 
       /* --- Unchanged LoadingScreen Styles --- */
       .logo-container { position: relative; overflow: hidden; border-radius: 50%; display: inline-block; }

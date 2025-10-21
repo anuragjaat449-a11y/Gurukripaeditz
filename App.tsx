@@ -1,9 +1,11 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { VIDEOS } from './constants';
 import VideoCard from './components/VideoCard';
 import IntroAnimation from './components/IntroAnimation';
 import ThemeToggle from './components/ThemeToggle';
-import GiftModal from './components/GiftModal';
+import VideoPlayerModal from './components/VideoPlayerModal';
+import SurveyModal, { SurveyData } from './components/SurveyModal';
+import RatingModal from './components/RatingModal';
 
 const QUOTES = [
   { text: "Meditation is the journey from the head to the heart.", author: "Sant Rajinder Singh Ji Maharaj" },
@@ -16,15 +18,22 @@ const QUOTES = [
   { text: "We are all children of the same one God, and our souls are parcels of that divine light.", author: "Sant Rajinder Singh Ji Maharaj" },
 ];
 
-
 // --- Main App Component ---
 const App: React.FC = () => {
   const [showIntro, setShowIntro] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
   const audioRef = useRef<HTMLAudioElement>(null);
-  const [isGiftModalOpen, setIsGiftModalOpen] = useState(false);
   const [currentQuoteIndex, setCurrentQuoteIndex] = useState(0);
   const [isQuoteVisible, setIsQuoteVisible] = useState(true);
+  const [playingVideoId, setPlayingVideoId] = useState<string | null>(null);
+
+  // --- Survey and Rating State ---
+  const [isSurveyOpen, setIsSurveyOpen] = useState(false);
+  const [hasUserRated, setHasUserRated] = useState(false);
+  const [averageRatingInfo, setAverageRatingInfo] = useState({ rating: 0, count: 0 });
+  const [isRatingModalOpen, setIsRatingModalOpen] = useState(false);
+  const [ratingModalPosition, setRatingModalPosition] = useState<{ top: number; left: number } | null>(null);
+
 
   const [theme, setTheme] = useState(() => {
     if (typeof window !== 'undefined') {
@@ -34,6 +43,27 @@ const App: React.FC = () => {
     }
     return 'dark';
   });
+  
+  const calculateAverageRating = useCallback(() => {
+    try {
+      const storedRatings = localStorage.getItem('gks_ratings');
+      const ratings: number[] = storedRatings ? JSON.parse(storedRatings) : [];
+      if (ratings.length > 0) {
+        const sum = ratings.reduce((acc, r) => acc + r, 0);
+        const average = sum / ratings.length;
+        setAverageRatingInfo({ rating: average, count: ratings.length });
+      }
+    } catch (error) {
+      console.error("Failed to parse ratings from localStorage", error);
+    }
+  }, []);
+  
+  useEffect(() => {
+    calculateAverageRating();
+    if (localStorage.getItem('gks_hasRated')) {
+      setHasUserRated(true);
+    }
+  }, [calculateAverageRating]);
 
   useEffect(() => {
     const root = window.document.documentElement;
@@ -85,32 +115,36 @@ const App: React.FC = () => {
     });
   };
   
-  const openGiftModal = () => {
-    setIsGiftModalOpen(true);
+  const handleWatchVideo = (videoId: string) => {
+    setPlayingVideoId(videoId);
   };
 
-  const closeGiftModal = useCallback(() => {
-    setIsGiftModalOpen(false);
-  }, []);
-
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        if (isGiftModalOpen) {
-          closeGiftModal();
-        }
-      }
-    };
+  const handleClosePlayer = () => {
+    setPlayingVideoId(null);
+  };
   
-    if (isGiftModalOpen) {
-      window.addEventListener('keydown', handleKeyDown);
+  const handleSurveySubmit = (data: SurveyData) => {
+    try {
+      const storedRatings = localStorage.getItem('gks_ratings');
+      const ratings: number[] = storedRatings ? JSON.parse(storedRatings) : [];
+      ratings.push(data.rating);
+      localStorage.setItem('gks_ratings', JSON.stringify(ratings));
+      localStorage.setItem('gks_hasRated', 'true');
+      setHasUserRated(true);
+      calculateAverageRating(); // Recalculate and update display
+    } catch (error) {
+      console.error("Failed to save rating to localStorage", error);
     }
-  
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [isGiftModalOpen, closeGiftModal]);
+  };
 
+  const handleOpenRatingModal = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    setRatingModalPosition({
+      top: rect.bottom + 12, // 12px below the icon
+      left: rect.left + rect.width / 2, // Centered horizontally
+    });
+    setIsRatingModalOpen(true);
+  };
 
   if (showIntro) {
     return <IntroAnimation onFinish={() => setShowIntro(false)} />;
@@ -124,6 +158,48 @@ const App: React.FC = () => {
         loop 
         aria-hidden="true"
       />
+
+      {playingVideoId && (
+        <VideoPlayerModal 
+            videoId={playingVideoId} 
+            onClose={handleClosePlayer} 
+            onMinimize={handleClosePlayer}
+        />
+      )}
+      
+      {isSurveyOpen && (
+        <SurveyModal
+          isOpen={isSurveyOpen}
+          onClose={() => setIsSurveyOpen(false)}
+          onSubmit={handleSurveySubmit}
+        />
+      )}
+      
+      
+      <RatingModal
+        isOpen={isRatingModalOpen}
+        onClose={() => {
+            setIsRatingModalOpen(false);
+            setRatingModalPosition(null);
+        }}
+        rating={averageRatingInfo.rating}
+        count={averageRatingInfo.count}
+        position={ratingModalPosition}
+      />
+      
+      
+      {!hasUserRated && (
+        <button
+          onClick={() => setIsSurveyOpen(true)}
+          className="fixed bottom-6 right-6 z-20 w-16 h-16 rounded-full btn-premium shadow-lg flex items-center justify-center animate-gentle-bounce transform-gpu"
+          aria-label="Share your feedback"
+          title="Share your feedback"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+          </svg>
+        </button>
+      )}
 
       <div className="fixed top-4 right-4 z-20 flex items-center space-x-2">
         <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
@@ -145,17 +221,6 @@ const App: React.FC = () => {
         </button>
       </div>
       
-      <button
-        onClick={openGiftModal}
-        className="fixed bottom-6 right-6 z-20 w-16 h-16 rounded-full btn-premium flex items-center justify-center shadow-lg animate-pulse"
-        aria-label="Share feedback"
-        title="Share your feedback"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-9 w-9" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-        </svg>
-      </button>
-
       <header className="header-bg py-8 sticky top-0 z-10">
         <div className="header-flourish left text-brand-maroon dark:text-brand-gold">
             <svg viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M50.7,76.8c-2.5-2.8-5.5-4.8-8.8-6.1C33.6,67.2,26,62,20.2,55.1c-4.2-5-6.5-11.2-6.5-17.8c0-5.4,1.4-10.4,4-14.7 C21.4,17.9,26.4,14,32.1,11.5c2.6-1.1,5.3-1.8,8.2-1.8c2.9,0,5.7,0.6,8.2,1.8c5.8,2.4,10.7,6.3,14.4,11.1 c2.6,3.4,4,7.4,4,11.7c0,3.3-0.7,6.4-2.1,9.2c-2.1,4.2-5.4,7.5-9.4,9.6c-4.4,2.3-9.3,3.4-14.4,3.4c-2.4,0-4.8-0.3-7-0.8 c-4-1-7.6-2.9-10.7-5.5" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeMiterlimit="10"></path></svg>
@@ -166,16 +231,17 @@ const App: React.FC = () => {
         <div className="container mx-auto text-center px-4 relative">
           <h1 className="text-4xl md:text-6xl tracking-widest text-brand-maroon dark:text-brand-gold title-decorative">GURU KRIPA SHORTZ</h1>
           <p className="text-lg mt-2 tracking-wider text-black/60 dark:text-white/80">VIDEOS</p>
+           
            <div className="h-16 flex items-center justify-center mt-2">
-            <div className="relative w-full">
-                <p 
-                className={`transition-opacity duration-500 ease-in-out text-sm md:text-base italic text-black/70 dark:text-white/70 ${isQuoteVisible ? 'opacity-100' : 'opacity-0'}`}
-                >
-                "{QUOTES[currentQuoteIndex].text}"
-                <br/>
-                <span className="font-semibold not-italic">- {QUOTES[currentQuoteIndex].author}</span>
-                </p>
-            </div>
+              <div className="relative w-full h-10 flex items-center justify-center">
+                  <p 
+                  className={`transition-opacity duration-500 ease-in-out text-sm md:text-base italic text-black/70 dark:text-white/70 absolute inset-0 ${isQuoteVisible ? 'opacity-100' : 'opacity-0'}`}
+                  >
+                  "{QUOTES[currentQuoteIndex].text}"
+                  <br/>
+                  <span className="font-semibold not-italic">- {QUOTES[currentQuoteIndex].author}</span>
+                  </p>
+              </div>
           </div>
         </div>
       </header>
@@ -183,28 +249,25 @@ const App: React.FC = () => {
       <main>
         <section className="my-16 mx-auto max-w-7xl p-5">
           <h2 className="text-4xl font-serif text-brand-maroon dark:text-brand-gold mb-4 text-center">Guru Kripa Shortz</h2>
-          <a 
-            href="https://www.instagram.com/anurag.singhindoliya?igsh=MWNzemdwc3dkMm96ZA==" 
-            target="_blank"
-            rel="noopener noreferrer"
-            title="Discover More"
-            aria-label="Discover more on Instagram"
-            className="flex justify-center items-center mb-12 group cursor-pointer"
+          <button
+            onClick={handleOpenRatingModal}
+            title="View Community Rating"
+            aria-label="View community rating for this app"
+            className="flex justify-center items-center mb-12 group cursor-pointer w-full"
           >
             <div className="w-24 h-px bg-gradient-to-r from-transparent via-brand-maroon/50 to-brand-maroon/50 dark:via-brand-gold/50 dark:to-brand-gold/50"></div>
-            <svg className="ornamental-divider w-16 h-16 mx-4 text-brand-maroon/80 dark:text-brand-gold/80 transition-transform duration-300 group-hover:scale-110" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="50" cy="50" r="48" stroke="currentColor" strokeWidth="1.5" opacity="0.5"/>
-                <path d="M50 15 a 20 20 0 0 1 0 70 a 20 20 0 0 1 0 -70" stroke="currentColor" strokeWidth="1"/>
-                <path d="M15 50 a 20 20 0 0 1 70 0 a 20 20 0 0 1 -70 0" stroke="currentColor" strokeWidth="1"/>
-                <circle cx="50" cy="50" r="35" stroke="currentColor" strokeWidth="1" strokeDasharray="5 5"/>
-                <path d="M50,25 A25,25,0,1,1,25,50" stroke="currentColor" strokeWidth="2" />
-                <path d="M50,25 A25,25,0,1,0,75,50" stroke="currentColor" strokeWidth="2" />
-                <path d="M50,75 A25,25,0,1,1,75,50" stroke="currentColor" strokeWidth="2" />
-                <path d="M50,75 A25,25,0,1,0,25,50" stroke="currentColor" strokeWidth="2" />
-                <circle cx="50" cy="50" r="5" fill="currentColor" className="pulse-center" />
+            <svg 
+              className="w-20 h-20 mx-4 text-brand-maroon/80 dark:text-brand-gold/80 transition-transform duration-300 group-hover:scale-110 third-eye-glow-effect" 
+              viewBox="0 0 100 100" 
+              fill="none" 
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+            >
+                <path d="M50 20 C 30 40, 30 60, 50 80 C 70 60, 70 40, 50 20 Z" stroke="currentColor" strokeWidth="3.5" fill="none" />
+                <circle cx="50" cy="50" r="10" fill="currentColor" />
             </svg>
             <div className="w-24 h-px bg-gradient-to-l from-transparent via-brand-maroon/50 to-brand-maroon/50 dark:via-brand-gold/50 dark:to-brand-gold/50"></div>
-          </a>
+          </button>
           
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
             {VIDEOS.map((video, index) => (
@@ -216,6 +279,7 @@ const App: React.FC = () => {
                 <VideoCard 
                   video={video} 
                   videoNumber={index + 1}
+                  onWatch={handleWatchVideo}
                 />
               </div>
             ))}
@@ -223,13 +287,6 @@ const App: React.FC = () => {
         </section>
 
       </main>
-
-      {isGiftModalOpen && (
-        <GiftModal 
-          onClose={closeGiftModal} 
-          instagramUrl="https://www.instagram.com/anurag.singhindoliya?igsh=MWNzemdwc3dkMm96ZA=="
-        />
-      )}
     </div>
   );
 };

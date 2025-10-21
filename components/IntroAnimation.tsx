@@ -5,8 +5,7 @@ interface IntroAnimationProps {
 }
 
 const INTRO_TEXTS = [
-  "In a world of noise...",
-  "...find your stillness.",
+  { text: '"God is love."', author: "Sant Darshan Singh Ji Maharaj" },
 ];
 
 const IntroAnimation: React.FC<IntroAnimationProps> = ({ onFinish }) => {
@@ -16,18 +15,14 @@ const IntroAnimation: React.FC<IntroAnimationProps> = ({ onFinish }) => {
   const handleFinish = () => {
     if (isExiting) return;
     setIsExiting(true);
-    setTimeout(onFinish, 800); // Allow fade-out animation to complete
+    setTimeout(onFinish, 800);
   };
 
   useEffect(() => {
     const timers: number[] = [];
-    
-    // Timer for text steps
-    timers.push(window.setTimeout(() => setStep(1), 3000));
-    // Timer for final step
-    timers.push(window.setTimeout(() => setStep(2), 6000));
-    // Timer to auto-finish the intro
-    timers.push(window.setTimeout(handleFinish, 8500));
+    // Updated timings for a more cinematic feel
+    timers.push(window.setTimeout(() => setStep(1), 5000)); // Show final title
+    timers.push(window.setTimeout(handleFinish, 7500)); // Auto-finish
 
     return () => {
       timers.forEach(clearTimeout);
@@ -38,65 +33,91 @@ const IntroAnimation: React.FC<IntroAnimationProps> = ({ onFinish }) => {
     animation: isExiting ? 'intro-container-fade-out 0.8s ease-in forwards' : undefined,
   };
   
-  const textStyle: React.CSSProperties = {
-      animation: 'intro-text-fade 3s ease-in-out forwards',
+  const backgroundStyle: React.CSSProperties = {
+    animation: 'intro-bg-zoom 8s ease-out forwards',
   };
 
-  const logoStyle: React.CSSProperties = {
-    animation: step < 2 
+  const textStyle: React.CSSProperties = {
+      // Start fade-in slightly after the logo begins to appear
+      animation: 'intro-text-fade 4.5s ease-in-out forwards',
+      animationDelay: '0.5s'
+  };
+
+  const logoAndQuoteContainerStyle: React.CSSProperties = {
+    animation: step < 1 
         ? 'intro-logo-enter 1s ease-out forwards'
         : 'intro-logo-exit 0.8s ease-in forwards',
   };
   
   const finalTitleStyle: React.CSSProperties = {
       animation: 'intro-title-enter 1.5s cubic-bezier(0.19, 1, 0.22, 1) forwards'
-  }
+  };
 
   return (
     <div 
         style={containerStyle}
-        className="fixed inset-0 bg-black z-50 flex flex-col items-center justify-center text-center p-4"
+        className="fixed inset-0 bg-black z-50 flex flex-col items-center justify-center text-center p-4 overflow-hidden"
     >
-      {/* Ensure starry background is visible for the intro regardless of theme */}
-      <div className="absolute inset-0">
+      {/* Enhanced animated background */}
+      <div style={backgroundStyle} className="absolute inset-[-5%]">
           <div className="stars"></div>
-          <div className="nebula"></div>
+          <div className="nebula" style={{opacity: 0.8}}></div>
           <div className="twinkling"></div>
           <div className="clouds"></div>
       </div>
       
       <div className="relative w-full h-48 flex items-center justify-center">
-        {step < 2 && (
-            <div style={logoStyle} className="absolute inset-0 flex flex-col items-center justify-center">
+        {step < 1 && (
+            <div style={logoAndQuoteContainerStyle} className="absolute inset-0 flex flex-col items-center justify-center">
+                {/* Divine Light Effect */}
+                <div 
+                  className="absolute w-64 h-64 bg-brand-gold rounded-full blur-3xl"
+                  style={{ animation: 'divine-light-pulse 5s ease-in-out infinite' }}
+                />
+
                 <svg
-                    className="w-24 h-24 text-brand-gold"
-                    viewBox="0 0 100 100"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    aria-label="Logo"
+                  viewBox="0 0 100 100"
+                  className="w-28 h-28 relative z-10 text-brand-gold/90"
+                  style={{ filter: 'drop-shadow(0 0 12px currentColor)' }}
+                  aria-label="Diya Lamp"
                 >
-                    <circle cx="50" cy="50" r="42" stroke="currentColor" strokeWidth="4" opacity="0.6" />
-                    <path d="M50 35 C 65 45, 65 60, 50 70 C 35 60, 35 45, 50 35 Z" fill="currentColor" opacity="0.9" />
-                    <path d="M50 20 L 50 35" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
-                    <path d="M35 32 L 42 42" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
-                    <path d="M65 32 L 58 42" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+                  <path
+                    d="M50 70 C 55 60, 50 45, 50 45 C 50 45, 45 60, 50 70Z"
+                    fill="currentColor"
+                    style={{
+                      transformOrigin: '50% 70%',
+                      animation: 'flicker 3s ease-in-out infinite',
+                    }}
+                  />
+                  <path
+                    d="M20 75 C 40 60, 60 60, 80 75 Q 50 90, 20 75Z"
+                    fill="currentColor"
+                    opacity="0.8"
+                  />
                 </svg>
-                <p style={textStyle} key={step} className="mt-6 text-xl font-serif text-brand-gold/80 tracking-widest">
-                    {INTRO_TEXTS[step]}
-                </p>
+
+                <div style={textStyle} key={step} className="mt-6 text-center relative z-10">
+                    <p className="text-xl font-serif text-brand-gold/90 tracking-widest" style={{animation: 'subtle-glow 5s ease-in-out infinite'}}>
+                        {INTRO_TEXTS[step].text}
+                    </p>
+                    {INTRO_TEXTS[step].author && (
+                        <p className="mt-2 text-lg font-serif text-brand-gold/80 tracking-normal">
+                            - {INTRO_TEXTS[step].author}
+                        </p>
+                    )}
+                </div>
             </div>
         )}
-        {step === 2 && (
+        {step === 1 && (
              <div style={finalTitleStyle}>
                 <h1 className="text-5xl md:text-7xl tracking-widest text-brand-gold title-decorative">GURU KRIPA SHORTZ</h1>
-                <p className="text-lg mt-2 tracking-wider text-white/80">VIDEOS</p>
              </div>
         )}
       </div>
 
       <button
         onClick={handleFinish}
-        className="absolute bottom-8 right-8 text-white/50 hover:text-white transition-colors text-sm font-semibold tracking-wider"
+        className="absolute bottom-8 right-8 text-white/50 hover:text-white transition-colors text-sm font-semibold tracking-wider z-20"
       >
         SKIP
       </button>
