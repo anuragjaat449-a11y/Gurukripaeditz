@@ -4,7 +4,6 @@ import type { Video } from '../constants';
 interface VideoCardProps {
   video: Video;
   videoNumber: number;
-  onWatchClick: (videoId: string) => void;
 }
 
 // Helper function to convert a Google Drive 'view' URL to a direct download URL.
@@ -20,13 +19,12 @@ const getDirectDownloadUrl = (url: string | undefined): string | undefined => {
 };
 
 
-const VideoCard: React.FC<VideoCardProps> = ({ video, videoNumber, onWatchClick }) => {
-  const [imageError, setImageError] = useState(false);
+const VideoCard: React.FC<VideoCardProps> = ({ video, videoNumber }) => {
+  const [isVideoInvalid, setIsVideoInvalid] = useState(false);
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
   const [downloadState, setDownloadState] = useState<'idle' | 'starting' | 'complete'>('idle');
   const [thumbnailUrl, setThumbnailUrl] = useState(`https://img.youtube.com/vi/${video.id}/hq720.jpg`);
 
-
-  const watchUrl = `https://www.youtube.com/watch?v=${video.id}`;
   const directDownloadUrl = getDirectDownloadUrl(video.downloadUrl);
 
   const handleImageError = () => {
@@ -35,13 +33,18 @@ const VideoCard: React.FC<VideoCardProps> = ({ video, videoNumber, onWatchClick 
     } else if (thumbnailUrl.includes('sddefault.jpg')) {
       setThumbnailUrl(`https://img.youtube.com/vi/${video.id}/hqdefault.jpg`);
     } else {
-      setImageError(true);
+      setIsVideoInvalid(true);
     }
   };
   
-  const handleWatch = (e: React.MouseEvent) => {
-    e.preventDefault();
-    onWatchClick(video.id);
+  const handleImageLoad = (event: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    // YouTube's default "unavailable" thumbnail has a natural width of 120px.
+    // A valid high-quality thumbnail will be much larger. We use < 200 to be safe.
+    if (event.currentTarget.naturalWidth < 200) {
+        setIsVideoInvalid(true);
+    } else {
+        setIsImageLoaded(true);
+    }
   };
 
   const handleDownloadClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -64,41 +67,55 @@ const VideoCard: React.FC<VideoCardProps> = ({ video, videoNumber, onWatchClick 
     }, 1500);
   };
 
-  const isButtonDisabled = downloadState !== 'idle';
+  const isDownloadButtonDisabled = downloadState !== 'idle';
+  
+  const handleWatch = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (isVideoInvalid) return;
+    window.open(`https://www.youtube.com/watch?v=${video.id}`, '_blank', 'noopener,noreferrer');
+  };
+
 
   return (
     <div className="glass-card rounded-lg overflow-hidden group h-full flex flex-col">
       <div className="p-2">
-        <a 
-          href={watchUrl} 
-          target="_blank" 
-          rel="noopener noreferrer" 
+        <div
           onClick={handleWatch}
-          className="thumbnail-link block overflow-hidden rounded-md relative border-2 border-brand-maroon/20 dark:border-brand-gold/30 group-hover:border-brand-maroon/80 dark:group-hover:border-brand-gold/80 transition-colors aspect-[9/16]"
+          className={`thumbnail-link block w-full p-0 text-left overflow-hidden rounded-md relative border-2 border-brand-maroon/20 dark:border-brand-gold/30 group-hover:border-brand-maroon/80 dark:group-hover:border-brand-gold/80 transition-colors aspect-video ${!isVideoInvalid ? 'cursor-pointer' : 'cursor-default'}`}
+          aria-label={isVideoInvalid ? `Video ${videoNumber} is unavailable` : `Watch Video ${videoNumber} on YouTube`}
         >
-          {imageError ? (
-             <div className="w-full h-full bg-black/5 dark:bg-black/30 flex flex-col items-center justify-center text-brand-maroon/70 dark:text-brand-gold/70">
+          {isVideoInvalid ? (
+             <div className="w-full h-full bg-black/5 dark:bg-black/30 flex flex-col items-center justify-center text-center p-4 text-brand-maroon/70 dark:text-brand-gold/70">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
               </svg>
-              <span className="mt-2 text-sm font-semibold">Thumbnail unavailable</span>
+              <span className="mt-2 text-sm font-semibold">Video Unavailable</span>
             </div>
           ) : (
-            <img 
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
-              src={thumbnailUrl} 
-              alt={`Thumbnail for Video ${videoNumber}`}
-              onError={handleImageError}
-              loading="lazy"
-              decoding="async"
-            />
+            <>
+              {/* Skeleton Loader - visible until image is loaded */}
+              {!isImageLoaded && (
+                  <div className="absolute inset-0 bg-gray-300 dark:bg-gray-700 animate-pulse" />
+              )}
+              <img 
+                className={`relative w-full h-full object-cover transition-opacity duration-500 group-hover:scale-110 ${isImageLoaded ? 'opacity-100' : 'opacity-0'}`} 
+                src={thumbnailUrl} 
+                alt={`Thumbnail for Video ${videoNumber}`}
+                onLoad={handleImageLoad}
+                onError={handleImageError}
+                loading="lazy"
+                decoding="async"
+              />
+              {isImageLoaded && (
+                <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <svg className="w-16 h-16 text-white/80" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
+                    </svg>
+                </div>
+              )}
+            </>
           )}
-          <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <svg className="w-16 h-16 text-white/80" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
-            </svg>
-          </div>
-        </a>
+        </div>
       </div>
       <div className="p-4 pt-2 text-center flex-grow flex flex-col justify-between">
         <h3 className="font-semibold text-brand-maroon dark:text-brand-gold mb-2 text-xl">
@@ -107,7 +124,9 @@ const VideoCard: React.FC<VideoCardProps> = ({ video, videoNumber, onWatchClick 
         <div className="flex justify-center items-center space-x-3">
           <button 
             onClick={handleWatch}
-            className="flex-1 inline-flex items-center justify-center py-2 px-4 rounded-md text-sm font-bold btn-premium-secondary"
+            disabled={isVideoInvalid}
+            aria-disabled={isVideoInvalid}
+            className={`flex-1 inline-flex items-center justify-center py-2 px-4 rounded-md text-sm font-bold ${isVideoInvalid ? 'btn-disabled' : 'btn-premium-secondary'}`}
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
               <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
@@ -120,8 +139,8 @@ const VideoCard: React.FC<VideoCardProps> = ({ video, videoNumber, onWatchClick 
               href={directDownloadUrl}
               download={`GuruKripaShortz_Video_${videoNumber}.mp4`}
               onClick={handleDownloadClick}
-              className={`flex-1 inline-flex items-center justify-center py-2 px-4 rounded-md text-sm font-bold transition-colors ${isButtonDisabled ? 'btn-disabled' : 'btn-premium'}`}
-              aria-disabled={isButtonDisabled}
+              className={`flex-1 inline-flex items-center justify-center py-2 px-4 rounded-md text-sm font-bold transition-colors ${isDownloadButtonDisabled ? 'btn-disabled' : 'btn-premium'}`}
+              aria-disabled={isDownloadButtonDisabled}
             >
               {downloadState === 'starting' ? (
                 <>

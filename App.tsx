@@ -1,13 +1,9 @@
-
-
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { VIDEOS } from './constants';
 import VideoCard from './components/VideoCard';
 import IntroAnimation from './components/IntroAnimation';
 import ThemeToggle from './components/ThemeToggle';
-import VideoPlayerModal from './components/VideoPlayerModal';
 import GiftModal from './components/GiftModal';
-
 
 const QUOTES = [
   { text: "Meditation is the journey from the head to the heart.", author: "Sant Rajinder Singh Ji Maharaj" },
@@ -20,12 +16,12 @@ const QUOTES = [
   { text: "We are all children of the same one God, and our souls are parcels of that divine light.", author: "Sant Rajinder Singh Ji Maharaj" },
 ];
 
+
 // --- Main App Component ---
 const App: React.FC = () => {
   const [showIntro, setShowIntro] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
   const audioRef = useRef<HTMLAudioElement>(null);
-  const [playingVideoId, setPlayingVideoId] = useState<string | null>(null);
   const [isGiftModalOpen, setIsGiftModalOpen] = useState(false);
   const [currentQuoteIndex, setCurrentQuoteIndex] = useState(0);
   const [isQuoteVisible, setIsQuoteVisible] = useState(true);
@@ -89,20 +85,6 @@ const App: React.FC = () => {
     });
   };
   
-  const handleWatchVideo = (videoId: string) => {
-    setPlayingVideoId(videoId);
-    if (audioRef.current) {
-      audioRef.current.pause();
-    }
-  };
-
-  const handleClosePlayer = useCallback(() => {
-    setPlayingVideoId(null);
-    if (audioRef.current && !isMuted) {
-      audioRef.current.play().catch(e => console.warn("Could not resume music.", e));
-    }
-  }, [isMuted]);
-
   const openGiftModal = () => {
     setIsGiftModalOpen(true);
   };
@@ -114,25 +96,26 @@ const App: React.FC = () => {
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
-        handleClosePlayer();
-        closeGiftModal();
+        if (isGiftModalOpen) {
+          closeGiftModal();
+        }
       }
     };
-
-    if (playingVideoId || isGiftModalOpen) {
+  
+    if (isGiftModalOpen) {
       window.addEventListener('keydown', handleKeyDown);
     }
-
+  
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [playingVideoId, isGiftModalOpen, handleClosePlayer, closeGiftModal]);
+  }, [isGiftModalOpen, closeGiftModal]);
 
 
   if (showIntro) {
     return <IntroAnimation onFinish={() => setShowIntro(false)} />;
   }
-
+  
   return (
     <div className="min-h-screen text-gray-800 dark:text-white" style={{animation: 'fade-in-up 0.8s ease-out both'}}>
       <audio 
@@ -233,7 +216,6 @@ const App: React.FC = () => {
                 <VideoCard 
                   video={video} 
                   videoNumber={index + 1}
-                  onWatchClick={handleWatchVideo}
                 />
               </div>
             ))}
@@ -242,9 +224,6 @@ const App: React.FC = () => {
 
       </main>
 
-      {playingVideoId && (
-        <VideoPlayerModal videoId={playingVideoId} onClose={handleClosePlayer} />
-      )}
       {isGiftModalOpen && (
         <GiftModal 
           onClose={closeGiftModal} 
