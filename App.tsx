@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { VIDEOS } from './constants';
 import VideoCard from './components/VideoCard';
 import IntroAnimation from './components/IntroAnimation';
 import ThemeToggle from './components/ThemeToggle';
-import VideoPlayerModal from './components/VideoPlayerModal';
 import SurveyModal, { SurveyData } from './components/SurveyModal';
 import RatingModal from './components/RatingModal';
 
@@ -25,7 +24,6 @@ const App: React.FC = () => {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [currentQuoteIndex, setCurrentQuoteIndex] = useState(0);
   const [isQuoteVisible, setIsQuoteVisible] = useState(true);
-  const [playingVideoId, setPlayingVideoId] = useState<string | null>(null);
 
   // --- Survey and Rating State ---
   const [isSurveyOpen, setIsSurveyOpen] = useState(false);
@@ -33,7 +31,6 @@ const App: React.FC = () => {
   const [averageRatingInfo, setAverageRatingInfo] = useState({ rating: 0, count: 0 });
   const [isRatingModalOpen, setIsRatingModalOpen] = useState(false);
   const [ratingModalPosition, setRatingModalPosition] = useState<{ top: number; left: number } | null>(null);
-
 
   const [theme, setTheme] = useState(() => {
     if (typeof window !== 'undefined') {
@@ -115,14 +112,6 @@ const App: React.FC = () => {
     });
   };
   
-  const handleWatchVideo = (videoId: string) => {
-    setPlayingVideoId(videoId);
-  };
-
-  const handleClosePlayer = () => {
-    setPlayingVideoId(null);
-  };
-  
   const handleSurveySubmit = (data: SurveyData) => {
     try {
       const storedRatings = localStorage.getItem('gks_ratings');
@@ -158,14 +147,6 @@ const App: React.FC = () => {
         loop 
         aria-hidden="true"
       />
-
-      {playingVideoId && (
-        <VideoPlayerModal 
-            videoId={playingVideoId} 
-            onClose={handleClosePlayer} 
-            onMinimize={handleClosePlayer}
-        />
-      )}
       
       {isSurveyOpen && (
         <SurveyModal
@@ -249,25 +230,27 @@ const App: React.FC = () => {
       <main>
         <section className="my-16 mx-auto max-w-7xl p-5">
           <h2 className="text-4xl font-serif text-brand-maroon dark:text-brand-gold mb-4 text-center">Guru Kripa Shortz</h2>
-          <button
-            onClick={handleOpenRatingModal}
-            title="View Community Rating"
-            aria-label="View community rating for this app"
-            className="flex justify-center items-center mb-12 group cursor-pointer w-full"
-          >
+          <div className="flex justify-center items-center mb-12 w-full">
             <div className="w-24 h-px bg-gradient-to-r from-transparent via-brand-maroon/50 to-brand-maroon/50 dark:via-brand-gold/50 dark:to-brand-gold/50"></div>
-            <svg 
-              className="w-20 h-20 mx-4 text-brand-maroon/80 dark:text-brand-gold/80 transition-transform duration-300 group-hover:scale-110 third-eye-glow-effect" 
-              viewBox="0 0 100 100" 
-              fill="none" 
-              xmlns="http://www.w3.org/2000/svg"
-              aria-hidden="true"
+            <button
+              onClick={handleOpenRatingModal}
+              title="View Community Rating"
+              aria-label="View community rating for this app"
+              className="mx-4 group"
             >
-                <path d="M50 20 C 30 40, 30 60, 50 80 C 70 60, 70 40, 50 20 Z" stroke="currentColor" strokeWidth="3.5" fill="none" />
-                <circle cx="50" cy="50" r="10" fill="currentColor" />
-            </svg>
+              <svg 
+                className="w-20 h-20 text-brand-maroon/80 dark:text-brand-gold/80 transition-transform duration-300 group-hover:scale-110 third-eye-glow-effect" 
+                viewBox="0 0 100 100" 
+                fill="none" 
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+              >
+                  <path d="M50 20 C 30 40, 30 60, 50 80 C 70 60, 70 40, 50 20 Z" stroke="currentColor" strokeWidth="3.5" fill="none" />
+                  <circle cx="50" cy="50" r="10" fill="currentColor" />
+              </svg>
+            </button>
             <div className="w-24 h-px bg-gradient-to-l from-transparent via-brand-maroon/50 to-brand-maroon/50 dark:via-brand-gold/50 dark:to-brand-gold/50"></div>
-          </button>
+          </div>
           
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
             {VIDEOS.map((video, index) => (
@@ -279,7 +262,6 @@ const App: React.FC = () => {
                 <VideoCard 
                   video={video} 
                   videoNumber={index + 1}
-                  onWatch={handleWatchVideo}
                 />
               </div>
             ))}

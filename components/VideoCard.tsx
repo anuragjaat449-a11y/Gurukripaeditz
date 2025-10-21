@@ -4,7 +4,6 @@ import type { Video } from '../constants';
 interface VideoCardProps {
   video: Video;
   videoNumber: number;
-  onWatch: (videoId: string) => void;
 }
 
 // Helper function to convert a Google Drive 'view' URL to a direct download URL.
@@ -20,7 +19,7 @@ const getDirectDownloadUrl = (url: string | undefined): string | undefined => {
 };
 
 
-const VideoCard: React.FC<VideoCardProps> = ({ video, videoNumber, onWatch }) => {
+const VideoCard: React.FC<VideoCardProps> = ({ video, videoNumber }) => {
   const [isVideoInvalid, setIsVideoInvalid] = useState(false);
   const [isImageLoaded, setIsImageLoaded] = useState(false);
   const [downloadState, setDownloadState] = useState<'idle' | 'starting' | 'complete'>('idle');
@@ -70,20 +69,16 @@ const VideoCard: React.FC<VideoCardProps> = ({ video, videoNumber, onWatch }) =>
 
   const isDownloadButtonDisabled = downloadState !== 'idle';
   
-  const handleWatch = (e: React.MouseEvent) => {
-    e.preventDefault();
-    if (isVideoInvalid) return;
-    onWatch(video.id);
-  };
-
-
   return (
     <div className="glass-card rounded-lg overflow-hidden group h-full flex flex-col">
       <div className="p-2">
-        <div
-          onClick={handleWatch}
-          className={`thumbnail-link block w-full p-0 text-left overflow-hidden rounded-md relative border-2 border-brand-maroon/20 dark:border-brand-gold/30 group-hover:border-brand-maroon/80 dark:group-hover:border-brand-gold/80 transition-colors aspect-video ${!isVideoInvalid ? 'cursor-pointer' : 'cursor-default'}`}
-          aria-label={isVideoInvalid ? `Video ${videoNumber} is unavailable` : `Watch Video ${videoNumber}`}
+        <a
+          href={!isVideoInvalid ? `https://www.youtube.com/watch?v=${video.id}` : undefined}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={(e) => { if (isVideoInvalid) e.preventDefault(); }}
+          className={`thumbnail-link block w-full p-0 text-left overflow-hidden rounded-md relative border-2 border-brand-maroon/20 dark:border-brand-gold/30 group-hover:border-brand-maroon/80 dark:group-hover:border-brand-gold/80 transition-colors aspect-video ${!isVideoInvalid ? 'cursor-pointer' : 'cursor-not-allowed'}`}
+          aria-label={isVideoInvalid ? `Video ${videoNumber} is unavailable` : `Watch Video ${videoNumber} on YouTube`}
         >
           {isVideoInvalid ? (
              <div className="w-full h-full bg-black/5 dark:bg-black/30 flex flex-col items-center justify-center text-center p-4 text-brand-maroon/70 dark:text-brand-gold/70">
@@ -116,16 +111,19 @@ const VideoCard: React.FC<VideoCardProps> = ({ video, videoNumber, onWatch }) =>
               )}
             </>
           )}
-        </div>
+        </a>
       </div>
       <div className="p-4 pt-2 text-center flex-grow flex flex-col justify-between">
         <h3 className="font-semibold text-brand-maroon dark:text-brand-gold mb-2 text-xl">
           {`Video #${videoNumber}`}
         </h3>
         <div className="flex justify-center items-center space-x-3">
-          <button 
-            onClick={handleWatch}
-            disabled={isVideoInvalid}
+          <a
+            href={!isVideoInvalid ? `https://www.youtube.com/watch?v=${video.id}` : undefined}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => { if (isVideoInvalid) e.preventDefault(); }}
+            role="button"
             aria-disabled={isVideoInvalid}
             className={`flex-1 inline-flex items-center justify-center py-2 px-4 rounded-md text-sm font-bold ${isVideoInvalid ? 'btn-disabled' : 'btn-premium-secondary'}`}
           >
@@ -134,7 +132,7 @@ const VideoCard: React.FC<VideoCardProps> = ({ video, videoNumber, onWatch }) =>
               <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.022 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
             </svg>
             <span className="ml-2">Watch</span>
-          </button>
+          </a>
           {directDownloadUrl ? (
             <a 
               href={directDownloadUrl}
