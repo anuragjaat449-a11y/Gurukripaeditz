@@ -23,6 +23,7 @@ const App: React.FC = () => {
   const [averageRatingInfo, setAverageRatingInfo] = useState({ rating: 0, count: 0 });
   const [isRatingModalOpen, setIsRatingModalOpen] = useState(false);
   const [ratingModalPosition, setRatingModalPosition] = useState<{ top: number; left: number } | null>(null);
+  const [playingVideoId, setPlayingVideoId] = useState<string | null>(null);
 
   const [theme, setTheme] = useState(() => {
     if (typeof window !== 'undefined') {
@@ -125,6 +126,10 @@ const App: React.FC = () => {
       left: rect.left + rect.width / 2, // Centered horizontally
     });
     setIsRatingModalOpen(true);
+  };
+
+  const handlePlayVideo = (videoId: string) => {
+    setPlayingVideoId(videoId);
   };
 
   if (showIntro) {
@@ -262,6 +267,8 @@ const App: React.FC = () => {
                 <VideoCard 
                   video={video} 
                   videoNumber={index + 1}
+                  isPlaying={playingVideoId === video.id}
+                  onPlay={handlePlayVideo}
                 />
               </div>
             ))}
