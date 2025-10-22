@@ -5,17 +5,7 @@ import IntroAnimation from './components/IntroAnimation';
 import ThemeToggle from './components/ThemeToggle';
 import SurveyModal, { SurveyData } from './components/SurveyModal';
 import RatingModal from './components/RatingModal';
-
-const QUOTES = [
-  { text: "Meditation is the journey from the head to the heart.", author: "Sant Rajinder Singh Ji Maharaj" },
-  { text: "Love is the only way back to God.", author: "Sant Darshan Singh Ji Maharaj" },
-  { text: "Spirituality is a living and practical subject. It is a science of the soul.", author: "Sant Kirpal Singh Ji Maharaj" },
-  { text: "The soul is a drop from the ocean of all-consciousness.", author: "Sant Rajinder Singh Ji Maharaj" },
-  { text: "In the silence of meditation, we can hear the voice of our soul.", author: "Sant Rajinder Singh Ji Maharaj" },
-  { text: "The purpose of human life is to know oneself and to know God.", author: "Sant Kirpal Singh Ji Maharaj" },
-  { text: "Let us become ambassadors of peace and love in the world.", author: "Sant Darshan Singh Ji Maharaj" },
-  { text: "We are all children of the same one God, and our souls are parcels of that divine light.", author: "Sant Rajinder Singh Ji Maharaj" },
-];
+import { useLanguage } from './contexts/LanguageContext';
 
 // --- Main App Component ---
 const App: React.FC = () => {
@@ -24,6 +14,8 @@ const App: React.FC = () => {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [currentQuoteIndex, setCurrentQuoteIndex] = useState(0);
   const [isQuoteVisible, setIsQuoteVisible] = useState(true);
+  const { language, toggleLanguage, t } = useLanguage();
+  const QUOTES = t.quotes;
 
   // --- Survey and Rating State ---
   const [isSurveyOpen, setIsSurveyOpen] = useState(false);
@@ -95,7 +87,7 @@ const App: React.FC = () => {
     }, 7000); // Change quote every 7 seconds
 
     return () => clearInterval(quoteInterval);
-  }, [showIntro]);
+  }, [showIntro, QUOTES.length]);
 
   useEffect(() => {
     if (audioRef.current) {
@@ -173,8 +165,8 @@ const App: React.FC = () => {
         <button
           onClick={() => setIsSurveyOpen(true)}
           className="fixed bottom-6 right-6 z-20 w-16 h-16 rounded-full btn-premium shadow-lg flex items-center justify-center animate-gentle-bounce transform-gpu"
-          aria-label="Share your feedback"
-          title="Share your feedback"
+          aria-label={t.feedbackButton}
+          title={t.feedbackButton}
         >
           <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
             <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
@@ -183,12 +175,20 @@ const App: React.FC = () => {
       )}
 
       <div className="fixed top-4 right-4 z-20 flex items-center space-x-2">
+        <button
+          onClick={toggleLanguage}
+          className="p-2 w-10 h-10 flex items-center justify-center rounded-full btn-premium-secondary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-gold font-bold text-lg"
+          aria-label={t.toggleLanguage}
+          title={t.toggleLanguage}
+        >
+          {language === 'en' ? 'हि' : 'EN'}
+        </button>
         <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
         <button
           onClick={toggleMute}
           className="p-2 rounded-full btn-premium-secondary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-gold"
-          aria-label={isMuted ? 'Unmute background music' : 'Mute background music'}
-          title={isMuted ? 'Unmute background music' : 'Mute background music'}
+          aria-label={isMuted ? t.unmute : t.mute}
+          title={isMuted ? t.unmute : t.mute}
         >
           {isMuted ? (
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
@@ -210,8 +210,8 @@ const App: React.FC = () => {
             <svg viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M50.7,76.8c-2.5-2.8-5.5-4.8-8.8-6.1C33.6,67.2,26,62,20.2,55.1c-4.2-5-6.5-11.2-6.5-17.8c0-5.4,1.4-10.4,4-14.7 C21.4,17.9,26.4,14,32.1,11.5c2.6-1.1,5.3-1.8,8.2-1.8c2.9,0,5.7,0.6,8.2,1.8c5.8,2.4,10.7,6.3,14.4,11.1 c2.6,3.4,4,7.4,4,11.7c0,3.3-0.7,6.4-2.1,9.2c-2.1,4.2-5.4,7.5-9.4,9.6c-4.4,2.3-9.3,3.4-14.4,3.4c-2.4,0-4.8-0.3-7-0.8 c-4-1-7.6-2.9-10.7-5.5" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeMiterlimit="10"></path></svg>
         </div>
         <div className="container mx-auto text-center px-4 relative">
-          <h1 className="text-4xl md:text-6xl tracking-widest text-brand-maroon dark:text-brand-gold title-decorative">GURU KRIPA SHORTZ</h1>
-          <p className="text-lg mt-2 tracking-wider text-black/60 dark:text-white/80">VIDEOS</p>
+          <h1 className="text-4xl md:text-6xl tracking-widest text-brand-maroon dark:text-brand-gold title-decorative">{t.headerTitle}</h1>
+          <p className="text-lg mt-2 tracking-wider text-black/60 dark:text-white/80">{t.headerSubtitle}</p>
            
            <div className="h-16 flex items-center justify-center mt-2">
               <div className="relative w-full h-10 flex items-center justify-center">
@@ -229,13 +229,13 @@ const App: React.FC = () => {
 
       <main>
         <section className="my-16 mx-auto max-w-7xl p-5">
-          <h2 className="text-4xl font-serif text-brand-maroon dark:text-brand-gold mb-4 text-center">Guru Kripa Shortz</h2>
+          <h2 className="text-4xl font-serif text-brand-maroon dark:text-brand-gold mb-4 text-center">{t.sectionTitle}</h2>
           <div className="flex justify-center items-center mb-12 w-full">
             <div className="w-24 h-px bg-gradient-to-r from-transparent via-brand-maroon/50 to-brand-maroon/50 dark:via-brand-gold/50 dark:to-brand-gold/50"></div>
             <button
               onClick={handleOpenRatingModal}
-              title="View Community Rating"
-              aria-label="View community rating for this app"
+              title={t.viewRating}
+              aria-label={t.viewRating}
               className="mx-4 group"
             >
               <svg 

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import StarRatingInput from './StarRatingInput';
+import { useLanguage } from '../contexts/LanguageContext';
 
 export interface SurveyData {
   rating: number;
@@ -17,6 +18,7 @@ const SurveyModal: React.FC<SurveyModalProps> = ({ isOpen, onClose, onSubmit }) 
   const [rating, setRating] = useState(0);
   const [comments, setComments] = useState('');
   const [showThanks, setShowThanks] = useState(false);
+  const { t } = useLanguage();
 
   const handleClose = () => {
     setIsClosing(true);
@@ -57,13 +59,13 @@ const SurveyModal: React.FC<SurveyModalProps> = ({ isOpen, onClose, onSubmit }) 
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 text-brand-maroon dark:text-brand-gold" viewBox="0 0 20 20" fill="currentColor">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
-                    <h2 className="text-2xl font-serif text-brand-maroon dark:text-brand-gold mt-4">Thank You!</h2>
-                    <p className="mt-2 text-black/80 dark:text-white/80">Your feedback is appreciated.</p>
+                    <h2 className="text-2xl font-serif text-brand-maroon dark:text-brand-gold mt-4">{t.thankYou}</h2>
+                    <p className="mt-2 text-black/80 dark:text-white/80">{t.feedbackAppreciated}</p>
                 </div>
             ) : (
                 <form onSubmit={handleSubmit}>
-                    <h2 className="text-2xl font-serif text-brand-maroon dark:text-brand-gold mb-2">Share Your Feedback</h2>
-                    <p className="mb-4 text-sm text-black/70 dark:text-white/70">How would you rate your experience?</p>
+                    <h2 className="text-2xl font-serif text-brand-maroon dark:text-brand-gold mb-2">{t.surveyTitle}</h2>
+                    <p className="mb-4 text-sm text-black/70 dark:text-white/70">{t.surveySubtitle}</p>
 
                     <div className="mb-4 flex justify-center">
                         <StarRatingInput rating={rating} setRating={setRating} />
@@ -72,20 +74,20 @@ const SurveyModal: React.FC<SurveyModalProps> = ({ isOpen, onClose, onSubmit }) 
                     <textarea
                         value={comments}
                         onChange={(e) => setComments(e.target.value)}
-                        placeholder="Any comments or suggestions? (Optional)"
+                        placeholder={t.surveyPlaceholder}
                         className="w-full h-24 p-3 rounded-md bg-white dark:bg-gray-800 border border-brand-maroon/30 dark:border-brand-gold/40 focus:ring-2 focus:ring-brand-gold focus:outline-none transition"
                     />
 
                     <div className="mt-4 flex justify-center space-x-4">
                         <button type="button" onClick={handleClose} className="py-2 px-8 rounded-md text-sm font-bold btn-premium-secondary">
-                        Cancel
+                        {t.cancel}
                         </button>
                         <button
                         type="submit"
                         disabled={rating === 0}
                         className={`py-2 px-8 rounded-md text-sm font-bold ${rating === 0 ? 'btn-disabled' : 'btn-premium'}`}
                         >
-                        Submit
+                        {t.submit}
                         </button>
                     </div>
                 </form>

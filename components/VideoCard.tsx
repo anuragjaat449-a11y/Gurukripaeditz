@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import type { Video } from '../constants';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface VideoCardProps {
   video: Video;
@@ -20,6 +21,7 @@ const getDirectDownloadUrl = (url: string | undefined): string | undefined => {
 
 
 const VideoCard: React.FC<VideoCardProps> = ({ video, videoNumber }) => {
+  const { t } = useLanguage();
   const [isVideoInvalid, setIsVideoInvalid] = useState(false);
   const [isImageLoaded, setIsImageLoaded] = useState(false);
   const [downloadState, setDownloadState] = useState<'idle' | 'starting' | 'complete'>('idle');
@@ -78,14 +80,14 @@ const VideoCard: React.FC<VideoCardProps> = ({ video, videoNumber }) => {
           rel="noopener noreferrer"
           onClick={(e) => { if (isVideoInvalid) e.preventDefault(); }}
           className={`thumbnail-link block w-full p-0 text-left overflow-hidden rounded-md relative border-2 border-brand-maroon/20 dark:border-brand-gold/30 group-hover:border-brand-maroon/80 dark:group-hover:border-brand-gold/80 transition-colors aspect-video ${!isVideoInvalid ? 'cursor-pointer' : 'cursor-not-allowed'}`}
-          aria-label={isVideoInvalid ? `Video ${videoNumber} is unavailable` : `Watch Video ${videoNumber} on YouTube`}
+          aria-label={isVideoInvalid ? t.videoUnavailableAria.replace('{videoNumber}', String(videoNumber)) : t.watchOnYoutube.replace('{videoNumber}', String(videoNumber))}
         >
           {isVideoInvalid ? (
              <div className="w-full h-full bg-black/5 dark:bg-black/30 flex flex-col items-center justify-center text-center p-4 text-brand-maroon/70 dark:text-brand-gold/70">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
               </svg>
-              <span className="mt-2 text-sm font-semibold">Video Unavailable</span>
+              <span className="mt-2 text-sm font-semibold">{t.videoUnavailable}</span>
             </div>
           ) : (
             <>
@@ -96,7 +98,7 @@ const VideoCard: React.FC<VideoCardProps> = ({ video, videoNumber }) => {
               <img 
                 className={`relative w-full h-full object-cover transition-opacity duration-500 group-hover:scale-110 ${isImageLoaded ? 'opacity-100' : 'opacity-0'}`} 
                 src={thumbnailUrl} 
-                alt={`Thumbnail for Video ${videoNumber}`}
+                alt={t.thumbnailAlt.replace('{videoNumber}', String(videoNumber))}
                 onLoad={handleImageLoad}
                 onError={handleImageError}
                 loading="lazy"
@@ -115,7 +117,7 @@ const VideoCard: React.FC<VideoCardProps> = ({ video, videoNumber }) => {
       </div>
       <div className="p-4 pt-2 text-center flex-grow flex flex-col justify-between">
         <h3 className="font-semibold text-brand-maroon dark:text-brand-gold mb-2 text-xl">
-          {`Video #${videoNumber}`}
+          {`${t.videoTitle}${videoNumber}`}
         </h3>
         <div className="flex justify-center items-center space-x-3">
           <a
@@ -131,7 +133,7 @@ const VideoCard: React.FC<VideoCardProps> = ({ video, videoNumber }) => {
               <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
               <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.022 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
             </svg>
-            <span className="ml-2">Watch</span>
+            <span className="ml-2">{t.watch}</span>
           </a>
           {directDownloadUrl ? (
             <a 
@@ -147,21 +149,21 @@ const VideoCard: React.FC<VideoCardProps> = ({ video, videoNumber }) => {
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                   </svg>
-                  <span>Starting...</span>
+                  <span>{t.downloadStarting}</span>
                 </>
               ) : downloadState === 'complete' ? (
                 <>
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
-                  <span>Started!</span>
+                  <span>{t.downloadStarted}</span>
                 </>
               ) : (
                 <>
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                     <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
                   </svg>
-                  <span>Download</span>
+                  <span>{t.download}</span>
                 </>
               )}
             </a>
@@ -170,7 +172,7 @@ const VideoCard: React.FC<VideoCardProps> = ({ video, videoNumber }) => {
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
                 </svg>
-                <span>N/A</span>
+                <span>{t.notAvailable}</span>
              </button>
           )}
         </div>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import AverageRatingDisplay from './AverageRatingDisplay';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface RatingModalProps {
   isOpen: boolean;
@@ -11,6 +12,7 @@ interface RatingModalProps {
 
 const RatingModal: React.FC<RatingModalProps> = ({ isOpen, onClose, rating, count, position }) => {
   const [isClosing, setIsClosing] = useState(false);
+  const { t } = useLanguage();
 
   const handleClose = () => {
     setIsClosing(true);
@@ -48,10 +50,10 @@ const RatingModal: React.FC<RatingModalProps> = ({ isOpen, onClose, rating, coun
           style={{ animation: isClosing ? 'pop-out-to-top 0.3s ease-in forwards' : 'pop-in-from-top 0.3s ease-out forwards' }}
         >
           <h2 className="text-3xl font-serif text-brand-gold mb-4">
-            Community Rating
+            {t.ratingTitle}
           </h2>
           <p className="mb-6 text-white/80">
-            This is the average rating provided by our community. Thank you!
+            {t.ratingDescription}
           </p>
           <div className="flex items-center justify-center scale-125">
             <AverageRatingDisplay rating={rating} count={count} />

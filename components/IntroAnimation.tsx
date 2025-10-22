@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface IntroAnimationProps {
   onFinish: () => void;
 }
 
-const INTRO_TEXTS = [
-  { text: '"God is love."', author: "Sant Darshan Singh Ji Maharaj" },
-];
-
 const IntroAnimation: React.FC<IntroAnimationProps> = ({ onFinish }) => {
   const [step, setStep] = useState(0);
   const [isExiting, setIsExiting] = useState(false);
+  const { t } = useLanguage();
+  const INTRO_TEXTS = [t.introQuote];
 
   const handleFinish = () => {
     if (isExiting) return;
@@ -110,7 +109,7 @@ const IntroAnimation: React.FC<IntroAnimationProps> = ({ onFinish }) => {
         )}
         {step === 1 && (
              <div style={finalTitleStyle}>
-                <h1 className="text-5xl md:text-7xl tracking-widest text-brand-gold title-decorative">GURU KRIPA SHORTZ</h1>
+                <h1 className="text-5xl md:text-7xl tracking-widest text-brand-gold title-decorative">{t.headerTitle}</h1>
              </div>
         )}
       </div>
@@ -119,7 +118,7 @@ const IntroAnimation: React.FC<IntroAnimationProps> = ({ onFinish }) => {
         onClick={handleFinish}
         className="absolute bottom-8 right-8 text-white/50 hover:text-white transition-colors text-sm font-semibold tracking-wider z-20"
       >
-        SKIP
+        {t.skip}
       </button>
     </div>
   );
