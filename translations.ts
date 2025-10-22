@@ -6,8 +6,6 @@ export const translations = {
     sectionTitle: "Guru Kripa Shortz",
     feedbackButton: "Share your feedback",
     viewRating: "View community rating for this app",
-    unmute: "Unmute background music",
-    mute: "Mute background music",
     toggleLanguage: "Toggle language",
     quotes: [
       { text: "Meditation is the journey from the head to the heart.", author: "Sant Rajinder Singh Ji Maharaj" },
@@ -58,8 +56,6 @@ export const translations = {
     sectionTitle: "गुरु कृपा शॉर्ट्स",
     feedbackButton: "अपनी प्रतिक्रिया साझा करें",
     viewRating: "इस ऐप के लिए सामुदायिक रेटिंग देखें",
-    unmute: "पृष्ठभूमि संगीत अनम्यूट करें",
-    mute: "पृष्ठभूमि संगीत म्यूट करें",
     toggleLanguage: "भाषा बदलें",
     quotes: [
       { text: "ध्यान सिर से हृदय तक की यात्रा है।", author: "संत राजिंदर सिंह जी महाराज" },

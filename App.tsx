@@ -10,8 +10,9 @@ import { useLanguage } from './contexts/LanguageContext';
 // --- Main App Component ---
 const App: React.FC = () => {
   const [showIntro, setShowIntro] = useState(true);
-  const [isMuted, setIsMuted] = useState(true);
   const audioRef = useRef<HTMLAudioElement>(null);
+  const [isMusicPlaying, setIsMusicPlaying] = useState(false);
+  const [musicRequiresInteraction, setMusicRequiresInteraction] = useState(false);
   const [currentQuoteIndex, setCurrentQuoteIndex] = useState(0);
   const [isQuoteVisible, setIsQuoteVisible] = useState(true);
   const { language, toggleLanguage, t } = useLanguage();
@@ -66,15 +67,53 @@ const App: React.FC = () => {
     setTheme(prevTheme => (prevTheme === 'dark' ? 'light' : 'dark'));
   };
   
-  useEffect(() => {
-    if (audioRef.current) {
-        audioRef.current.volume = 0.3;
-        // Autoplay is handled by the browser, we request it, but it might be blocked.
-        audioRef.current.play().catch(() => {
-            console.warn("Background music autoplay was prevented. User interaction is required to start audio.");
-        });
+  const tryPlayingMusic = useCallback(() => {
+    const audioEl = audioRef.current;
+    if (audioEl && !isMusicPlaying) {
+      audioEl.volume = 0.3;
+      const playPromise = audioEl.play();
+  
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            setIsMusicPlaying(true);
+            setMusicRequiresInteraction(false); // Autoplay succeeded
+          })
+          .catch(error => {
+            console.warn("Music autoplay was prevented by the browser:", error);
+            setIsMusicPlaying(false);
+            setMusicRequiresInteraction(true); // Autoplay failed, requires user interaction
+          });
+      }
     }
-  }, []);
+  }, [isMusicPlaying]);
+
+  // Effect to try playing music automatically after the intro
+  useEffect(() => {
+    if (!showIntro) {
+      tryPlayingMusic();
+    }
+  }, [showIntro, tryPlayingMusic]);
+
+  // Effect to handle playing music on the first user interaction if autoplay failed
+  useEffect(() => {
+    if (musicRequiresInteraction) {
+      const handleFirstInteraction = () => {
+        tryPlayingMusic();
+      };
+  
+      // Use { once: true } to automatically remove the listener after it fires.
+      window.addEventListener('click', handleFirstInteraction, { once: true });
+      window.addEventListener('keydown', handleFirstInteraction, { once: true });
+  
+      // The cleanup is implicitly handled by `once: true`, but it's good practice
+      // in case the component unmounts before interaction.
+      return () => {
+        window.removeEventListener('click', handleFirstInteraction);
+        window.removeEventListener('keydown', handleFirstInteraction);
+      };
+    }
+  }, [musicRequiresInteraction, tryPlayingMusic]);
   
   useEffect(() => {
     if(showIntro) return; // Don't start quote interval during intro
@@ -89,21 +128,6 @@ const App: React.FC = () => {
 
     return () => clearInterval(quoteInterval);
   }, [showIntro, QUOTES.length]);
-
-  useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.muted = isMuted;
-    }
-  }, [isMuted]);
-
-  const toggleMute = () => {
-    setIsMuted(prevMuted => {
-      if (prevMuted && audioRef.current?.paused) {
-         audioRef.current?.play().catch(e => console.warn("Could not play audio", e));
-      }
-      return !prevMuted;
-    });
-  };
   
   const handleSurveySubmit = (data: SurveyData) => {
     try {
@@ -140,7 +164,7 @@ const App: React.FC = () => {
     <div className="min-h-screen text-gray-800 dark:text-white" style={{animation: 'fade-in-up 0.8s ease-out both'}}>
       <audio 
         ref={audioRef} 
-        src="https://cdn.pixabay.com/audio/2022/11/22/audio_2c4a4033b0.mp3" 
+        src="https://cdn.pixabay.com/audio/2022/11/11/audio_a16d3e34a2.mp3" 
         loop 
         aria-hidden="true"
       />
@@ -189,22 +213,6 @@ const App: React.FC = () => {
           {language === 'en' ? 'हि' : 'EN'}
         </button>
         <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
-        <button
-          onClick={toggleMute}
-          className="p-2 rounded-full btn-premium-secondary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-gold"
-          aria-label={isMuted ? t.unmute : t.mute}
-          title={isMuted ? t.unmute : t.mute}
-        >
-          {isMuted ? (
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 9.75 19.5 12m0 0 2.25 2.25M19.5 12l2.25-2.25M19.5 12l-2.25-2.25M6.75 8.25l4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z" />
-            </svg>
-          ) : (
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M19.114 5.636a9 9 0 0 1 0 12.728M16.463 8.288a5.25 5.25 0 0 1 0 7.424M6.75 8.25l4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z" />
-            </svg>
-          )}
-        </button>
       </div>
       
       <header className="header-bg py-8 sticky top-0 z-10">

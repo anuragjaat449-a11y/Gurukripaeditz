@@ -57,7 +57,7 @@ const VideoPlayerModal: React.FC<VideoPlayerModalProps> = ({ videoId, onClose, o
       style={{ animation: isClosing ? 'fade-out-down 0.3s ease-in' : 'fade-in-up 0.3s ease-out' }}
     >
       <div 
-        className="relative w-full max-w-4xl bg-black rounded-lg shadow-2xl shadow-brand-maroon/20 dark:shadow-brand-gold/40 overflow-hidden"
+        className="relative w-full max-w-sm bg-black rounded-lg shadow-2xl shadow-brand-maroon/20 dark:shadow-brand-gold/40 overflow-hidden"
         onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside the content
       >
         <div className="video-responsive">
