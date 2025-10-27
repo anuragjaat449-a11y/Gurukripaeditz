@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { VIDEOS } from './constants';
+import { VIDEOS, SATSANG_CLIPS } from './constants';
 import VideoCard from './components/VideoCard';
 import IntroAnimation from './components/IntroAnimation';
 import ThemeToggle from './components/ThemeToggle';
@@ -242,6 +242,27 @@ const App: React.FC = () => {
 
       <main>
         <section className="my-16 mx-auto max-w-7xl p-5">
+          <h2 className="text-4xl font-serif text-brand-maroon dark:text-brand-gold mb-12 text-center">{t.satsangSectionTitle}</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+            {SATSANG_CLIPS.map((video, index) => (
+              <div 
+                className="card-container" 
+                key={video.id}
+                style={{ animation: `fade-in-up 0.5s ${index * 0.05}s ease-out both` }}
+              >
+                <VideoCard 
+                  video={video} 
+                  videoNumber={index + 1}
+                  isPlaying={playingVideoId === video.id}
+                  onPlay={handlePlayVideo}
+                  titlePrefix={t.clipTitlePrefix}
+                />
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="my-16 mx-auto max-w-7xl p-5">
           <h2 className="text-4xl font-serif text-brand-maroon dark:text-brand-gold mb-4 text-center">{t.sectionTitle}</h2>
           <div className="flex justify-center items-center mb-12 w-full">
             <div className="w-24 h-px bg-gradient-to-r from-transparent via-brand-maroon/50 to-brand-maroon/50 dark:via-brand-gold/50 dark:to-brand-gold/50"></div>
@@ -277,6 +298,7 @@ const App: React.FC = () => {
                   videoNumber={index + 1}
                   isPlaying={playingVideoId === video.id}
                   onPlay={handlePlayVideo}
+                  titlePrefix={t.videoTitlePrefix}
                 />
               </div>
             ))}

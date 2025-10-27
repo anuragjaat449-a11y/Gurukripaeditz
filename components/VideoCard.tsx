@@ -7,6 +7,7 @@ interface VideoCardProps {
   videoNumber: number;
   isPlaying: boolean;
   onPlay: (videoId: string) => void;
+  titlePrefix: string;
 }
 
 // Helper function to convert a Google Drive 'view' URL to a direct download URL.
@@ -22,32 +23,52 @@ const getDirectDownloadUrl = (url: string | undefined): string | undefined => {
 };
 
 
-const VideoCard: React.FC<VideoCardProps> = ({ video, videoNumber, isPlaying, onPlay }) => {
+const VideoCard: React.FC<VideoCardProps> = ({ video, videoNumber, isPlaying, onPlay, titlePrefix }) => {
   const { t } = useLanguage();
+  const hasThumbnail = video.type === 'youtube' || video.type === 'gdrive';
+
   const [isVideoInvalid, setIsVideoInvalid] = useState(false);
   const [isImageLoaded, setIsImageLoaded] = useState(false);
   const [downloadState, setDownloadState] = useState<'idle' | 'starting' | 'complete'>('idle');
-  const [thumbnailUrl, setThumbnailUrl] = useState(`https://img.youtube.com/vi/${video.id}/hq720.jpg`);
+  const [thumbnailUrl, setThumbnailUrl] = useState(() => {
+    if (video.type === 'youtube') {
+      return `https://img.youtube.com/vi/${video.id}/hq720.jpg`;
+    }
+    if (video.type === 'gdrive') {
+      return `https://drive.google.com/thumbnail?id=${video.id}&sz=w640`;
+    }
+    return '';
+  });
 
   const directDownloadUrl = getDirectDownloadUrl(video.downloadUrl);
 
   const handleImageError = () => {
-    if (thumbnailUrl.includes('hq720.jpg')) {
-      setThumbnailUrl(`https://img.youtube.com/vi/${video.id}/sddefault.jpg`);
-    } else if (thumbnailUrl.includes('sddefault.jpg')) {
-      setThumbnailUrl(`https://img.youtube.com/vi/${video.id}/hqdefault.jpg`);
+    if (video.type === 'youtube') {
+        if (thumbnailUrl.includes('hq720.jpg')) {
+        setThumbnailUrl(`https://img.youtube.com/vi/${video.id}/sddefault.jpg`);
+        } else if (thumbnailUrl.includes('sddefault.jpg')) {
+        setThumbnailUrl(`https://img.youtube.com/vi/${video.id}/hqdefault.jpg`);
+        } else {
+        setIsVideoInvalid(true);
+        }
     } else {
-      setIsVideoInvalid(true);
+        // For GDrive or other types, if thumbnail fails, mark as invalid
+        setIsVideoInvalid(true);
     }
   };
   
   const handleImageLoad = (event: React.SyntheticEvent<HTMLImageElement, Event>) => {
-    // YouTube's default "unavailable" thumbnail has a natural width of 120px.
-    // A valid high-quality thumbnail will be much larger. We use < 200 to be safe.
-    if (event.currentTarget.naturalWidth < 200) {
-        setIsVideoInvalid(true);
+    if (video.type === 'youtube') {
+        // YouTube's default "unavailable" thumbnail has a natural width of 120px.
+        // A valid high-quality thumbnail will be much larger. We use < 200 to be safe.
+        if (event.currentTarget.naturalWidth < 200) {
+            setIsVideoInvalid(true);
+        } else {
+            setIsImageLoaded(true);
+        }
     } else {
-        setIsImageLoaded(true);
+      // For GDrive, we assume if it loads, it's valid. The onError will catch failures.
+      setIsImageLoaded(true);
     }
   };
 
@@ -72,33 +93,46 @@ const VideoCard: React.FC<VideoCardProps> = ({ video, videoNumber, isPlaying, on
   };
 
   const isDownloadButtonDisabled = downloadState !== 'idle';
+  const fullTitle = `${titlePrefix} #${videoNumber}`;
+  const downloadFilename = `GuruKripa_${titlePrefix.replace(/\s/g, '')}_${videoNumber}.mp4`;
   
+  // Dynamic translations
+  const playerTitle = t.youTubePlayerTitle.replace('{titlePrefix}', titlePrefix).replace('{videoNumber}', String(videoNumber));
+  const unavailableAria = t.videoUnavailableAria.replace('{titlePrefix}', titlePrefix).replace('{videoNumber}', String(videoNumber));
+  const playAria = t.playVideoAria.replace('{titlePrefix}', titlePrefix).replace('{videoNumber}', String(videoNumber));
+  const thumbnailAlt = t.thumbnailAlt.replace('{titlePrefix}', titlePrefix).replace('{videoNumber}', String(videoNumber));
+
   return (
     <div className="glass-card rounded-lg overflow-hidden group h-full flex flex-col">
       <div className="p-2">
         <div className="relative w-full overflow-hidden rounded-md border-2 border-brand-maroon/20 dark:border-brand-gold/30 group-hover:border-brand-maroon/80 dark:group-hover:border-brand-gold/80 transition-colors video-responsive">
           {isPlaying && !isVideoInvalid ? (
-            <iframe
-                style={{
-                  position: 'absolute',
-                  // This combination of styles achieves two things:
-                  // 1. It scales the 16:9 player to fill the 9:16 container without pillarboxing (black bars on the sides).
-                  //    This is done by making the iframe very wide to compensate for the aspect ratio difference and then centering it,
-                  //    which clips the unused horizontal space.
-                  // 2. It hides the YouTube title bar by making the iframe slightly taller than its container and shifting it up.
-                  width: '332%', // Approx. (16/9)^2 * 105% height percentage
-                  height: '105%',
-                  top: '-5%', // Shift up to hide the title bar
-                  left: '50%',
-                  transform: 'translateX(-50%)',
-                }}
-                src={`https://www.youtube.com/embed/${video.id}?autoplay=1&rel=0&modestbranding=1&iv_load_policy=3&playsinline=1&controls=1&fs=0`}
-                title={t.youTubePlayerTitle.replace('{videoNumber}', String(videoNumber))}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope;"
-              ></iframe>
+            video.type === 'youtube' ? (
+                <iframe
+                    style={{
+                      position: 'absolute',
+                      width: '332%',
+                      height: '105%',
+                      top: '-5%',
+                      left: '50%',
+                      transform: 'translateX(-50%)',
+                    }}
+                    src={`https://www.youtube.com/embed/${video.id}?autoplay=1&rel=0&modestbranding=1&iv_load_policy=3&playsinline=1&controls=1&fs=0`}
+                    title={playerTitle}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope;"
+                ></iframe>
+            ) : (
+                <iframe
+                    className="absolute top-0 left-0 w-full h-full border-0"
+                    src={`https://drive.google.com/file/d/${video.id}/preview`}
+                    title={`${titlePrefix} Player`}
+                    allow="autoplay; encrypted-media;"
+                    allowFullScreen
+                ></iframe>
+            )
           ) : (
             <a
-              href={`https://www.youtube.com/watch?v=${video.id}`}
+              href={video.type === 'youtube' ? `https://www.youtube.com/watch?v=${video.id}` : '#'}
               onClick={(e) => {
                 if (isVideoInvalid) {
                   e.preventDefault();
@@ -110,7 +144,7 @@ const VideoCard: React.FC<VideoCardProps> = ({ video, videoNumber, isPlaying, on
               target="_blank"
               rel="noopener noreferrer"
               className={`thumbnail-link absolute inset-0 w-full h-full text-left ${!isVideoInvalid ? 'cursor-pointer' : 'cursor-not-allowed'}`}
-              aria-label={isVideoInvalid ? t.videoUnavailableAria.replace('{videoNumber}', String(videoNumber)) : t.playVideoAria.replace('{videoNumber}', String(videoNumber))}
+              aria-label={isVideoInvalid ? unavailableAria : playAria}
             >
               {isVideoInvalid ? (
                  <div className="w-full h-full bg-black/5 dark:bg-black/30 flex flex-col items-center justify-center text-center p-4 text-brand-maroon/70 dark:text-brand-gold/70">
@@ -119,7 +153,7 @@ const VideoCard: React.FC<VideoCardProps> = ({ video, videoNumber, isPlaying, on
                   </svg>
                   <span className="mt-2 text-sm font-semibold">{t.videoUnavailable}</span>
                 </div>
-              ) : (
+              ) : hasThumbnail ? (
                 <>
                   {/* Skeleton Loader - visible until image is loaded */}
                   {!isImageLoaded && (
@@ -128,7 +162,7 @@ const VideoCard: React.FC<VideoCardProps> = ({ video, videoNumber, isPlaying, on
                   <img 
                     className={`relative w-full h-full object-cover transition-opacity duration-500 group-hover:scale-110 ${isImageLoaded ? 'opacity-100' : 'opacity-0'}`} 
                     src={thumbnailUrl} 
-                    alt={t.thumbnailAlt.replace('{videoNumber}', String(videoNumber))}
+                    alt={thumbnailAlt}
                     onLoad={handleImageLoad}
                     onError={handleImageError}
                     loading="lazy"
@@ -142,6 +176,13 @@ const VideoCard: React.FC<VideoCardProps> = ({ video, videoNumber, isPlaying, on
                     </div>
                   )}
                 </>
+              ) : (
+                <div className="absolute inset-0 bg-black/5 dark:bg-black/20 group-hover:bg-black/30 flex items-center justify-center transition-colors">
+                    <div className="absolute inset-0 bg-gradient-to-t from-brand-cream/50 via-transparent to-transparent dark:from-black/50"></div>
+                    <svg className="w-16 h-16 text-brand-maroon/50 dark:text-brand-gold/70 group-hover:text-brand-maroon/80 dark:group-hover:text-brand-gold drop-shadow-lg transition-colors" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
+                    </svg>
+                </div>
               )}
             </a>
           )}
@@ -149,13 +190,13 @@ const VideoCard: React.FC<VideoCardProps> = ({ video, videoNumber, isPlaying, on
       </div>
       <div className="p-4 pt-2 text-center flex-grow flex flex-col justify-between">
         <h3 className={`font-semibold text-brand-maroon dark:text-brand-gold mb-2 text-xl transition-opacity duration-300 ${isPlaying ? 'opacity-0' : 'opacity-100'}`}>
-          {`${t.videoTitle}${videoNumber}`}
+          {fullTitle}
         </h3>
         <div className="flex justify-center items-center">
           {directDownloadUrl ? (
             <a 
               href={directDownloadUrl}
-              download={`GuruKripaShortz_Video_${videoNumber}.mp4`}
+              download={downloadFilename}
               onClick={handleDownloadClick}
               className={`w-full inline-flex items-center justify-center py-2 px-4 rounded-md text-sm font-bold transition-colors ${isDownloadButtonDisabled ? 'btn-disabled' : 'btn-premium'}`}
               aria-disabled={isDownloadButtonDisabled}
