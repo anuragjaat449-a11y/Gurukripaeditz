@@ -52,43 +52,31 @@ const VideoCard: React.FC<VideoCardProps> = ({ video, videoNumber, isPlaying, on
         setIsVideoInvalid(true);
         }
     } else {
-        // For GDrive or other types, if thumbnail fails, mark as invalid
         setIsVideoInvalid(true);
     }
   };
   
   const handleImageLoad = (event: React.SyntheticEvent<HTMLImageElement, Event>) => {
     if (video.type === 'youtube') {
-        // YouTube's default "unavailable" thumbnail has a natural width of 120px.
-        // A valid high-quality thumbnail will be much larger. We use < 200 to be safe.
         if (event.currentTarget.naturalWidth < 200) {
             setIsVideoInvalid(true);
         } else {
             setIsImageLoaded(true);
         }
     } else {
-      // For GDrive, we assume if it loads, it's valid. The onError will catch failures.
       setIsImageLoaded(true);
     }
   };
 
   const handleDownloadClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    // Prevent multiple clicks or following the link while in a non-idle state
     if (downloadState !== 'idle') {
       e.preventDefault();
       return;
     }
-
     setDownloadState('starting');
-
-    // Stage 1: Show "Starting..." for 1.5 seconds
     setTimeout(() => {
       setDownloadState('complete');
-      
-      // Stage 2: Show "Started!" for 2.5 seconds before resetting
-      setTimeout(() => {
-        setDownloadState('idle');
-      }, 2500);
+      setTimeout(() => setDownloadState('idle'), 2500);
     }, 1500);
   };
 
@@ -96,27 +84,19 @@ const VideoCard: React.FC<VideoCardProps> = ({ video, videoNumber, isPlaying, on
   const fullTitle = `${titlePrefix} #${videoNumber}`;
   const downloadFilename = `GuruKripa_${titlePrefix.replace(/\s/g, '')}_${videoNumber}.mp4`;
   
-  // Dynamic translations
   const playerTitle = t.youTubePlayerTitle.replace('{titlePrefix}', titlePrefix).replace('{videoNumber}', String(videoNumber));
   const unavailableAria = t.videoUnavailableAria.replace('{titlePrefix}', titlePrefix).replace('{videoNumber}', String(videoNumber));
   const playAria = t.playVideoAria.replace('{titlePrefix}', titlePrefix).replace('{videoNumber}', String(videoNumber));
   const thumbnailAlt = t.thumbnailAlt.replace('{titlePrefix}', titlePrefix).replace('{videoNumber}', String(videoNumber));
 
   return (
-    <div className="glass-card rounded-lg overflow-hidden group h-full flex flex-col">
-      <div className="p-2">
+    <div className="glass-card rounded-lg overflow-hidden group h-full flex flex-col relative">
+      <div className="p-2 pb-0" style={{ transform: 'translateZ(20px)' }}>
         <div className="relative w-full overflow-hidden rounded-md border-2 border-brand-maroon/20 dark:border-brand-gold/30 group-hover:border-brand-maroon/80 dark:group-hover:border-brand-gold/80 transition-colors video-responsive">
           {isPlaying && !isVideoInvalid ? (
             video.type === 'youtube' ? (
                 <iframe
-                    style={{
-                      position: 'absolute',
-                      width: '332%',
-                      height: '105%',
-                      top: '-5%',
-                      left: '50%',
-                      transform: 'translateX(-50%)',
-                    }}
+                    className="youtube-short-iframe-hack"
                     src={`https://www.youtube.com/embed/${video.id}?autoplay=1&rel=0&modestbranding=1&iv_load_policy=3&playsinline=1&controls=1&fs=0`}
                     title={playerTitle}
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope;"
@@ -132,18 +112,9 @@ const VideoCard: React.FC<VideoCardProps> = ({ video, videoNumber, isPlaying, on
             )
           ) : (
             <a
-              href={video.type === 'youtube' ? `https://www.youtube.com/watch?v=${video.id}` : '#'}
-              onClick={(e) => {
-                if (isVideoInvalid) {
-                  e.preventDefault();
-                  return;
-                }
-                e.preventDefault();
-                onPlay(video.id);
-              }}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`thumbnail-link absolute inset-0 w-full h-full text-left ${!isVideoInvalid ? 'cursor-pointer' : 'cursor-not-allowed'}`}
+              href="#"
+              onClick={(e) => { e.preventDefault(); if (!isVideoInvalid) onPlay(video.id); }}
+              className={`absolute inset-0 w-full h-full text-left ${!isVideoInvalid ? 'cursor-pointer' : 'cursor-not-allowed'}`}
               aria-label={isVideoInvalid ? unavailableAria : playAria}
             >
               {isVideoInvalid ? (
@@ -155,12 +126,9 @@ const VideoCard: React.FC<VideoCardProps> = ({ video, videoNumber, isPlaying, on
                 </div>
               ) : hasThumbnail ? (
                 <>
-                  {/* Skeleton Loader - visible until image is loaded */}
-                  {!isImageLoaded && (
-                      <div className="absolute inset-0 bg-gray-300 dark:bg-gray-700 animate-pulse" />
-                  )}
+                  {!isImageLoaded && <div className="absolute inset-0 bg-gray-300 dark:bg-gray-700 animate-pulse" />}
                   <img 
-                    className={`relative w-full h-full object-cover transition-opacity duration-500 group-hover:scale-110 ${isImageLoaded ? 'opacity-100' : 'opacity-0'}`} 
+                    className={`relative w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 ${isImageLoaded ? 'opacity-100' : 'opacity-0'}`} 
                     src={thumbnailUrl} 
                     alt={thumbnailAlt}
                     onLoad={handleImageLoad}
@@ -169,10 +137,13 @@ const VideoCard: React.FC<VideoCardProps> = ({ video, videoNumber, isPlaying, on
                     decoding="async"
                   />
                   {isImageLoaded && (
-                    <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 flex items-center justify-center transition-opacity duration-300 opacity-60 group-hover:opacity-80">
-                        <svg className="w-16 h-16 text-white" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
-                        </svg>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end items-center text-center p-4">
+                        <div className="w-16 h-16 mb-2 bg-white/30 backdrop-blur-sm rounded-full flex items-center justify-center border-2 border-white/50 group-hover:scale-110 transition-transform">
+                            <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
+                            </svg>
+                        </div>
+                        <p className="text-white font-semibold text-lg drop-shadow-md">{t.watch}</p>
                     </div>
                   )}
                 </>
@@ -188,48 +159,39 @@ const VideoCard: React.FC<VideoCardProps> = ({ video, videoNumber, isPlaying, on
           )}
         </div>
       </div>
-      <div className="p-4 pt-2 text-center flex-grow flex flex-col justify-between">
+      <div className="p-4 pt-2 text-center flex-grow flex flex-col justify-between" style={{ transform: 'translateZ(50px)' }}>
         <h3 className={`font-semibold text-brand-maroon dark:text-brand-gold mb-2 text-xl transition-opacity duration-300 ${isPlaying ? 'opacity-0' : 'opacity-100'}`}>
           {fullTitle}
         </h3>
-        <div className="flex justify-center items-center">
+        <div className={`flex justify-center items-center transition-opacity duration-300 ${isPlaying ? 'opacity-0' : 'opacity-100'}`}>
           {directDownloadUrl ? (
             <a 
               href={directDownloadUrl}
               download={downloadFilename}
               onClick={handleDownloadClick}
-              className={`w-full inline-flex items-center justify-center py-2 px-4 rounded-md text-sm font-bold transition-colors ${isDownloadButtonDisabled ? 'btn-disabled' : 'btn-premium'}`}
+              className={`w-full inline-flex items-center justify-center py-2 px-4 rounded-md text-sm font-bold ${isDownloadButtonDisabled ? 'btn-disabled' : 'btn-premium'}`}
               aria-disabled={isDownloadButtonDisabled}
             >
               {downloadState === 'starting' ? (
                 <>
-                  <svg className="animate-spin mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                  </svg>
+                  <svg className="animate-spin mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
                   <span>{t.downloadStarting}</span>
                 </>
               ) : downloadState === 'complete' ? (
                 <>
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                  </svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
                   <span>{t.downloadStarted}</span>
                 </>
               ) : (
                 <>
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
-                  </svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" /></svg>
                   <span>{t.download}</span>
                 </>
               )}
             </a>
           ) : (
              <button className="w-full btn-disabled inline-flex items-center justify-center py-2 px-4 rounded-md text-sm font-bold" disabled>
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
-                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" /></svg>
                 <span>{t.notAvailable}</span>
              </button>
           )}

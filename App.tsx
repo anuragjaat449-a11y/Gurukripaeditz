@@ -1,11 +1,14 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { VIDEOS, SATSANG_CLIPS } from './constants';
+import { VIDEOS, SATSANG_CLIPS, BOOKS } from './constants';
 import VideoCard from './components/VideoCard';
+import BookCard from './components/BookCard';
 import IntroAnimation from './components/IntroAnimation';
 import ThemeToggle from './components/ThemeToggle';
 import SurveyModal, { SurveyData } from './components/SurveyModal';
 import RatingModal from './components/RatingModal';
 import { useLanguage } from './contexts/LanguageContext';
+
+type Tab = 'satsang' | 'books' | 'videos';
 
 // --- Main App Component ---
 const App: React.FC = () => {
@@ -25,6 +28,7 @@ const App: React.FC = () => {
   const [isRatingModalOpen, setIsRatingModalOpen] = useState(false);
   const [ratingModalPosition, setRatingModalPosition] = useState<{ top: number; left: number } | null>(null);
   const [playingVideoId, setPlayingVideoId] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<Tab>('satsang');
 
   const [theme, setTheme] = useState(() => {
     if (typeof window !== 'undefined') {
@@ -62,6 +66,25 @@ const App: React.FC = () => {
     root.classList.add(theme);
     localStorage.setItem('theme', theme);
   }, [theme]);
+
+  // Add scroll listener for header effects
+  useEffect(() => {
+    const handleScroll = () => {
+      const header = document.querySelector('header');
+      if (header) {
+        if (window.scrollY > 20) {
+          header.classList.add('scrolled');
+        } else {
+          header.classList.remove('scrolled');
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   const toggleTheme = () => {
     setTheme(prevTheme => (prevTheme === 'dark' ? 'light' : 'dark'));
@@ -102,12 +125,9 @@ const App: React.FC = () => {
         tryPlayingMusic();
       };
   
-      // Use { once: true } to automatically remove the listener after it fires.
       window.addEventListener('click', handleFirstInteraction, { once: true });
       window.addEventListener('keydown', handleFirstInteraction, { once: true });
   
-      // The cleanup is implicitly handled by `once: true`, but it's good practice
-      // in case the component unmounts before interaction.
       return () => {
         window.removeEventListener('click', handleFirstInteraction);
         window.removeEventListener('keydown', handleFirstInteraction);
@@ -153,7 +173,7 @@ const App: React.FC = () => {
   };
 
   const handlePlayVideo = (videoId: string) => {
-    setPlayingVideoId(videoId);
+    setPlayingVideoId(prevId => (prevId === videoId ? null : videoId));
   };
 
   if (showIntro) {
@@ -177,7 +197,6 @@ const App: React.FC = () => {
         />
       )}
       
-      
       <RatingModal
         isOpen={isRatingModalOpen}
         onClose={() => {
@@ -188,7 +207,6 @@ const App: React.FC = () => {
         count={averageRatingInfo.count}
         position={ratingModalPosition}
       />
-      
       
       {!hasUserRated && (
         <button
@@ -215,21 +233,15 @@ const App: React.FC = () => {
         <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
       </div>
       
-      <header className="header-bg py-8 sticky top-0 z-10">
-        <div className="header-flourish left text-brand-maroon dark:text-brand-gold">
-            <svg viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M50.7,76.8c-2.5-2.8-5.5-4.8-8.8-6.1C33.6,67.2,26,62,20.2,55.1c-4.2-5-6.5-11.2-6.5-17.8c0-5.4,1.4-10.4,4-14.7 C21.4,17.9,26.4,14,32.1,11.5c2.6-1.1,5.3-1.8,8.2-1.8c2.9,0,5.7,0.6,8.2,1.8c5.8,2.4,10.7,6.3,14.4,11.1 c2.6,3.4,4,7.4,4,11.7c0,3.3-0.7,6.4-2.1,9.2c-2.1,4.2-5.4,7.5-9.4,9.6c-4.4,2.3-9.3,3.4-14.4,3.4c-2.4,0-4.8-0.3-7-0.8 c-4-1-7.6-2.9-10.7-5.5" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeMiterlimit="10"></path></svg>
-        </div>
-        <div className="header-flourish right text-brand-maroon dark:text-brand-gold">
-            <svg viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M50.7,76.8c-2.5-2.8-5.5-4.8-8.8-6.1C33.6,67.2,26,62,20.2,55.1c-4.2-5-6.5-11.2-6.5-17.8c0-5.4,1.4-10.4,4-14.7 C21.4,17.9,26.4,14,32.1,11.5c2.6-1.1,5.3-1.8,8.2-1.8c2.9,0,5.7,0.6,8.2,1.8c5.8,2.4,10.7,6.3,14.4,11.1 c2.6,3.4,4,7.4,4,11.7c0,3.3-0.7,6.4-2.1,9.2c-2.1,4.2-5.4,7.5-9.4,9.6c-4.4,2.3-9.3,3.4-14.4,3.4c-2.4,0-4.8-0.3-7-0.8 c-4-1-7.6-2.9-10.7-5.5" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeMiterlimit="10"></path></svg>
-        </div>
+      <header className="py-8 sticky top-0 z-10">
         <div className="container mx-auto text-center px-4 relative">
-          <h1 className="text-4xl md:text-6xl tracking-widest text-brand-maroon dark:text-brand-gold title-decorative">{t.headerTitle}</h1>
+          <h1 className="text-4xl md:text-6xl tracking-widest text-brand-maroon dark:text-brand-gold title-decorative transition-font-size duration-400">{t.headerTitle}</h1>
           <p className="text-lg mt-2 tracking-wider text-black/60 dark:text-white/80">{t.headerSubtitle}</p>
            
            <div className="h-16 flex items-center justify-center mt-2">
               <div className="relative w-full h-10 flex items-center justify-center">
                   <p 
-                  className={`transition-opacity duration-500 ease-in-out text-sm md:text-base italic text-black/70 dark:text-white/70 absolute inset-0 ${isQuoteVisible ? 'opacity-100' : 'opacity-0'}`}
+                  className={`transition-all duration-500 ease-in-out text-sm md:text-base italic text-black/70 dark:text-white/70 absolute inset-0 ${isQuoteVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2'}`}
                   >
                   "{QUOTES[currentQuoteIndex].text}"
                   <br/>
@@ -241,70 +253,102 @@ const App: React.FC = () => {
       </header>
 
       <main>
-        <section className="my-16 mx-auto max-w-7xl p-5">
-          <h2 className="text-4xl font-serif text-brand-maroon dark:text-brand-gold mb-12 text-center">{t.satsangSectionTitle}</h2>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
-            {SATSANG_CLIPS.map((video, index) => (
-              <div 
-                className="card-container" 
-                key={video.id}
-                style={{ animation: `fade-in-up 0.5s ${index * 0.05}s ease-out both` }}
-              >
-                <VideoCard 
-                  video={video} 
-                  videoNumber={index + 1}
-                  isPlaying={playingVideoId === video.id}
-                  onPlay={handlePlayVideo}
-                  titlePrefix={t.clipTitlePrefix}
-                />
-              </div>
-            ))}
-          </div>
-        </section>
+        <nav className="my-8 flex justify-center items-center gap-2 md:gap-4 p-4">
+            <div className="flex items-center bg-brand-maroon/5 dark:bg-brand-gold/5 p-1 rounded-full">
+                <button onClick={() => setActiveTab('satsang')} className={`tab-button ${activeTab === 'satsang' ? 'tab-active' : ''}`}>
+                    {t.satsangSectionTitle}
+                </button>
+                <button onClick={() => setActiveTab('books')} className={`tab-button ${activeTab === 'books' ? 'tab-active' : ''}`}>
+                    {t.booksSectionTitle}
+                </button>
+                <button onClick={() => setActiveTab('videos')} className={`tab-button ${activeTab === 'videos' ? 'tab-active' : ''}`}>
+                    {t.sectionTitle}
+                </button>
+            </div>
+        </nav>
 
-        <section className="my-16 mx-auto max-w-7xl p-5">
-          <h2 className="text-4xl font-serif text-brand-maroon dark:text-brand-gold mb-4 text-center">{t.sectionTitle}</h2>
-          <div className="flex justify-center items-center mb-12 w-full">
-            <div className="w-24 h-px bg-gradient-to-r from-transparent via-brand-maroon/50 to-brand-maroon/50 dark:via-brand-gold/50 dark:to-brand-gold/50"></div>
-            <button
-              onClick={handleOpenRatingModal}
-              title={t.viewRating}
-              aria-label={t.viewRating}
-              className="mx-4 group"
-            >
-              <svg 
-                className="w-20 h-20 text-brand-maroon/80 dark:text-brand-gold/80 transition-transform duration-300 group-hover:scale-110 third-eye-glow-effect" 
-                viewBox="0 0 100 100" 
-                fill="none" 
-                xmlns="http://www.w3.org/2000/svg"
-                aria-hidden="true"
-              >
-                  <path d="M50 20 C 30 40, 30 60, 50 80 C 70 60, 70 40, 50 20 Z" stroke="currentColor" strokeWidth="3.5" fill="none" />
-                  <circle cx="50" cy="50" r="10" fill="currentColor" />
-              </svg>
-            </button>
-            <div className="w-24 h-px bg-gradient-to-l from-transparent via-brand-maroon/50 to-brand-maroon/50 dark:via-brand-gold/50 dark:to-brand-gold/50"></div>
-          </div>
-          
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
-            {VIDEOS.map((video, index) => (
-              <div 
-                className="card-container" 
-                key={video.id}
-                style={{ animation: `fade-in-up 0.5s ${index * 0.05}s ease-out both` }}
-              >
-                <VideoCard 
-                  video={video} 
-                  videoNumber={index + 1}
-                  isPlaying={playingVideoId === video.id}
-                  onPlay={handlePlayVideo}
-                  titlePrefix={t.videoTitlePrefix}
-                />
+        <div key={activeTab} style={{ animation: 'fade-in-up 0.6s ease-out both' }}>
+          {activeTab === 'satsang' && (
+            <section className="my-12 mx-auto max-w-7xl p-5">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8">
+                {SATSANG_CLIPS.map((video, index) => (
+                  <div 
+                    className="card-container" 
+                    key={`${video.id}-${index}`}
+                    style={{ animation: `fade-in-up 0.5s ${index * 0.05}s ease-out both` }}
+                  >
+                    <VideoCard 
+                      video={video} 
+                      videoNumber={index + 1}
+                      isPlaying={playingVideoId === video.id}
+                      onPlay={handlePlayVideo}
+                      titlePrefix={t.clipTitlePrefix}
+                    />
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </section>
+            </section>
+          )}
 
+          {activeTab === 'books' && (
+            <section className="my-12 mx-auto max-w-7xl p-5">
+              <div className="flex justify-center gap-8 flex-wrap">
+                {BOOKS.map((book, index) => (
+                  <div
+                    className="card-container w-full max-w-xs"
+                    key={book.id}
+                    style={{ animation: `fade-in-up 0.5s ${index * 0.05}s ease-out both` }}
+                  >
+                    <BookCard book={book} />
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {activeTab === 'videos' && (
+            <section className="my-12 mx-auto max-w-7xl p-5">
+              <div className="flex justify-center items-center mb-12 w-full">
+                <div className="w-24 h-px bg-gradient-to-r from-transparent via-brand-maroon/50 to-brand-maroon/50 dark:via-brand-gold/50 dark:to-brand-gold/50"></div>
+                <button
+                  onClick={handleOpenRatingModal}
+                  title={t.viewRating}
+                  aria-label={t.viewRating}
+                  className="mx-4 group"
+                >
+                  <svg 
+                    className="w-24 h-24 text-brand-maroon/80 dark:text-brand-gold/80 transition-transform duration-300 group-hover:scale-110"
+                    viewBox="0 0 24 24" 
+                    fill="currentColor" 
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                  >
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-5.5-2.5l1.5-3.5 1.5 3.5h-3zm4-1.5l1.5-3.5 1.5 3.5h-3zm4.5 1.5l1.5-3.5 1.5 3.5h-3zM12 5c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+                  </svg>
+                </button>
+                <div className="w-24 h-px bg-gradient-to-l from-transparent via-brand-maroon/50 to-brand-maroon/50 dark:via-brand-gold/50 dark:to-brand-gold/50"></div>
+              </div>
+              
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8">
+                {VIDEOS.map((video, index) => (
+                  <div 
+                    className="card-container" 
+                    key={`${video.id}-${index}`}
+                    style={{ animation: `fade-in-up 0.5s ${index * 0.05}s ease-out both` }}
+                  >
+                    <VideoCard 
+                      video={video} 
+                      videoNumber={index + 1}
+                      isPlaying={playingVideoId === video.id}
+                      onPlay={handlePlayVideo}
+                      titlePrefix={t.videoTitlePrefix}
+                    />
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+        </div>
       </main>
     </div>
   );

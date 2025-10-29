@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import StarRatingInput from './StarRatingInput';
 import { useLanguage } from '../contexts/LanguageContext';
 
@@ -19,6 +19,14 @@ const SurveyModal: React.FC<SurveyModalProps> = ({ isOpen, onClose, onSubmit }) 
   const [comments, setComments] = useState('');
   const [showThanks, setShowThanks] = useState(false);
   const { t } = useLanguage();
+  const cancelButtonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (isOpen && !showThanks) {
+        // Focus the cancel button when the modal opens for better accessibility.
+        cancelButtonRef.current?.focus();
+    }
+  }, [isOpen, showThanks]);
 
   const handleClose = () => {
     setIsClosing(true);
@@ -40,20 +48,18 @@ const SurveyModal: React.FC<SurveyModalProps> = ({ isOpen, onClose, onSubmit }) 
   if (!isOpen) return null;
 
   return (
-    // This div acts as an invisible full-screen click-away listener.
     <div
       className="fixed inset-0 z-40"
       onClick={handleClose}
       aria-modal="true"
       role="dialog"
     >
-      {/* This is the actual popover content. */}
       <div
         className="fixed bottom-24 right-6 w-full max-w-sm z-50"
-        onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside
+        onClick={(e) => e.stopPropagation()} 
         style={{ animation: isClosing ? 'fade-out-down 0.3s ease-in forwards' : 'fade-in-up 0.3s ease-out forwards' }}
       >
-        <div className="bg-brand-cream dark:bg-gray-900 border-2 border-brand-maroon/40 dark:border-brand-gold/40 rounded-lg p-6 text-center shadow-2xl dark:shadow-black/50">
+        <div className="glass-card rounded-lg p-6 text-center shadow-2xl dark:shadow-black/50">
             {showThanks ? (
                 <div className="flex flex-col items-center justify-center h-56">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 text-brand-maroon dark:text-brand-gold" viewBox="0 0 20 20" fill="currentColor">
@@ -75,11 +81,11 @@ const SurveyModal: React.FC<SurveyModalProps> = ({ isOpen, onClose, onSubmit }) 
                         value={comments}
                         onChange={(e) => setComments(e.target.value)}
                         placeholder={t.surveyPlaceholder}
-                        className="w-full h-24 p-3 rounded-md bg-white dark:bg-gray-800 border border-brand-maroon/30 dark:border-brand-gold/40 focus:ring-2 focus:ring-brand-gold focus:outline-none transition"
+                        className="w-full h-24 p-3 rounded-md bg-white/50 dark:bg-gray-800/50 border border-brand-maroon/30 dark:border-brand-gold/40 focus:ring-2 focus:ring-brand-gold focus:outline-none transition"
                     />
 
                     <div className="mt-4 flex justify-center space-x-4">
-                        <button type="button" onClick={handleClose} className="py-2 px-8 rounded-md text-sm font-bold btn-premium-secondary">
+                        <button ref={cancelButtonRef} type="button" onClick={handleClose} className="py-2 px-8 rounded-md text-sm font-bold btn-premium-secondary">
                         {t.cancel}
                         </button>
                         <button

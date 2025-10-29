@@ -2,9 +2,11 @@ export const translations = {
   en: {
     // App.tsx
     headerTitle: "GURU KRIPA SHORTZ",
-    headerSubtitle: "VIDEOS",
-    sectionTitle: "Guru Kripa Shortz",
+    headerSubtitle: "Inspired by Sant Rajinder Singh Ji Maharaj",
+    sectionTitle: "Shortz",
     satsangSectionTitle: "Satsang Clips",
+    booksSectionTitle: "Spiritual Books",
+    animatedBooksSectionTitle: "Animated Spiritual Books",
     feedbackButton: "Share your feedback",
     viewRating: "View community rating for this app",
     toggleLanguage: "Toggle language",
@@ -34,6 +36,11 @@ export const translations = {
     videoUnavailableAria: "{titlePrefix} #{videoNumber} is unavailable",
     notAvailable: "N/A",
 
+    // BookCard.tsx
+    readPdf: "Read PDF",
+    listenAudio: "Listen Audio",
+    watchVideo: "Watch Video",
+
     // IntroAnimation.tsx
     skip: "SKIP",
     introQuote: { text: '"God is love."', author: "Sant Darshan Singh Ji Maharaj" },
@@ -54,9 +61,11 @@ export const translations = {
   hi: {
     // App.tsx
     headerTitle: "गुरु कृपा शॉर्ट्स",
-    headerSubtitle: "वीडियो",
-    sectionTitle: "गुरु कृपा शॉर्ट्स",
+    headerSubtitle: "संत राजिंदर सिंह जी महाराज से प्रेरित",
+    sectionTitle: "शॉर्ट्स",
     satsangSectionTitle: "सत्संग क्लिप्स",
+    booksSectionTitle: "आध्यात्मिक पुस्तकें",
+    animatedBooksSectionTitle: "एनिमेटेड आध्यात्मिक पुस्तकें",
     feedbackButton: "अपनी प्रतिक्रिया साझा करें",
     viewRating: "इस ऐप के लिए सामुदायिक रेटिंग देखें",
     toggleLanguage: "भाषा बदलें",
@@ -85,6 +94,11 @@ export const translations = {
     watchOnYoutube: "यूट्यूब पर {titlePrefix} #{videoNumber} देखें",
     videoUnavailableAria: "{titlePrefix} #{videoNumber} अनुपलब्ध है",
     notAvailable: "लागू नहीं",
+
+    // BookCard.tsx
+    readPdf: "पीडीएफ पढ़ें",
+    listenAudio: "ऑडियो सुनें",
+    watchVideo: "वीडियो देखें",
 
     // IntroAnimation.tsx
     skip: "छोड़ें",

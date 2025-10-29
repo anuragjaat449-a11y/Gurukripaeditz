@@ -19,13 +19,13 @@ const IntroAnimation: React.FC<IntroAnimationProps> = ({ onFinish }) => {
 
   useEffect(() => {
     const timers: number[] = [];
-    // Updated timings for a more cinematic feel
     timers.push(window.setTimeout(() => setStep(1), 5000)); // Show final title
     timers.push(window.setTimeout(handleFinish, 7500)); // Auto-finish
 
     return () => {
       timers.forEach(clearTimeout);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const containerStyle: React.CSSProperties = {
@@ -37,7 +37,6 @@ const IntroAnimation: React.FC<IntroAnimationProps> = ({ onFinish }) => {
   };
 
   const textStyle: React.CSSProperties = {
-      // Start fade-in slightly after the logo begins to appear
       animation: 'intro-text-fade 4.5s ease-in-out forwards',
       animationDelay: '0.5s'
   };
@@ -57,21 +56,18 @@ const IntroAnimation: React.FC<IntroAnimationProps> = ({ onFinish }) => {
         style={containerStyle}
         className="fixed inset-0 bg-black z-50 flex flex-col items-center justify-center text-center p-4 overflow-hidden"
     >
-      {/* Enhanced animated background */}
-      <div style={backgroundStyle} className="absolute inset-[-5%]">
+      <div style={backgroundStyle} className="absolute inset-[-5%] dark-mode-bg">
           <div className="stars"></div>
-          <div className="nebula" style={{opacity: 0.8}}></div>
           <div className="twinkling"></div>
-          <div className="clouds"></div>
+          <div className="clouds" style={{opacity: 0.8}}></div>
       </div>
       
       <div className="relative w-full h-48 flex items-center justify-center">
         {step < 1 && (
             <div style={logoAndQuoteContainerStyle} className="absolute inset-0 flex flex-col items-center justify-center">
-                {/* Divine Light Effect */}
                 <div 
                   className="absolute w-64 h-64 bg-brand-gold rounded-full blur-3xl"
-                  style={{ animation: 'divine-light-pulse 5s ease-in-out infinite' }}
+                  style={{ animation: 'divine-light-pulse 6s ease-in-out infinite' }}
                 />
 
                 <svg
@@ -83,20 +79,13 @@ const IntroAnimation: React.FC<IntroAnimationProps> = ({ onFinish }) => {
                   <path
                     d="M50 70 C 55 60, 50 45, 50 45 C 50 45, 45 60, 50 70Z"
                     fill="currentColor"
-                    style={{
-                      transformOrigin: '50% 70%',
-                      animation: 'flicker 3s ease-in-out infinite',
-                    }}
+                    style={{ transformOrigin: '50% 70%', animation: 'flicker 2.5s ease-in-out infinite' }}
                   />
-                  <path
-                    d="M20 75 C 40 60, 60 60, 80 75 Q 50 90, 20 75Z"
-                    fill="currentColor"
-                    opacity="0.8"
-                  />
+                  <path d="M20 75 C 40 60, 60 60, 80 75 Q 50 90, 20 75Z" fill="currentColor" opacity="0.8" />
                 </svg>
 
                 <div style={textStyle} key={step} className="mt-6 text-center relative z-10">
-                    <p className="text-xl font-serif text-brand-gold/90 tracking-widest" style={{animation: 'subtle-glow 5s ease-in-out infinite'}}>
+                    <p className="text-xl font-serif text-brand-gold/90 tracking-widest" style={{animation: 'subtle-glow-title 5s ease-in-out infinite'}}>
                         {INTRO_TEXTS[step].text}
                     </p>
                     {INTRO_TEXTS[step].author && (

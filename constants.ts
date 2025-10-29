@@ -6,6 +6,29 @@ export interface Video {
     downloadUrl?: string;
 }
 
+export interface Book {
+    id: string;
+    titleEn: string;
+    titleHi: string;
+    coverImageUrl: string;
+    pdfUrl?: string;
+    audioUrl?: string;
+    video?: Video;
+    category?: 'animated';
+}
+
+export const BOOKS: Book[] = [
+    {
+        id: 'insaan-apne-aap-ko-jaan',
+        titleEn: 'Man! Know Thyself',
+        titleHi: 'इंसान! अपने आप को जान',
+        coverImageUrl: 'https://drive.google.com/thumbnail?id=1JuFHZRQ_Df6z1qoKv7SfuM-w5b6HBe0e&sz=w640',
+        pdfUrl: 'https://drive.google.com/file/d/1rHLCvsrOWgdubA_uZJUZYOFqV30JJu9j/view?usp=drivesdk',
+        audioUrl: 'https://drive.google.com/file/d/1cytP6SOQwXcBY8phaf7db8hZCi6vO7lL/view?usp=drivesdk',
+        video: { id: '1JuFHZRQ_Df6z1qoKv7SfuM-w5b6HBe0e', type: 'gdrive' },
+    }
+];
+
 export const SATSANG_CLIPS: Video[] = [
     { id: "10ojtFcxhuoxDPlVvwkrJmeEBG30g3QlK", type: 'gdrive', downloadUrl: "https://drive.google.com/file/d/10ojtFcxhuoxDPlVvwkrJmeEBG30g3QlK/view?usp=drivesdk" },
     { id: "3h22llbkYxU", type: 'youtube', downloadUrl: "https://drive.google.com/file/d/1M3kCJ_zB9ca2FxP0ZdoU0rqHKJlAKaCO/view?usp=drivesdk" },
