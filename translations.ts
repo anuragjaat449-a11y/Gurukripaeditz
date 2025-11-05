@@ -40,6 +40,7 @@ export const translations = {
     readPdf: "Read PDF",
     listenAudio: "Listen Audio",
     watchVideo: "Watch Video",
+    takeQuiz: "Take Quiz",
 
     // IntroAnimation.tsx
     skip: "SKIP",
@@ -99,6 +100,7 @@ export const translations = {
     readPdf: "पीडीएफ पढ़ें",
     listenAudio: "ऑडियो सुनें",
     watchVideo: "वीडियो देखें",
+    takeQuiz: "प्रश्नोत्तरी करें",
 
     // IntroAnimation.tsx
     skip: "छोड़ें",

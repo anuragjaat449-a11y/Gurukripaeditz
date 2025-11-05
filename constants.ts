@@ -15,6 +15,7 @@ export interface Book {
     audioUrl?: string;
     video?: Video;
     category?: 'animated';
+    quizzes?: { id: string; titleEn: string; titleHi: string }[];
 }
 
 export const BOOKS: Book[] = [
@@ -26,10 +27,60 @@ export const BOOKS: Book[] = [
         pdfUrl: 'https://drive.google.com/file/d/1rHLCvsrOWgdubA_uZJUZYOFqV30JJu9j/view?usp=drivesdk',
         audioUrl: 'https://drive.google.com/file/d/1cytP6SOQwXcBY8phaf7db8hZCi6vO7lL/view?usp=drivesdk',
         video: { id: '1JuFHZRQ_Df6z1qoKv7SfuM-w5b6HBe0e', type: 'gdrive' },
+        quizzes: [
+            { id: 'insaan-apne-aap-ko-jaan-quiz', titleEn: 'Take Quiz', titleHi: 'प्रश्नोत्तरी करें' },
+            { id: 'insaan-apne-aap-ko-jaan-quiz-2', titleEn: 'Advanced Quiz', titleHi: 'उन्नत प्रश्नोत्तरी' }
+        ],
+    },
+    {
+        id: 'jeevan-ka-uddeshya',
+        titleEn: 'The Purpose of Life',
+        titleHi: 'जीवन का उद्देश्य',
+        coverImageUrl: 'https://drive.google.com/thumbnail?id=1GaahQVnqkGIFkW3-eoZQfJ7QSXnm1B-p&sz=w640',
+        pdfUrl: 'https://drive.google.com/file/d/1VEcCBfkhKk4YCLPJrtvEPAAHyK0Mmy-w/view?usp=drivesdk',
+        audioUrl: 'https://drive.google.com/file/d/1l5NAhP3HNJD4z3GuksUPQ9EFAiirE43G/view?usp=drivesdk',
+        video: { id: '1ZA-hChsk8VqSQgDDEBKjk36lme0EpMX9', type: 'gdrive' },
+    },
+    {
+        id: 'adhyatmikta-kya-hai',
+        titleEn: 'What is Spirituality?',
+        titleHi: 'अध्यात्मिकता क्या है?',
+        coverImageUrl: 'https://drive.google.com/thumbnail?id=1aQa1uRKRpYNV-wXlwi8YsgqsPxeb7KXe&sz=w640',
+        pdfUrl: 'https://drive.google.com/file/d/1aQa1uRKRpYNV-wXlwi8YsgqsPxeb7KXe/view?usp=drivesdk',
+        audioUrl: 'https://drive.google.com/file/d/1UDNhkt3i1IFYlzLp-GpgXzYkFKSXJEK_/view?usp=drivesdk',
+        video: { id: '1Sk31C4d8g-ESF62CiDw5Ski8LaQqTLr_', type: 'gdrive' },
     }
 ];
 
 export const SATSANG_CLIPS: Video[] = [
+    { id: "1d5oNs97s_ae2lACzDS3WjEAG9EIdVlqT", type: 'gdrive', downloadUrl: "https://drive.google.com/file/d/1d5oNs97s_ae2lACzDS3WjEAG9EIdVlqT/view?usp=drivesdk" },
+    { id: "1wI9JHmQ9VFyv34_s5PqajuXSn_ol0RX-", type: 'gdrive', downloadUrl: "https://drive.google.com/file/d/1wI9JHmQ9VFyv34_s5PqajuXSn_ol0RX-/view?usp=drivesdk" },
+    { id: "12i95zCnQr4tyl3MqL4bPzRWrNIqXDlDg", type: 'gdrive', downloadUrl: "https://drive.google.com/file/d/12i95zCnQr4tyl3MqL4bPzRWrNIqXDlDg/view?usp=drivesdk" },
+    { id: "1ct4f2o-vJWExxe4Ccor2MysY1bjcSCKS", type: 'gdrive', downloadUrl: "https://drive.google.com/file/d/1ct4f2o-vJWExxe4Ccor2MysY1bjcSCKS/view?usp=drivesdk" },
+    { id: "1Ciy1G-RQJRsJMeuBzpk9eXW8ovJn0pK-", type: 'gdrive', downloadUrl: "https://drive.google.com/file/d/1Ciy1G-RQJRsJMeuBzpk9eXW8ovJn0pK-/view?usp=drivesdk" },
+    { id: "11E3DAHEzC1nH-1NY6-KR_AfAFU2rpqtx", type: 'gdrive', downloadUrl: "https://drive.google.com/file/d/11E3DAHEzC1nH-1NY6-KR_AfAFU2rpqtx/view?usp=drivesdk" },
+    { id: "1dqJN4jVPNt2LLTqJHBHPghM76PvbwxbK", type: 'gdrive', downloadUrl: "https://drive.google.com/file/d/1dqJN4jVPNt2LLTqJHBHPghM76PvbwxbK/view?usp=drivesdk" },
+    { id: "1PFeinD4iS4Qpz1v935Ba0n-6S6Tm_sSB", type: 'gdrive', downloadUrl: "https://drive.google.com/file/d/1PFeinD4iS4Qpz1v935Ba0n-6S6Tm_sSB/view?usp=drivesdk" },
+    { id: "1QEWFVH5S10162_0bs0mzc-zBAUA3whEX", type: 'gdrive', downloadUrl: "https://drive.google.com/file/d/1QEWFVH5S10162_0bs0mzc-zBAUA3whEX/view?usp=drivesdk" },
+    { id: "1sQbONcxZ4AoucmtLWVoMJOm0UbhghQlr", type: 'gdrive', downloadUrl: "https://drive.google.com/file/d/1sQbONcxZ4AoucmtLWVoMJOm0UbhghQlr/view?usp=drivesdk" },
+    { id: "1g5LKJdqcuP29O1X2zZNZOtail5Za9uih", type: 'gdrive', downloadUrl: "https://drive.google.com/file/d/1g5LKJdqcuP29O1X2zZNZOtail5Za9uih/view?usp=drivesdk" },
+    { id: "1jZkUSDAUpyMigQTlw-3jEvPNcj1BptGJ", type: 'gdrive', downloadUrl: "https://drive.google.com/file/d/1jZkUSDAUpyMigQTlw-3jEvPNcj1BptGJ/view?usp=drivesdk" },
+    { id: "1PrylvvvbakkmvbTYYD0UpUL31pczR12w", type: 'gdrive', downloadUrl: "https://drive.google.com/file/d/1PrylvvvbakkmvbTYYD0UpUL31pczR12w/view?usp=drivesdk" },
+    { id: "1kMiyj4Mo-5CQhJswBFHy_EDpCeRThXwL", type: 'gdrive', downloadUrl: "https://drive.google.com/file/d/1kMiyj4Mo-5CQhJswBFHy_EDpCeRThXwL/view?usp=drivesdk" },
+    { id: "1N8fcjEFiyx8p4ezHtrZdaSxSaq9kwTPk", type: 'gdrive', downloadUrl: "https://drive.google.com/file/d/1N8fcjEFiyx8p4ezHtrZdaSxSaq9kwTPk/view?usp=drivesdk" },
+    { id: "1pf8Z7SZb8q4PivEU3FHD6TVkwdqsGo7W", type: 'gdrive', downloadUrl: "https://drive.google.com/file/d/1pf8Z7SZb8q4PivEU3FHD6TVkwdqsGo7W/view?usp=drivesdk" },
+    { id: "1J2OcPsYW2LEfDVnEpw8-FTt1KAcY-Aix", type: 'gdrive', downloadUrl: "https://drive.google.com/file/d/1J2OcPsYW2LEfDVnEpw8-FTt1KAcY-Aix/view?usp=drivesdk" },
+    { id: "1Y20HdUaXbLQmmgIRbyMR-QPA1liBic3g", type: 'gdrive', downloadUrl: "https://drive.google.com/file/d/1Y20HdUaXbLQmmgIRbyMR-QPA1liBic3g/view?usp=drivesdk" },
+    { id: "1TWQVoLKYXiaKzfzGULEDDXRd_B_w9yxK", type: 'gdrive', downloadUrl: "https://drive.google.com/file/d/1TWQVoLKYXiaKzfzGULEDDXRd_B_w9yxK/view?usp=drivesdk" },
+    { id: "1alYk-DyYskdjDEQs5PvXal9wmSkZdm2x", type: 'gdrive', downloadUrl: "https://drive.google.com/file/d/1alYk-DyYskdjDEQs5PvXal9wmSkZdm2x/view?usp=drivesdk" },
+    { id: "1mDE5LD7g7Vg80mzwDAytYiddlaIh9e_L", type: 'gdrive', downloadUrl: "https://drive.google.com/file/d/1mDE5LD7g7Vg80mzwDAytYiddlaIh9e_L/view?usp=drivesdk" },
+    { id: "1zh9EdXkXA4bSO_W1Ogt54OGmq61n6qS-", type: 'gdrive', downloadUrl: "https://drive.google.com/file/d/1zh9EdXkXA4bSO_W1Ogt54OGmq61n6qS-/view?usp=drivesdk" },
+    { id: "1u4TVPLlgzQQLCHIbDiKXFEa7u-eQqjbx", type: 'gdrive', downloadUrl: "https://drive.google.com/file/d/1u4TVPLlgzQQLCHIbDiKXFEa7u-eQqjbx/view?usp=drivesdk" },
+    { id: "1jDQwY5TrJ6MDv6dT2MK5Te-Dsb0d42xP", type: 'gdrive', downloadUrl: "https://drive.google.com/file/d/1jDQwY5TrJ6MDv6dT2MK5Te-Dsb0d42xP/view?usp=drivesdk" },
+    { id: "1w7-b4HO35RXiJepK_qicVV9totfLqizF", type: 'gdrive', downloadUrl: "https://drive.google.com/file/d/1w7-b4HO35RXiJepK_qicVV9totfLqizF/view?usp=drivesdk" },
+    { id: "1aKwbggJVnloFjAcaqmeC3GpkAYcfHBJ0", type: 'gdrive', downloadUrl: "https://drive.google.com/file/d/1aKwbggJVnloFjAcaqmeC3GpkAYcfHBJ0/view?usp=drivesdk" },
+    { id: "1CXTKL_w5TydEshXf9hKCpHXu1dsnDKIH", type: 'gdrive', downloadUrl: "https://drive.google.com/file/d/1CXTKL_w5TydEshXf9hKCpHXu1dsnDKIH/view?usp=drivesdk" },
+    { id: "11IckLe3Y54yHajl5ZsJ4zbOB2yL_ZfCh", type: 'gdrive', downloadUrl: "https://drive.google.com/file/d/11IckLe3Y54yHajl5ZsJ4zbOB2yL_ZfCh/view?usp=drivesdk" },
     { id: "10ojtFcxhuoxDPlVvwkrJmeEBG30g3QlK", type: 'gdrive', downloadUrl: "https://drive.google.com/file/d/10ojtFcxhuoxDPlVvwkrJmeEBG30g3QlK/view?usp=drivesdk" },
     { id: "3h22llbkYxU", type: 'youtube', downloadUrl: "https://drive.google.com/file/d/1M3kCJ_zB9ca2FxP0ZdoU0rqHKJlAKaCO/view?usp=drivesdk" },
     { id: "9PN3ZCmNZKE", type: 'youtube', downloadUrl: "https://drive.google.com/file/d/1ePfbUoZXHiuo9gBy_NEvcOsUhYIUmPUA/view?usp=drivesdk" },

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Book Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Poppins', sans-serif; }
+        .dark { background-color: #000; color: white; }
+        /* Reuse some styles from the main app for consistency */
+        @keyframes fade-in-up { from { opacity: 0; transform: translateY(20px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        .glass-card {
+            background: rgba(20, 27, 40, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 0.75rem;
+            border: 1px solid rgba(255, 215, 0, 0.15);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+        .btn-premium {
+            background: linear-gradient(135deg, #FFD700, #F0C400);
+            color: #4b0000;
+            text-shadow: none;
+            box-shadow: 0 4px 20px 0 rgba(255, 215, 0, 0.35);
+            transition: all 0.3s ease;
+        }
+        .btn-premium:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 25px 0 rgba(255, 215, 0, 0.45);
+        }
+        .btn-premium-secondary {
+            background-color: rgba(255, 215, 0, 0.1);
+            color: #FFD700;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+        .btn-premium-secondary:hover:not(:disabled) {
+            background-color: #FFD700;
+            color: #4b0000;
+            border-color: #FFD700;
+        }
+        .btn-disabled {
+            background-color: #444 !important;
+            color: #999 !important;
+            cursor: not-allowed !important;
+            opacity: 0.7 !important;
+            border: none !important;
+            box-shadow: none !important;
+        }
+         /* --- BACKGROUND STYLES from index.html --- */
+      .dark-mode-bg { display: block; position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: -4; background: #000; overflow: hidden; }
+      .stars-far, .stars-twinkle, .stars-near { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-repeat: repeat; will-change: background-position; }
+      @keyframes move-stars-far { from { background-position: 0 0; } to { background-position: -5000px 0; } }
+      .stars-far { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1000' height='1000'%3E%3Cdefs%3E%3Cfilter id='blur1' x='-10%25' y='-10%25' width='120%25' height='120%25'%3E%3CfeGaussianBlur stdDeviation='1' /%3E%3C/filter%3E%3C/defs%3E%3Cg fill='%23ffffff' filter='url(%23blur1)'%3E%3Ccircle r='1' cx='100' cy='100' opacity='0.3'/%3E%3Ccircle r='0.5' cx='200' cy='500' opacity='0.2'/%3E%3Ccircle r='0.8' cx='300' cy='300' opacity='0.4'/%3E%3Ccircle r='0.6' cx='400' cy='800' opacity='0.3'/%3E%3Ccircle r='1' cx='550' cy='150' opacity='0.5'/%3E%3Ccircle r='0.5' cx='650' cy='950' opacity='0.2'/%3E%3Ccircle r='0.8' cx='800' cy='450' opacity='0.4'/%3E%3Ccircle r='1' cx='950' cy='50' opacity='0.3'/%3E%3Ccircle r='0.7' cx='50' cy='700' opacity='0.3'/%3E%3Ccircle r='0.9' cx='150' cy='900' opacity='0.5'/%3E%3Ccircle r='0.6' cx='250' cy='200' opacity='0.2'/%3E%3Ccircle r='1' cx='350' cy='600' opacity='0.4'/%3E%3Ccircle r='0.5' cx='450' cy='400' opacity='0.3'/%3E%3Ccircle r='0.8' cx='600' cy='850' opacity='0.5'/%3E%3Ccircle r='0.75' cx='750' cy='250' opacity='0.2'/%3E%3Ccircle r='1' cx='900' cy='650' opacity='0.4'/%3E%3Ccircle r='0.7' cx='850' cy='750' opacity='0.3'/%3E%3Ccircle r='1.1' cx='700' cy='50' opacity='0.4'/%3E%3Ccircle r='0.6' cx='500' cy='900' opacity='0.2'/%3E%3Ccircle r='0.9' cx='300' cy='100' opacity='0.5'/%3E%3Ccircle r='0.4' cx='100' cy='400' opacity='0.3'/%3E%3Ccircle r='0.8' cx='200' cy='800' opacity='0.5'/%3E%3Ccircle r='0.5' cx='400' cy='500' opacity='0.2'/%3E%3Ccircle r='1' cx='600' cy='200' opacity='0.4'/%3E%3Ccircle r='0.7' cx='800' cy='950' opacity='0.3'/%3E%3Ccircle r='1' cx='950' cy='300' opacity='0.5'/%3E%3Ccircle r='0.6' cx='50' cy='550' opacity='0.2'/%3E%3Ccircle r='0.8' cx='250' cy='750' opacity='0.4'/%3E%3Ccircle r='0.5' cx='450' cy='50' opacity='0.3'/%3E%3Ccircle r='0.9' cx='650' cy='350' opacity='0.5'/%3E%3Ccircle r='0.6' cx='850' cy='500' opacity='0.2'/%3E%3Ccircle r='1' cx='50' cy='150' opacity='0.4'/%3E%3C/g%3E%3C/svg%3E"); background-size: 500px 500px; animation: move-stars-far 400s linear infinite; z-index: -3; }
+      @keyframes twinkle { 0%, 100% { opacity: 0.4; transform: scale(1); } 50% { opacity: 1; transform: scale(1.05); } }
+      .stars-twinkle { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600'%3E%3Cg fill='%23ffffff'%3E%3Ccircle r='0.4' cx='10' cy='300' opacity='0.7'/%3E%3Ccircle r='0.6' cx='50' cy='50' opacity='0.9'/%3E%3Ccircle r='0.3' cx='100' cy='100' opacity='0.6'/%3E%3Ccircle r='0.5' cx='150' cy='450' opacity='0.8'/%3E%3Ccircle r='0.4' cx='200' cy='200' opacity='0.7'/%3E%3Ccircle r='0.6' cx='250' cy='550' opacity='1'/%3E%3Ccircle r='0.3' cx='320' cy='80' opacity='0.5'/%3E%3Ccircle r='0.5' cx='380' cy='380' opacity='0.9'/%3E%3Ccircle r='0.4' cx='450' cy='150' opacity='0.6'/%3E%3Ccircle r='0.6' cx='500' cy='500' opacity='0.8'/%3E%3Ccircle r='0.3' cx='580' cy='250' opacity='0.7'/%3E%3Ccircle r='0.5' cx='30' cy='150' opacity='0.8'/%3E%3Ccircle r='0.4' cx='80' cy='400' opacity='0.7'/%3E%3Ccircle r='0.6' cx='130' cy='580' opacity='1'/%3E%3Ccircle r='0.3' cx='180' cy='30' opacity='0.5'/%3E%3Ccircle r='0.5' cx='280' cy='310' opacity='0.9'/%3E%3Ccircle r='0.4' cx='340' cy='520' opacity='0.6'/%3E%3Ccircle r='0.6' cx='400' cy='20' opacity='0.8'/%3E%3Ccircle r='0.3' cx='480' cy='320' opacity='0.7'/%3E%3Ccircle r='0.5' cx='550' cy='400' opacity='0.9'/%3E%3Ccircle r='0.4' cx='15' cy='500' opacity='0.6'/%3E%3Ccircle r='0.6' cx='55' cy='250' opacity='1'/%3E%3Ccircle r='0.3' cx='105' cy='300' opacity='0.5'/%3E%3Ccircle r='0.5' cx='155' cy='550' opacity='0.9'/%3E%3Ccircle r='0.4' cx='205' cy='100' opacity='0.7'/%3E%3Ccircle r='0.6' cx='255' cy='450' opacity='0.8'/%3E%3Ccircle r='0.3' cx='325' cy='180' opacity='0.6'/%3E%3Ccircle r='0.5' cx='385' cy='480' opacity='0.8'/%3E%3Ccircle r='0.4' cx='455' cy='250' opacity='0.7'/%3E%3Ccircle r='0.6' cx='505' cy='400' opacity='1'/%3E%3Ccircle r='0.3' cx='585' cy='150' opacity='0.5'/%3E%3Ccircle r='0.5' cx='35' cy='50' opacity='0.9'/%3E%3Ccircle r='0.4' cx='85' cy='500' opacity='0.6'/%3E%3Ccircle r='0.6' cx='135' cy='480' opacity='0.8'/%3E%3Ccircle r='0.3' cx='185' cy='130' opacity='0.7'/%3E%3Ccircle r='0.5' cx='285' cy='410' opacity='0.8'/%3E%3Ccircle r='0.4' cx='345' cy='420' opacity='0.5'/%3E%3Ccircle r='0.6' cx='405' cy='120' opacity='1'/%3E%3Ccircle r='0.3' cx='485' cy='420' opacity='0.6'/%3E%3Ccircle r='0.5' cx='555' cy='300' opacity='0.9'/%3E%3C/g%3E%3C/svg%3E"); background-size: 400px 400px; animation: move-stars-far 250s linear infinite, twinkle 4s ease-in-out infinite alternate; z-index: -2; }
+      @keyframes move-stars-near { from { background-position: 0 0; } to { background-position: -10000px 0; } }
+      .stars-near { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='500' height='500'%3E%3Cg fill='%23ffffff'%3E%3Ccircle r='1.5' cx='50' cy='400' opacity='0.9'/%3E%3Ccircle r='1.2' cx='200' cy='100' opacity='0.8'/%3E%3Ccircle r='1.8' cx='350' cy='300' opacity='1'/%3E%3Ccircle r='1.3' cx='450' cy='50' opacity='0.8'/%3E%3Ccircle r='1.6' cx='120' cy='250' opacity='1'/%3E%3Ccircle r='1.1' cx='280' cy='450' opacity='0.8'/%3E%3Ccircle r='1.4' cx='400' cy='180' opacity='0.9'/%3E%3Ccircle r='1.5' cx='150' cy='450' opacity='0.9'/%3E%3Ccircle r='1.2' cx='300' cy='200' opacity='0.8'/%3E%3Ccircle r='1.8' cx='450' cy='400' opacity='1'/%3E%3Ccircle r='1.3' cx='250' cy='150' opacity='0.8'/%3E%3Ccircle r='1.6' cx='220' cy='350' opacity='1'/%3E%3Ccircle r='1.1' cx='380' cy='250' opacity='0.8'/%3E%3Ccircle r='1.4' cx='100' cy='80' opacity='0.9'/%3E%3C/g%3E%3C/svg%3E"); background-size: 1000px 1000px; animation: move-stars-near 120s linear infinite; z-index: -1; }
+    </style>
+    <script type="importmap">
+    {
+      "imports": {
+        "react/": "https://aistudiocdn.com/react@^19.2.0/",
+        "react": "https://aistudiocdn.com/react@^19.2.0",
+        "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/"
+      }
+    }
+    </script>
+</head>
+<body class="dark">
+    <div class="dark-mode-bg">
+      <div class="stars-far"></div>
+      <div class="stars-twinkle"></div>
+      <div class="stars-near"></div>
+    </div>
+    <div id="root"></div>
+    <script type="module" src="/book-quiz.tsx"></script>
+</body>
+</html>

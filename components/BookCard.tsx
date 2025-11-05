@@ -6,26 +6,20 @@ interface BookCardProps {
   book: Book;
 }
 
-// Helper function to generate a Google Drive thumbnail URL from a PDF view link.
-const getThumbnailUrlFromPdf = (book: Book): string => {
-  if (book.pdfUrl) {
-    // Extracts the file ID from URLs like: https://drive.google.com/file/d/FILE_ID/view...
-    const match = book.pdfUrl.match(/\/d\/([a-zA-Z0-9_-]+)/);
-    if (match && match[1]) {
-      const fileId = match[1];
-      // Use Google Drive's thumbnail endpoint. 'sz=w640' provides a reasonable size.
-      return `https://drive.google.com/thumbnail?id=${fileId}&sz=w640`;
-    }
-  }
-  // Fallback to the original coverImageUrl if no valid pdfUrl is found.
-  return book.coverImageUrl;
-};
-
 const BookCard: React.FC<BookCardProps> = ({ book }) => {
   const { language, t } = useLanguage();
   const title = language === 'hi' ? book.titleHi : book.titleEn;
   const video = book.video;
-  const thumbnailUrl = getThumbnailUrlFromPdf(book);
+
+  let thumbnailUrl = book.coverImageUrl;
+  // User requested to restore the first book's cover from its PDF.
+  if (book.id === 'insaan-apne-aap-ko-jaan' && book.pdfUrl) {
+    const match = book.pdfUrl.match(/file\/d\/(.*?)\//);
+    if (match && match[1]) {
+      const fileId = match[1];
+      thumbnailUrl = `https://drive.google.com/thumbnail?id=${fileId}&sz=w640`;
+    }
+  }
 
   return (
     <div className="glass-card rounded-lg overflow-hidden group h-full flex flex-col">
@@ -41,7 +35,7 @@ const BookCard: React.FC<BookCardProps> = ({ book }) => {
         </h3>
         <div className="space-y-2">
           {book.pdfUrl && (
-            <a href={book.pdfUrl} target="_blank" rel="noopener noreferrer" className="w-full inline-flex items-center justify-center py-2 px-4 rounded-md text-sm font-bold btn-premium-secondary">
+            <a href={`/book-reader.html?pdf=${encodeURIComponent(book.pdfUrl)}`} target="_blank" rel="noopener noreferrer" className="w-full inline-flex items-center justify-center py-2 px-4 rounded-md text-sm font-bold btn-premium-secondary">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clipRule="evenodd" /></svg>
               <span>{t.readPdf}</span>
             </a>
@@ -61,12 +55,24 @@ const BookCard: React.FC<BookCardProps> = ({ book }) => {
               }
               target="_blank" 
               rel="noopener noreferrer" 
-              className="w-full inline-flex items-center justify-center py-2 px-4 rounded-md text-sm font-bold btn-premium"
+              className="w-full inline-flex items-center justify-center py-2 px-4 rounded-md text-sm font-bold btn-premium-secondary"
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" /></svg>
               <span>{t.watchVideo}</span>
             </a>
           )}
+          {book.quizzes?.map((quiz, index) => (
+              <a 
+                key={quiz.id}
+                href={`/book-quiz.html?id=${quiz.id}`} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className={`w-full inline-flex items-center justify-center py-2 px-4 rounded-md text-sm font-bold ${index > 0 ? 'btn-premium-secondary' : 'btn-premium'}`}
+              >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" /></svg>
+                  <span>{language === 'hi' ? quiz.titleHi : quiz.titleEn}</span>
+              </a>
+          ))}
         </div>
       </div>
     </div>

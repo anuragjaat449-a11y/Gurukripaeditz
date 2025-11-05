@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { VIDEOS, SATSANG_CLIPS, BOOKS } from './constants';
 import VideoCard from './components/VideoCard';
 import BookCard from './components/BookCard';
@@ -13,9 +13,6 @@ type Tab = 'satsang' | 'books' | 'videos';
 // --- Main App Component ---
 const App: React.FC = () => {
   const [showIntro, setShowIntro] = useState(true);
-  const audioRef = useRef<HTMLAudioElement>(null);
-  const [isMusicPlaying, setIsMusicPlaying] = useState(false);
-  const [musicRequiresInteraction, setMusicRequiresInteraction] = useState(false);
   const [currentQuoteIndex, setCurrentQuoteIndex] = useState(0);
   const [isQuoteVisible, setIsQuoteVisible] = useState(true);
   const { language, toggleLanguage, t } = useLanguage();
@@ -90,51 +87,6 @@ const App: React.FC = () => {
     setTheme(prevTheme => (prevTheme === 'dark' ? 'light' : 'dark'));
   };
   
-  const tryPlayingMusic = useCallback(() => {
-    const audioEl = audioRef.current;
-    if (audioEl && !isMusicPlaying) {
-      audioEl.volume = 0.3;
-      const playPromise = audioEl.play();
-  
-      if (playPromise !== undefined) {
-        playPromise
-          .then(() => {
-            setIsMusicPlaying(true);
-            setMusicRequiresInteraction(false); // Autoplay succeeded
-          })
-          .catch(error => {
-            console.warn("Music autoplay was prevented by the browser:", error);
-            setIsMusicPlaying(false);
-            setMusicRequiresInteraction(true); // Autoplay failed, requires user interaction
-          });
-      }
-    }
-  }, [isMusicPlaying]);
-
-  // Effect to try playing music automatically after the intro
-  useEffect(() => {
-    if (!showIntro) {
-      tryPlayingMusic();
-    }
-  }, [showIntro, tryPlayingMusic]);
-
-  // Effect to handle playing music on the first user interaction if autoplay failed
-  useEffect(() => {
-    if (musicRequiresInteraction) {
-      const handleFirstInteraction = () => {
-        tryPlayingMusic();
-      };
-  
-      window.addEventListener('click', handleFirstInteraction, { once: true });
-      window.addEventListener('keydown', handleFirstInteraction, { once: true });
-  
-      return () => {
-        window.removeEventListener('click', handleFirstInteraction);
-        window.removeEventListener('keydown', handleFirstInteraction);
-      };
-    }
-  }, [musicRequiresInteraction, tryPlayingMusic]);
-  
   useEffect(() => {
     if(showIntro) return; // Don't start quote interval during intro
 
@@ -182,13 +134,6 @@ const App: React.FC = () => {
   
   return (
     <div className="min-h-screen text-gray-800 dark:text-white" style={{animation: 'fade-in-up 0.8s ease-out both'}}>
-      <audio 
-        ref={audioRef} 
-        src="https://cdn.pixabay.com/audio/2022/11/11/audio_a16d3e34a2.mp3" 
-        loop 
-        aria-hidden="true"
-      />
-      
       {isSurveyOpen && (
         <SurveyModal
           isOpen={isSurveyOpen}
@@ -274,7 +219,7 @@ const App: React.FC = () => {
                 {SATSANG_CLIPS.map((video, index) => (
                   <div 
                     className="card-container" 
-                    key={`${video.id}-${index}`}
+                    key={`${video.id}-${index}-${playingVideoId === video.id}`}
                     style={{ animation: `fade-in-up 0.5s ${index * 0.05}s ease-out both` }}
                   >
                     <VideoCard 
@@ -333,7 +278,7 @@ const App: React.FC = () => {
                 {VIDEOS.map((video, index) => (
                   <div 
                     className="card-container" 
-                    key={`${video.id}-${index}`}
+                    key={`${video.id}-${index}-${playingVideoId === video.id}`}
                     style={{ animation: `fade-in-up 0.5s ${index * 0.05}s ease-out both` }}
                   >
                     <VideoCard 
@@ -354,4 +299,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default App

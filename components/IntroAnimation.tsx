@@ -57,9 +57,12 @@ const IntroAnimation: React.FC<IntroAnimationProps> = ({ onFinish }) => {
         className="fixed inset-0 bg-black z-50 flex flex-col items-center justify-center text-center p-4 overflow-hidden"
     >
       <div style={backgroundStyle} className="absolute inset-[-5%] dark-mode-bg">
-          <div className="stars"></div>
-          <div className="twinkling"></div>
-          <div className="clouds" style={{opacity: 0.8}}></div>
+        <div className="stars-far"></div>
+        <div className="stars-twinkle"></div>
+        <div className="stars-near"></div>
+        <div className="shooting-star"></div>
+        <div className="shooting-star"></div>
+        <div className="shooting-star"></div>
       </div>
       
       <div className="relative w-full h-48 flex items-center justify-center">
