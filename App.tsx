@@ -315,9 +315,8 @@ const App: React.FC = () => {
                     <VideoCard 
                       video={video} 
                       videoNumber={index + 1}
-                      onOpenPlayer={() => handleOpenPlayer(VIDEOS, index, true)}
                       titlePrefix={t.videoTitlePrefix}
-                      useModalPlayer={true}
+                      useModalPlayer={false}
                     />
                   </div>
                 ))}

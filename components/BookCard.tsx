@@ -64,7 +64,7 @@ const BookCard: React.FC<BookCardProps> = ({ book }) => {
           {book.quizzes?.map((quiz, index) => (
               <a 
                 key={quiz.id}
-                href={`/book-quiz.html?id=${quiz.id}`} 
+                href={quiz.url || `/book-quiz.html?id=${quiz.id}`} 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className={`w-full inline-flex items-center justify-center py-2 px-4 rounded-md text-sm font-bold ${index > 0 ? 'btn-premium-secondary' : 'btn-premium'}`}
