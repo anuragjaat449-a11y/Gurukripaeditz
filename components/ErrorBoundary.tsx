@@ -8,13 +8,13 @@ interface ErrorBoundaryState {
   hasError: boolean;
 }
 
-// FIX: Using class property for state initialization and explicitly extending
-// React.Component to resolve TypeScript issues where component instance properties
-// like `this.props` were not being recognized.
 class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
-  state: ErrorBoundaryState = {
-    hasError: false,
-  };
+  // FIX: Reverted to using a constructor to initialize state. The class property syntax, while modern,
+  // was likely causing an issue where `this.props` was not being recognized on the component instance in this environment.
+  constructor(props: ErrorBoundaryProps) {
+    super(props);
+    this.state = { hasError: false };
+  }
 
   static getDerivedStateFromError(_: Error): ErrorBoundaryState {
     return { hasError: true };

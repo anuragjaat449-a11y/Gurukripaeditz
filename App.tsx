@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { VIDEOS, SATSANG_CLIPS, BOOKS } from './constants';
+import { VIDEOS, SATSANG_CLIPS, BOOKS, Video } from './constants';
 import VideoCard from './components/VideoCard';
 import BookCard from './components/BookCard';
 import IntroAnimation from './components/IntroAnimation';
@@ -7,6 +7,7 @@ import ThemeToggle from './components/ThemeToggle';
 import SurveyModal, { SurveyData } from './components/SurveyModal';
 import RatingModal from './components/RatingModal';
 import { useLanguage } from './contexts/LanguageContext';
+import VideoPlayerModal from './components/VideoPlayerModal';
 
 type Tab = 'satsang' | 'books' | 'videos';
 
@@ -24,7 +25,7 @@ const App: React.FC = () => {
   const [averageRatingInfo, setAverageRatingInfo] = useState({ rating: 0, count: 0 });
   const [isRatingModalOpen, setIsRatingModalOpen] = useState(false);
   const [ratingModalPosition, setRatingModalPosition] = useState<{ top: number; left: number } | null>(null);
-  const [playingVideoId, setPlayingVideoId] = useState<string | null>(null);
+  const [playerState, setPlayerState] = useState<{ list: Video[], index: number, isShortsList: boolean } | null>(null);
   const [activeTab, setActiveTab] = useState<Tab>('satsang');
 
   const [theme, setTheme] = useState(() => {
@@ -124,14 +125,36 @@ const App: React.FC = () => {
     setIsRatingModalOpen(true);
   };
 
-  const handlePlayVideo = (videoId: string) => {
-    setPlayingVideoId(prevId => (prevId === videoId ? null : videoId));
+  const handleOpenPlayer = (list: Video[], index: number, isShortsList: boolean) => {
+    setPlayerState({ list, index, isShortsList });
+  };
+
+  const handleClosePlayer = () => {
+    setPlayerState(null);
+  };
+
+  const handleNextVideo = () => {
+    setPlayerState(prev => {
+        if (!prev) return null;
+        const nextIndex = (prev.index + 1) % prev.list.length;
+        return { ...prev, index: nextIndex };
+    });
+  };
+
+  const handlePrevVideo = () => {
+    setPlayerState(prev => {
+        if (!prev) return null;
+        const prevIndex = (prev.index - 1 + prev.list.length) % prev.list.length;
+        return { ...prev, index: prevIndex };
+    });
   };
 
   if (showIntro) {
     return <IntroAnimation onFinish={() => setShowIntro(false)} />;
   }
   
+  const currentVideo = playerState ? playerState.list[playerState.index] : null;
+
   return (
     <div className="min-h-screen text-gray-800 dark:text-white" style={{animation: 'fade-in-up 0.8s ease-out both'}}>
       {isSurveyOpen && (
@@ -151,6 +174,15 @@ const App: React.FC = () => {
         rating={averageRatingInfo.rating}
         count={averageRatingInfo.count}
         position={ratingModalPosition}
+      />
+
+      <VideoPlayerModal
+        isOpen={!!playerState}
+        onClose={handleClosePlayer}
+        onNext={handleNextVideo}
+        onPrev={handlePrevVideo}
+        video={currentVideo}
+        isShort={playerState?.isShortsList}
       />
       
       {!hasUserRated && (
@@ -225,9 +257,8 @@ const App: React.FC = () => {
                     <VideoCard 
                       video={video} 
                       videoNumber={index + 1}
-                      isPlaying={playingVideoId === video.id}
-                      onPlay={handlePlayVideo}
                       titlePrefix={t.clipTitlePrefix}
+                      useModalPlayer={false}
                     />
                   </div>
                 ))}
@@ -284,9 +315,9 @@ const App: React.FC = () => {
                     <VideoCard 
                       video={video} 
                       videoNumber={index + 1}
-                      isPlaying={playingVideoId === video.id}
-                      onPlay={handlePlayVideo}
+                      onOpenPlayer={() => handleOpenPlayer(VIDEOS, index, true)}
                       titlePrefix={t.videoTitlePrefix}
+                      useModalPlayer={true}
                     />
                   </div>
                 ))}

@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import type { Video } from '../constants';
 import { useLanguage } from '../contexts/LanguageContext';
 
 interface VideoCardProps {
   video: Video;
   videoNumber: number;
-  isPlaying: boolean;
-  onPlay: (videoId: string) => void;
+  onOpenPlayer?: () => void;
   titlePrefix: string;
+  useModalPlayer: boolean;
 }
 
 // Helper function to convert a Google Drive 'view' URL to a direct download URL.
@@ -23,10 +23,12 @@ const getDirectDownloadUrl = (url: string | undefined): string | undefined => {
 };
 
 
-const VideoCard: React.FC<VideoCardProps> = ({ video, videoNumber, isPlaying, onPlay, titlePrefix }) => {
+const VideoCard: React.FC<VideoCardProps> = ({ video, videoNumber, onOpenPlayer, titlePrefix, useModalPlayer }) => {
   const { t } = useLanguage();
   const hasThumbnail = video.type === 'youtube' || video.type === 'gdrive';
 
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [origin, setOrigin] = useState<string | null>(null);
   const [isVideoInvalid, setIsVideoInvalid] = useState(false);
   const [isImageLoaded, setIsImageLoaded] = useState(false);
   const [downloadState, setDownloadState] = useState<'idle' | 'starting' | 'complete'>('idle');
@@ -39,6 +41,22 @@ const VideoCard: React.FC<VideoCardProps> = ({ video, videoNumber, isPlaying, on
     }
     return '';
   });
+  
+  useEffect(() => {
+    // Set origin on client-side for YouTube's embed requirements.
+    setOrigin(window.location.origin);
+  }, []);
+
+  const handlePlayClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    if (isVideoInvalid) return;
+
+    if (useModalPlayer) {
+      onOpenPlayer?.();
+    } else {
+      setIsPlaying(true);
+    }
+  };
 
   const directDownloadUrl = getDirectDownloadUrl(video.downloadUrl);
 
@@ -84,36 +102,47 @@ const VideoCard: React.FC<VideoCardProps> = ({ video, videoNumber, isPlaying, on
   const fullTitle = `${titlePrefix} #${videoNumber}`;
   const downloadFilename = `GuruKripa_${titlePrefix.replace(/\s/g, '')}_${videoNumber}.mp4`;
   
-  const playerTitle = t.youTubePlayerTitle.replace('{titlePrefix}', titlePrefix).replace('{videoNumber}', String(videoNumber));
   const unavailableAria = t.videoUnavailableAria.replace('{titlePrefix}', titlePrefix).replace('{videoNumber}', String(videoNumber));
   const playAria = t.playVideoAria.replace('{titlePrefix}', titlePrefix).replace('{videoNumber}', String(videoNumber));
   const thumbnailAlt = t.thumbnailAlt.replace('{titlePrefix}', titlePrefix).replace('{videoNumber}', String(videoNumber));
+  
+  const youtubeSrc = (origin && video.type === 'youtube') 
+    ? `https://www.youtube.com/embed/${video.id}?autoplay=1&rel=0&modestbranding=1&iv_load_policy=3&playsinline=1&controls=1&fs=0&origin=${encodeURIComponent(origin)}`
+    : '';
+  
+  const gdriveSrc = video.type === 'gdrive' 
+    ? `https://drive.google.com/file/d/${video.id}/preview` 
+    : '';
 
   return (
     <div className="glass-card rounded-lg overflow-hidden group h-full flex flex-col relative">
       <div className="p-2 pb-0" style={{ transform: 'translateZ(20px)' }}>
         <div className="relative w-full overflow-hidden rounded-md border-2 border-brand-maroon/20 dark:border-brand-gold/30 group-hover:border-brand-maroon/80 dark:group-hover:border-brand-gold/80 transition-colors video-responsive">
-          {isPlaying && !isVideoInvalid ? (
-            video.type === 'youtube' ? (
+          { !useModalPlayer && isPlaying ? (
+            <>
+              {video.type === 'youtube' && youtubeSrc && (
                 <iframe
-                    className="youtube-short-iframe-hack"
-                    src={`https://www.youtube.com/embed/${video.id}?autoplay=1&rel=0&modestbranding=1&iv_load_policy=3&playsinline=1&controls=1&fs=0`}
-                    title={playerTitle}
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope;"
+                  className="absolute top-0 left-0 w-full h-full border-0"
+                  src={youtubeSrc}
+                  title={t.youTubePlayerTitle.replace('{titlePrefix}', titlePrefix).replace('{videoNumber}', String(videoNumber))}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
                 ></iframe>
-            ) : (
-                <iframe
-                    className="absolute top-0 left-0 w-full h-full border-0"
-                    src={`https://drive.google.com/file/d/${video.id}/preview`}
-                    title={`${titlePrefix} Player`}
-                    allow="autoplay; encrypted-media;"
-                    allowFullScreen
+              )}
+              {video.type === 'gdrive' && gdriveSrc && (
+                 <iframe
+                  className="absolute top-0 left-0 w-full h-full border-0"
+                  src={gdriveSrc}
+                  title={`Google Drive Player for ${titlePrefix} #${videoNumber}`}
+                  allow="autoplay; encrypted-media"
+                  allowFullScreen
                 ></iframe>
-            )
+              )}
+            </>
           ) : (
             <a
               href="#"
-              onClick={(e) => { e.preventDefault(); if (!isVideoInvalid) onPlay(video.id); }}
+              onClick={handlePlayClick}
               className={`absolute inset-0 w-full h-full text-left ${!isVideoInvalid ? 'cursor-pointer' : 'cursor-not-allowed'}`}
               aria-label={isVideoInvalid ? unavailableAria : playAria}
             >
@@ -137,14 +166,20 @@ const VideoCard: React.FC<VideoCardProps> = ({ video, videoNumber, isPlaying, on
                     decoding="async"
                   />
                   {isImageLoaded && (
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end items-center text-center p-4">
-                        <div className="w-16 h-16 mb-2 bg-white/30 backdrop-blur-sm rounded-full flex items-center justify-center border-2 border-white/50 group-hover:scale-110 transition-transform">
-                            <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
-                            </svg>
-                        </div>
-                        <p className="text-white font-semibold text-lg drop-shadow-md">{t.watch}</p>
-                    </div>
+                    <>
+                      {/* Always-visible centered play icon */}
+                      <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="w-16 h-16 bg-black/40 backdrop-blur-sm rounded-full flex items-center justify-center border-2 border-white/50 group-hover:scale-110 group-hover:bg-black/60 transition-all duration-300">
+                              <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
+                              </svg>
+                          </div>
+                      </div>
+                      {/* Gradient and "Watch" text on hover at the bottom */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end items-center text-center p-4">
+                          <p className="text-white font-semibold text-lg drop-shadow-md">{t.watch}</p>
+                      </div>
+                    </>
                   )}
                 </>
               ) : (
@@ -160,10 +195,10 @@ const VideoCard: React.FC<VideoCardProps> = ({ video, videoNumber, isPlaying, on
         </div>
       </div>
       <div className="p-4 pt-2 text-center flex-grow flex flex-col justify-between" style={{ transform: 'translateZ(50px)' }}>
-        <h3 className={`font-semibold text-brand-maroon dark:text-brand-gold mb-2 text-xl transition-opacity duration-300 ${isPlaying ? 'opacity-0' : 'opacity-100'}`}>
+        <h3 className="font-semibold text-brand-maroon dark:text-brand-gold mb-2 text-xl">
           {fullTitle}
         </h3>
-        <div className={`flex justify-center items-center transition-opacity duration-300 ${isPlaying ? 'opacity-0' : 'opacity-100'}`}>
+        <div className="flex justify-center items-center">
           {directDownloadUrl ? (
             <a 
               href={directDownloadUrl}
