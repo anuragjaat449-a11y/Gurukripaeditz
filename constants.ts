@@ -28,8 +28,7 @@ export const BOOKS: Book[] = [
         audioUrl: 'https://drive.google.com/file/d/1cytP6SOQwXcBY8phaf7db8hZCi6vO7lL/view?usp=drivesdk',
         video: { id: '1JuFHZRQ_Df6z1qoKv7SfuM-w5b6HBe0e', type: 'gdrive' },
         quizzes: [
-            { id: 'insaan-apne-aap-ko-jaan-quiz', titleEn: 'Take Quiz', titleHi: 'प्रश्नोत्तरी करें', url: 'https://notebooklm.google.com/notebook/b1d363e3-63fc-4796-b852-f122662cae7e?artifactId=607b87a3-2275-48f4-a794-4ddb7a2d7576' },
-            { id: 'insaan-apne-aap-ko-jaan-quiz-2', titleEn: 'Advanced Quiz', titleHi: 'उन्नत प्रश्नोत्तरी' }
+            { id: 'insaan-apne-aap-ko-jaan-quiz', titleEn: 'Take Quiz', titleHi: 'प्रश्नोत्तरी करें', url: 'https://notebooklm.google.com/notebook/b1d363e3-63fc-4796-b852-f122662cae7e?artifactId=607b87a3-2275-48f4-a794-4ddb7a2d7576' }
         ],
     },
     {

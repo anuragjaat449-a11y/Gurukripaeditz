@@ -8,6 +8,7 @@ interface VideoCardProps {
   onOpenPlayer?: () => void;
   titlePrefix: string;
   useModalPlayer: boolean;
+  isShort?: boolean;
 }
 
 // Helper function to convert a Google Drive 'view' URL to a direct download URL.
@@ -23,7 +24,7 @@ const getDirectDownloadUrl = (url: string | undefined): string | undefined => {
 };
 
 
-const VideoCard: React.FC<VideoCardProps> = ({ video, videoNumber, onOpenPlayer, titlePrefix, useModalPlayer }) => {
+const VideoCard: React.FC<VideoCardProps> = ({ video, videoNumber, onOpenPlayer, titlePrefix, useModalPlayer, isShort }) => {
   const { t } = useLanguage();
   const hasThumbnail = video.type === 'youtube' || video.type === 'gdrive';
 
@@ -122,7 +123,7 @@ const VideoCard: React.FC<VideoCardProps> = ({ video, videoNumber, onOpenPlayer,
             <>
               {video.type === 'youtube' && youtubeSrc && (
                 <iframe
-                  className="absolute top-0 left-0 w-full h-full border-0"
+                  className={isShort ? 'youtube-short-iframe-hack' : 'absolute top-0 left-0 w-full h-full border-0'}
                   src={youtubeSrc}
                   title={t.youTubePlayerTitle.replace('{titlePrefix}', titlePrefix).replace('{videoNumber}', String(videoNumber))}
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
