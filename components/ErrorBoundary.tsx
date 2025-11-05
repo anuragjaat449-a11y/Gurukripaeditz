@@ -8,7 +8,9 @@ interface ErrorBoundaryState {
   hasError: boolean;
 }
 
-// FIX: Explicitly extend React.Component to resolve TypeScript error where 'this.props' was not recognized on the class instance.
+// FIX: Using class property for state initialization and explicitly extending
+// React.Component to resolve TypeScript issues where component instance properties
+// like `this.props` were not being recognized.
 class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
   state: ErrorBoundaryState = {
     hasError: false,

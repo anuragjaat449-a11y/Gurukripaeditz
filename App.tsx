@@ -219,7 +219,7 @@ const App: React.FC = () => {
                 {SATSANG_CLIPS.map((video, index) => (
                   <div 
                     className="card-container" 
-                    key={`${video.id}-${index}-${playingVideoId === video.id}`}
+                    key={`${video.id}-${index}`}
                     style={{ animation: `fade-in-up 0.5s ${index * 0.05}s ease-out both` }}
                   >
                     <VideoCard 
@@ -278,7 +278,7 @@ const App: React.FC = () => {
                 {VIDEOS.map((video, index) => (
                   <div 
                     className="card-container" 
-                    key={`${video.id}-${index}-${playingVideoId === video.id}`}
+                    key={`${video.id}-${index}`}
                     style={{ animation: `fade-in-up 0.5s ${index * 0.05}s ease-out both` }}
                   >
                     <VideoCard 
@@ -299,4 +299,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App
+export default App;
