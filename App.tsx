@@ -317,7 +317,6 @@ const App: React.FC = () => {
                       videoNumber={index + 1}
                       titlePrefix={t.videoTitlePrefix}
                       useModalPlayer={false}
-                      isShort={true}
                     />
                   </div>
                 ))}
