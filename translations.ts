@@ -1,3 +1,5 @@
+
+
 export const translations = {
   en: {
     // App.tsx
@@ -7,6 +9,7 @@ export const translations = {
     satsangSectionTitle: "Satsang Clips",
     booksSectionTitle: "Spiritual Books",
     poetrySectionTitle: "Poetry",
+    photoGallerySectionTitle: "Photo Gallery",
     animatedBooksSectionTitle: "Animated Spiritual Books",
     feedbackButton: "Share your feedback",
     viewRating: "View community rating for this app",
@@ -64,6 +67,15 @@ export const translations = {
     // RatingModal.tsx
     ratingTitle: "Community Rating",
     ratingDescription: "This is the average rating provided by our community. Thank you!",
+
+    // PhotoGallery.tsx & ImageModal.tsx
+    kirpalSinghTitle: "Sant Kirpal Singh Ji Maharaj (1894-1974)",
+    photoGallerySubheading: "A Glimpse into a Life of Love and Service",
+    kirpalSinghP1: "Sant Kirpal Singh Ji Maharaj was a renowned spiritual Master who taught the universal path of Surat Shabd Yoga (the yoga of the Sound Current). His teachings emphasized the unity of all religions and the importance of a living Master to guide seekers on the inner spiritual journey back to God.",
+    close: "Close",
+    next: "Next",
+    previous: "Previous",
+
   },
   hi: {
     // App.tsx
@@ -73,6 +85,7 @@ export const translations = {
     satsangSectionTitle: "सत्संग क्लिप्स",
     booksSectionTitle: "आध्यात्मिक पुस्तकें",
     poetrySectionTitle: "कविता",
+    photoGallerySectionTitle: "फोटो गैलरी",
     animatedBooksSectionTitle: "एनिमेटेड आध्यात्मिक पुस्तकें",
     feedbackButton: "अपनी प्रतिक्रिया साझा करें",
     viewRating: "इस ऐप के लिए सामुदायिक रेटिंग देखें",
@@ -130,6 +143,14 @@ export const translations = {
     // RatingModal.tsx
     ratingTitle: "सामुदायिक रेटिंग",
     ratingDescription: "यह हमारे समुदाय द्वारा प्रदान की गई औसत रेटिंग है। धन्यवाद!",
+
+    // PhotoGallery.tsx & ImageModal.tsx
+    kirpalSinghTitle: "संत किरपाल सिंह जी महाराज (१८९४-१९७४)",
+    photoGallerySubheading: "प्रेम और सेवा के जीवन की एक झलक",
+    kirpalSinghP1: "संत किरपाल सिंह जी महाराज एक प्रसिद्ध आध्यात्मिक गुरु थे जिन्होंने सूरत शब्द योग (शब्द-धारा का योग) का सार्वभौमिक मार्ग सिखाया। उनकी शिक्षाओं ने सभी धर्मों की एकता और साधकों को वापस ईश्वर की ओर ले जाने वाली आंतरिक आध्यात्मिक यात्रा पर मार्गदर्शन करने के लिए एक जीवित गुरु के महत्व पर जोर दिया।",
+    close: "बंद करें",
+    next: "अगला",
+    previous: "पिछला",
   }
 };
 

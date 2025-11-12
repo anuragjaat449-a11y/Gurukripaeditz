@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { VIDEOS, SATSANG_CLIPS, BOOKS, Video, POETRY } from './constants';
 import VideoCard from './components/VideoCard';
@@ -10,11 +11,13 @@ import RatingModal from './components/RatingModal';
 import { useLanguage } from './contexts/LanguageContext';
 import VideoPlayerModal from './components/VideoPlayerModal';
 import CarouselNavigator, { CarouselTab } from './components/CarouselNavigator';
+import PhotoGallery from './components/PhotoGallery';
 
 const TABS: CarouselTab[] = [
   { id: 'poetry', titleKey: 'poetrySectionTitle', imageUrl: 'https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=1973&auto=format&fit=crop' },
   { id: 'books', titleKey: 'booksSectionTitle', imageUrl: 'https://images.unsplash.com/photo-1495446815901-a7297e633e8d?q=80&w=2070&auto=format&fit=crop' },
   { id: 'satsang', titleKey: 'satsangSectionTitle', imageUrl: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=1998&auto=format&fit=crop' },
+  { id: 'gallery', titleKey: 'photoGallerySectionTitle', imageUrl: 'https://www.kirpal-sagar.org/images/content/sant-kirpal-singh/sant-kirpal-singh-001-xl.jpg' },
   { id: 'videos', titleKey: 'sectionTitle', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/e/e1/Sant_Rajinder_Singh_Ji_Maharaj_in_white_turban_and_white_kurta_pajama.jpg' },
 ];
 
@@ -141,6 +144,8 @@ const App: React.FC = () => {
         return <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 ${animationClass}`}>{BOOKS.map(book => <BookCard key={book.id} book={book} />)}</div>;
       case 'satsang':
         return <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 ${animationClass}`}>{SATSANG_CLIPS.map((video, i) => <VideoCard key={`${video.id}-${i}`} video={video} videoNumber={i + 1} onOpenPlayer={() => openPlayer(SATSANG_CLIPS, i)} titlePrefix={t.clipTitlePrefix} useModalPlayer={true} isShort={true} />)}</div>;
+      case 'gallery':
+        return <div className={animationClass}><PhotoGallery /></div>;
       case 'videos':
         return <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 ${animationClass}`}>{VIDEOS.map((video, i) => <VideoCard key={`${video.id}-${i}`} video={video} videoNumber={i + 1} onOpenPlayer={() => openPlayer(VIDEOS, i)} titlePrefix={t.videoTitlePrefix} useModalPlayer={true} isShort={true} />)}</div>;
       default: return null;

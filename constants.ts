@@ -30,6 +30,115 @@ export interface Poem {
     meaningHi?: string;
 }
 
+export interface GalleryImage {
+    id: string;
+    thumbnailUrl: string;
+    fullUrl: string;
+    altEn: string;
+    altHi: string;
+}
+
+export const GALLERY_IMAGES: GalleryImage[] = [
+    { id: 'k1', thumbnailUrl: 'https://www.kirpal-sagar.org/images/content/sant-kirpal-singh/sant-kirpal-singh-001-m.jpg', fullUrl: 'https://www.kirpal-sagar.org/images/content/sant-kirpal-singh/sant-kirpal-singh-001-xl.jpg', altEn: 'A portrait of Sant Kirpal Singh Ji Maharaj', altHi: 'संत किरपाल सिंह जी महाराज का एक चित्र' },
+    { id: 'k2', thumbnailUrl: 'https://www.kirpal-sagar.org/images/content/sant-kirpal-singh/sant-kirpal-singh-002-m.jpg', fullUrl: 'https://www.kirpal-sagar.org/images/content/sant-kirpal-singh/sant-kirpal-singh-002-xl.jpg', altEn: 'Sant Kirpal Singh Ji Maharaj in a thoughtful pose', altHi: 'संत किरपाल सिंह जी महाराज एक विचारशील मुद्रा में' },
+    { id: 'k3', thumbnailUrl: 'https://www.kirpal-sagar.org/images/content/sant-kirpal-singh/sant-kirpal-singh-003-m.jpg', fullUrl: 'https://www.kirpal-sagar.org/images/content/sant-kirpal-singh/sant-kirpal-singh-003-xl.jpg', altEn: 'Sant Kirpal Singh Ji Maharaj speaking to an audience', altHi: 'संत किरपाल सिंह जी महाराज एक सभा को संबोधित करते हुए' },
+    { id: 'k4', thumbnailUrl: 'https://www.kirpal-sagar.org/images/content/sant-kirpal-singh/sant-kirpal-singh-004-m.jpg', fullUrl: 'https://www.kirpal-sagar.org/images/content/sant-kirpal-singh/sant-kirpal-singh-004-xl.jpg', altEn: 'A smiling photo of Sant Kirpal Singh Ji Maharaj', altHi: 'संत किरपाल सिंह जी महाराज की एक मुस्कुराती हुई तस्वीर' },
+    { id: 'k5', thumbnailUrl: 'https://www.kirpal-sagar.org/images/content/sant-kirpal-singh/sant-kirpal-singh-005-m.jpg', fullUrl: 'https://www.kirpal-sagar.org/images/content/sant-kirpal-singh/sant-kirpal-singh-005-xl.jpg', altEn: 'Sant Kirpal Singh Ji Maharaj during a tour abroad', altHi: 'संत किरपाल सिंह जी महाराज विदेश यात्रा के दौरान' },
+    { id: 'k6', thumbnailUrl: 'https://www.kirpal-sagar.org/images/content/sant-kirpal-singh/sant-kirpal-singh-006-m.jpg', fullUrl: 'https://www.kirpal-sagar.org/images/content/sant-kirpal-singh/sant-kirpal-singh-006-xl.jpg', altEn: 'A candid moment of Sant Kirpal Singh Ji Maharaj', altHi: 'संत किरपाल सिंह जी महाराज का एक स्पष्ट क्षण' },
+    { id: 'k7', thumbnailUrl: 'https://www.kirpal-sagar.org/images/content/sant-kirpal-singh/sant-kirpal-singh-007-m.jpg', fullUrl: 'https://www.kirpal-sagar.org/images/content/sant-kirpal-singh/sant-kirpal-singh-007-xl.jpg', altEn: 'Sant Kirpal Singh Ji Maharaj in meditation', altHi: 'संत किरपाल सिंह जी महाराज ध्यान में' },
+    { id: 'k8', thumbnailUrl: 'https://www.kirpal-sagar.org/images/content/sant-kirpal-singh/sant-kirpal-singh-008-m.jpg', fullUrl: 'https://www.kirpal-sagar.org/images/content/sant-kirpal-singh/sant-kirpal-singh-008-xl.jpg', altEn: 'A close-up portrait of Sant Kirpal Singh Ji Maharaj', altHi: 'संत किरपाल सिंह जी महाराज का एक क्लोज-अप चित्र' },
+    { id: 'k9', thumbnailUrl: 'https://www.kirpal-sagar.org/images/content/sant-kirpal-singh/sant-kirpal-singh-009-m.jpg', fullUrl: 'https://www.kirpal-sagar.org/images/content/sant-kirpal-singh/sant-kirpal-singh-009-xl.jpg', altEn: 'Sant Kirpal Singh Ji Maharaj with his Master, Baba Sawan Singh Ji', altHi: 'संत किरपाल सिंह जी महाराज अपने गुरु, बाबा सावन सिंह जी के साथ' },
+    { id: 'k10', thumbnailUrl: 'https://www.kirpal-sagar.org/images/content/sant-kirpal-singh/sant-kirpal-singh-010-m.jpg', fullUrl: 'https://www.kirpal-sagar.org/images/content/sant-kirpal-singh/sant-kirpal-singh-010-xl.jpg', altEn: 'Sawan Ashram in Delhi, India', altHi: 'सावन आश्रम, दिल्ली, भारत' },
+    { id: 'k11', thumbnailUrl: 'https://www.kirpal-sagar.org/images/content/sant-kirpal-singh/sant-kirpal-singh-011-m.jpg', fullUrl: 'https://www.kirpal-sagar.org/images/content/sant-kirpal-singh/sant-kirpal-singh-011-xl.jpg', altEn: 'Sant Kirpal Singh Ji speaking at the World Fellowship of Religions', altHi: 'संत किरपाल सिंह जी विश्व धर्म सम्मेलन में बोलते हुए' },
+    { id: 'k12', thumbnailUrl: 'https://www.kirpal-sagar.org/images/content/sant-kirpal-singh/sant-kirpal-singh-012-m.jpg', fullUrl: 'https://www.kirpal-sagar.org/images/content/sant-kirpal-singh/sant-kirpal-singh-012-xl.jpg', altEn: 'Sant Kirpal Singh Ji on one of his world tours', altHi: 'संत किरपाल सिंह जी अपनी एक विश्व यात्रा पर' },
+    { id: 'k15', thumbnailUrl: 'https://www.kirpal-sagar.org/images/content/sant-kirpal-singh/sant-kirpal-singh-015-m.jpg', fullUrl: 'https://www.kirpal-sagar.org/images/content/sant-kirpal-singh/sant-kirpal-singh-015-xl.jpg', altEn: 'Sant Kirpal Singh Ji at the World Conference on Unity of Man', altHi: 'संत किरपाल सिंह जी मानव एकता पर विश्व सम्मेलन में' },
+];
+
+export interface TimelineEvent {
+    year: string;
+    titleEn: string;
+    titleHi: string;
+    descriptionEn: string;
+    descriptionHi: string;
+    imageId: string; // Corresponds to the id in GALLERY_IMAGES
+}
+
+export const TIMELINE_EVENTS: TimelineEvent[] = [
+  {
+    year: '1894',
+    titleEn: 'Birth and Early Life',
+    titleHi: 'जन्म और प्रारंभिक जीवन',
+    descriptionEn: 'Sant Kirpal Singh Ji Maharaj was born on February 6, 1894, in Sayyad Kasran, a rural town in what is now Pakistan. From a young age, He showed a deep interest in spirituality and a profound compassion for all living beings.',
+    descriptionHi: 'संत किरपाल सिंह जी महाराज का जन्म 6 फरवरी, 1894 को सय्यद कसरान में हुआ था, जो अब पाकिस्तान में एक ग्रामीण कस्बा है। छोटी उम्र से ही, उन्होंने आध्यात्मिकता में गहरी रुचि और सभी जीवित प्राणियों के प्रति गहन करुणा दिखाई।',
+    imageId: 'k8'
+  },
+  {
+    year: '1924',
+    titleEn: 'Meeting the Master',
+    titleHi: 'गुरु से भेंट',
+    descriptionEn: 'After a long and sincere search for a true spiritual guide, He met his Satguru, Baba Sawan Singh Ji Maharaj, in 1924 at the ashram on the banks of the Beas river. He was initiated into the path of Surat Shabd Yoga on February 15, 1924.',
+    descriptionHi: 'एक सच्चे आध्यात्मिक मार्गदर्शक की लंबी और सच्ची खोज के बाद, वह 1924 में ब्यास नदी के तट पर स्थित आश्रम में अपने सतगुरु, बाबा सावन सिंह जी महाराज से मिले। उन्हें 15 फरवरी, 1924 को सूरत शब्द योग के मार्ग में दीक्षित किया गया।',
+    imageId: 'k9'
+  },
+  {
+    year: '1948',
+    titleEn: 'Assuming the Mantle',
+    titleHi: 'गुरु पद का दायित्व',
+    descriptionEn: 'Following the passing of his Master Baba Sawan Singh Ji in April 1948, Sant Kirpal Singh Ji began his spiritual mission as entrusted to him. He moved to Delhi and began carrying on the spiritual work.',
+    descriptionHi: 'अप्रैल 1948 में अपने गुरु बाबा सावन सिंह जी के निधन के बाद, संत किरपाल सिंह जी ने उन्हें सौंपे गए आध्यात्मिक मिशन को शुरू किया। वह दिल्ली चले गए और आध्यात्मिक कार्य को आगे बढ़ाने लगे।',
+    imageId: 'k1'
+  },
+  {
+    year: '1951',
+    titleEn: 'Founding of Sawan Ashram',
+    titleHi: 'सावन आश्रम की स्थापना',
+    descriptionEn: 'In 1951, He established Sawan Ashram on the outskirts of Delhi. This center became the heart of his spiritual mission, a place where people from all over the world could come to receive spiritual guidance and instruction in meditation.',
+    descriptionHi: '1951 में, उन्होंने दिल्ली के बाहरी इलाके में सावन आश्रम की स्थापना की। यह केंद्र उनके आध्यात्मिक मिशन का हृदय बन गया, एक ऐसा स्थान जहाँ दुनिया भर से लोग आध्यात्मिक मार्गदर्शन और ध्यान में निर्देश प्राप्त करने के लिए आ सकते थे।',
+    imageId: 'k10'
+  },
+  {
+    year: '1955',
+    titleEn: 'First World Tour',
+    titleHi: 'प्रथम विश्व यात्रा',
+    descriptionEn: 'He was the first Sant Mat Master to travel outside of India. His first world tour in 1955 took him to major cities across the United States and Europe, where He introduced the practical science of spirituality to thousands of seekers.',
+    descriptionHi: 'वह भारत से बाहर यात्रा करने वाले पहले संत मत गुरु थे। 1955 में उनकी पहली विश्व यात्रा उन्हें संयुक्त राज्य अमेरिका और यूरोप के प्रमुख शहरों में ले गई, जहाँ उन्होंने हजारों साधकों को आध्यात्मिकता के व्यावहारिक विज्ञान से परिचित कराया।',
+    imageId: 'k5'
+  },
+  {
+    year: '1957',
+    titleEn: 'World Fellowship of Religions',
+    titleHi: 'विश्व धर्म सम्मेलन',
+    descriptionEn: 'In recognition of his work for human unity, Sant Kirpal Singh Ji was unanimously elected President of the World Fellowship of Religions, a position he held for fifteen years, presiding over four world conferences.',
+    descriptionHi: 'मानव एकता के लिए उनके काम की मान्यता में, संत किरपाल सिंह जी को सर्वसम्मति से विश्व धर्म सम्मेलन का अध्यक्ष चुना गया, इस पद पर वह पंद्रह वर्षों तक रहे और चार विश्व सम्मेलनों की अध्यक्षता की।',
+    imageId: 'k11'
+  },
+  {
+    year: '1963',
+    titleEn: 'Second World Tour',
+    titleHi: 'द्वितीय विश्व यात्रा',
+    descriptionEn: 'His second world tour in 1963 further spread the message of self-knowledge and God-knowledge. He met with numerous religious and state leaders, emphasizing that the core teachings of all religions are the same.',
+    descriptionHi: '1963 में उनकी दूसरी विश्व यात्रा ने आत्म-ज्ञान और ईश्वर-ज्ञान के संदेश को और फैलाया। उन्होंने कई धार्मिक और राज्य के नेताओं से मुलाकात की, इस बात पर जोर देते हुए कि सभी धर्मों की मूल शिक्षाएं समान हैं।',
+    imageId: 'k12'
+  },
+  {
+    year: '1972',
+    titleEn: 'Third World Tour',
+    titleHi: 'तृतीय विश्व यात्रा',
+    descriptionEn: 'During his final world tour, He continued his tireless work of uniting humanity, giving talks and holding meditation sittings, and offering the gift of Naam initiation to sincere seekers everywhere.',
+    descriptionHi: 'अपनी अंतिम विश्व यात्रा के दौरान, उन्होंने मानवता को एकजुट करने का अपना अथक कार्य जारी रखा, वार्ताएं दीं और ध्यान सभाएं आयोजित कीं, और हर जगह सच्चे साधकों को नाम दीक्षा का उपहार दिया।',
+    imageId: 'k3'
+  },
+  {
+    year: '1974',
+    titleEn: 'Unity of Man & Passing',
+    titleHi: 'मानव एकता और महाप्रयाण',
+    descriptionEn: 'In February 1974, He convened the first World Conference on Unity of Man. On August 21, 1974, having completed his mission on earth, Sant Kirpal Singh Ji Maharaj left his physical body, leaving behind a legacy of love and a universal teaching for all humanity.',
+    descriptionHi: 'फरवरी 1974 में, उन्होंने मानव एकता पर पहला विश्व सम्मेलन आयोजित किया। 21 अगस्त, 1974 को, पृथ्वी पर अपना मिशन पूरा करने के बाद, संत किरपाल सिंह जी महाराज ने अपना भौतिक शरीर छोड़ दिया, और अपने पीछे प्रेम की विरासत और पूरी मानवता के लिए एक सार्वभौमिक शिक्षा छोड़ गए।',
+    imageId: 'k15'
+  }
+];
+
+
 export const BOOKS: Book[] = [
     {
         id: 'insaan-apne-aap-ko-jaan',
