@@ -76,6 +76,9 @@ export const translations = {
     next: "Next",
     previous: "Previous",
 
+    // Poetry Reset Message
+    poetryResetTitle: "You've seen all the poems!",
+    poetryResetSubtitle: "Enjoy them again from the beginning.",
   },
   hi: {
     // App.tsx
@@ -151,6 +154,10 @@ export const translations = {
     close: "बंद करें",
     next: "अगला",
     previous: "पिछला",
+    
+    // Poetry Reset Message
+    poetryResetTitle: "आपने सारी कविताएँ देख ली हैं!",
+    poetryResetSubtitle: "शुरू से फिर से उनका आनंद लें।",
   }
 };
 

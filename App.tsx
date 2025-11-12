@@ -1,6 +1,7 @@
 
+
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { VIDEOS, SATSANG_CLIPS, BOOKS, Video, POETRY } from './constants';
+import { VIDEOS, SATSANG_CLIPS, BOOKS, Video, POETRY, Poem } from './constants';
 import VideoCard from './components/VideoCard';
 import BookCard from './components/BookCard';
 import PoetryCard from './components/PoetryCard';
@@ -36,7 +37,54 @@ const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>('poetry');
   const [scrolled, setScrolled] = useState(false);
   const ratingButtonRef = useRef<HTMLButtonElement>(null);
+  
+  const [poetryToDisplay, setPoetryToDisplay] = useState<Poem[]>([]);
+  const [showPoetryResetMessage, setShowPoetryResetMessage] = useState(false);
 
+  useEffect(() => {
+    const initializePoetry = () => {
+      let seenIds: string[] = [];
+      try {
+        const storedIds = localStorage.getItem('seenPoemIds');
+        if (storedIds) {
+          seenIds = JSON.parse(storedIds);
+        }
+      } catch (e) {
+        console.error("Failed to parse seenPoemIds from localStorage", e);
+        seenIds = [];
+      }
+      
+      const seenIdSet = new Set(seenIds);
+      let unseenPoems = POETRY.filter(p => !seenIdSet.has(p.id));
+
+      if (unseenPoems.length === 0 && POETRY.length > 0) {
+        setShowPoetryResetMessage(true);
+        localStorage.removeItem('seenPoemIds');
+        unseenPoems = [...POETRY]; // Show all again
+      } else {
+        setShowPoetryResetMessage(false);
+      }
+
+      const shuffled = unseenPoems.sort(() => Math.random() - 0.5);
+      setPoetryToDisplay(shuffled);
+    };
+
+    initializePoetry();
+  }, []);
+
+  const handlePoemBecameVisible = useCallback((id: string) => {
+    try {
+      const storedIds = localStorage.getItem('seenPoemIds');
+      const seenIds = storedIds ? new Set<string>(JSON.parse(storedIds)) : new Set<string>();
+      if (!seenIds.has(id)) {
+        seenIds.add(id);
+        localStorage.setItem('seenPoemIds', JSON.stringify(Array.from(seenIds)));
+      }
+    } catch (e) {
+      console.error("Failed to update seenPoemIds in localStorage", e);
+    }
+  }, []);
+  
   const [theme, setTheme] = useState(() => {
     if (typeof window !== 'undefined') {
       const savedTheme = localStorage.getItem('theme');
@@ -139,7 +187,19 @@ const App: React.FC = () => {
     const animationClass = "animate-[fade-in-up_0.5s_ease-out]";
     switch(activeTab) {
       case 'poetry':
-        return <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 ${animationClass}`}>{POETRY.map(poem => <PoetryCard key={poem.id} poem={poem} />)}</div>;
+        return (
+          <>
+            {showPoetryResetMessage && (
+              <div className={`mb-8 p-4 text-center glass-card text-brand-maroon dark:text-brand-gold ${animationClass}`}>
+                <p className="font-semibold">{t.poetryResetTitle}</p>
+                <p>{t.poetryResetSubtitle}</p>
+              </div>
+            )}
+            <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 ${animationClass}`}>
+              {poetryToDisplay.map(poem => <PoetryCard key={poem.id} poem={poem} onBecameVisible={handlePoemBecameVisible} />)}
+            </div>
+          </>
+        );
       case 'books':
         return <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 ${animationClass}`}>{BOOKS.map(book => <BookCard key={book.id} book={book} />)}</div>;
       case 'satsang':

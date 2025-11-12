@@ -1,15 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import type { Poem } from '../constants';
 import { useLanguage } from '../contexts/LanguageContext';
 
 interface PoetryCardProps {
   poem: Poem;
+  onBecameVisible: (id: string) => void;
 }
 
-const PoetryCard: React.FC<PoetryCardProps> = ({ poem }) => {
+const PoetryCard: React.FC<PoetryCardProps> = ({ poem, onBecameVisible }) => {
   const { t } = useLanguage();
   const [showMeaning, setShowMeaning] = useState(false);
   const [cardLanguage, setCardLanguage] = useState<'en' | 'hi'>('hi');
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          onBecameVisible(poem.id);
+          observer.disconnect(); // Fire only once
+        }
+      },
+      {
+        root: null, // viewport
+        rootMargin: '0px',
+        threshold: 0.5, // 50% of the item must be visible
+      }
+    );
+
+    const currentRef = cardRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
+    }
+
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+    };
+  }, [poem.id, onBecameVisible]);
 
   const toggleCardLanguage = () => {
     setCardLanguage(prev => (prev === 'hi' ? 'en' : 'hi'));
@@ -21,7 +50,7 @@ const PoetryCard: React.FC<PoetryCardProps> = ({ poem }) => {
   const hasMeaning = !!meaning;
 
   return (
-    <div className="glass-card rounded-lg overflow-hidden group h-full flex flex-col relative p-6 text-center">
+    <div ref={cardRef} className="glass-card rounded-lg overflow-hidden group h-full flex flex-col relative p-6 text-center">
       <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-brand-maroon/10 via-transparent to-brand-maroon/10 dark:from-brand-gold/10 dark:via-transparent dark:to-brand-gold/10 opacity-50 group-hover:opacity-100 transition-opacity"></div>
       <div className="relative z-10 flex flex-col h-full">
         <h3 className="font-serif-decorative text-2xl text-brand-maroon dark:text-brand-gold mb-4">
