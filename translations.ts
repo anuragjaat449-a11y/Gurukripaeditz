@@ -6,6 +6,7 @@ export const translations = {
     sectionTitle: "Shortz",
     satsangSectionTitle: "Satsang Clips",
     booksSectionTitle: "Spiritual Books",
+    poetrySectionTitle: "Poetry",
     animatedBooksSectionTitle: "Animated Spiritual Books",
     feedbackButton: "Share your feedback",
     viewRating: "View community rating for this app",
@@ -42,6 +43,11 @@ export const translations = {
     watchVideo: "Watch Video",
     takeQuiz: "Take Quiz",
 
+    // PoetryCard.tsx
+    listenToPoem: "Listen to Poem",
+    showMeaning: "Show Meaning",
+    hideMeaning: "Hide Meaning",
+
     // IntroAnimation.tsx
     skip: "SKIP",
     introQuote: { text: '"God is love."', author: "Sant Darshan Singh Ji Maharaj" },
@@ -66,6 +72,7 @@ export const translations = {
     sectionTitle: "शॉर्ट्स",
     satsangSectionTitle: "सत्संग क्लिप्स",
     booksSectionTitle: "आध्यात्मिक पुस्तकें",
+    poetrySectionTitle: "कविता",
     animatedBooksSectionTitle: "एनिमेटेड आध्यात्मिक पुस्तकें",
     feedbackButton: "अपनी प्रतिक्रिया साझा करें",
     viewRating: "इस ऐप के लिए सामुदायिक रेटिंग देखें",
@@ -101,6 +108,11 @@ export const translations = {
     listenAudio: "ऑडियो सुनें",
     watchVideo: "वीडियो देखें",
     takeQuiz: "प्रश्नोत्तरी करें",
+    
+    // PoetryCard.tsx
+    listenToPoem: "कविता सुनें",
+    showMeaning: "अर्थ देखें",
+    hideMeaning: "अर्थ छिपाएं",
 
     // IntroAnimation.tsx
     skip: "छोड़ें",

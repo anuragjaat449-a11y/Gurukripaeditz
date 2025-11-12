@@ -148,11 +148,20 @@ const VideoCard: React.FC<VideoCardProps> = ({ video, videoNumber, onOpenPlayer,
               aria-label={isVideoInvalid ? unavailableAria : playAria}
             >
               {isVideoInvalid ? (
-                 <div className="w-full h-full bg-black/5 dark:bg-black/30 flex flex-col items-center justify-center text-center p-4 text-brand-maroon/70 dark:text-brand-gold/70">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
-                  </svg>
-                  <span className="mt-2 text-sm font-semibold">{t.videoUnavailable}</span>
+                 <div className="w-full h-full bg-brand-cream/50 dark:bg-black/30 flex flex-col items-center justify-center text-center p-4 text-brand-maroon/70 dark:text-brand-gold/70 relative overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-br from-brand-maroon/10 via-transparent to-brand-maroon/10 dark:from-brand-gold/10 dark:via-transparent dark:to-brand-gold/10"></div>
+                    <svg
+                      viewBox="0 0 100 100"
+                      className="w-20 h-20 relative z-10 text-brand-maroon/50 dark:text-brand-gold/50"
+                      aria-label="Diya Lamp"
+                    >
+                      <path
+                        d="M50 70 C 55 60, 50 45, 50 45 C 50 45, 45 60, 50 70Z"
+                        fill="currentColor"
+                      />
+                      <path d="M20 75 C 40 60, 60 60, 80 75 Q 50 90, 20 75Z" fill="currentColor" opacity="0.8" />
+                    </svg>
+                    <span className="mt-2 text-sm font-semibold relative z-10">{t.videoUnavailable}</span>
                 </div>
               ) : hasThumbnail ? (
                 <>

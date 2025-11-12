@@ -1,32 +1,38 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { VIDEOS, SATSANG_CLIPS, BOOKS, Video } from './constants';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { VIDEOS, SATSANG_CLIPS, BOOKS, Video, POETRY } from './constants';
 import VideoCard from './components/VideoCard';
 import BookCard from './components/BookCard';
+import PoetryCard from './components/PoetryCard';
 import IntroAnimation from './components/IntroAnimation';
 import ThemeToggle from './components/ThemeToggle';
 import SurveyModal, { SurveyData } from './components/SurveyModal';
 import RatingModal from './components/RatingModal';
 import { useLanguage } from './contexts/LanguageContext';
 import VideoPlayerModal from './components/VideoPlayerModal';
+import CarouselNavigator, { CarouselTab } from './components/CarouselNavigator';
 
-type Tab = 'satsang' | 'books' | 'videos';
+const TABS: CarouselTab[] = [
+  { id: 'poetry', titleKey: 'poetrySectionTitle', imageUrl: 'https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=1973&auto=format&fit=crop' },
+  { id: 'books', titleKey: 'booksSectionTitle', imageUrl: 'https://images.unsplash.com/photo-1495446815901-a7297e633e8d?q=80&w=2070&auto=format&fit=crop' },
+  { id: 'satsang', titleKey: 'satsangSectionTitle', imageUrl: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=1998&auto=format&fit=crop' },
+  { id: 'videos', titleKey: 'sectionTitle', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/e/e1/Sant_Rajinder_Singh_Ji_Maharaj_in_white_turban_and_white_kurta_pajama.jpg' },
+];
 
-// --- Main App Component ---
 const App: React.FC = () => {
   const [showIntro, setShowIntro] = useState(true);
   const [currentQuoteIndex, setCurrentQuoteIndex] = useState(0);
   const [isQuoteVisible, setIsQuoteVisible] = useState(true);
   const { language, toggleLanguage, t } = useLanguage();
   const QUOTES = t.quotes;
-
-  // --- Survey and Rating State ---
   const [isSurveyOpen, setIsSurveyOpen] = useState(false);
   const [hasUserRated, setHasUserRated] = useState(false);
   const [averageRatingInfo, setAverageRatingInfo] = useState({ rating: 0, count: 0 });
   const [isRatingModalOpen, setIsRatingModalOpen] = useState(false);
   const [ratingModalPosition, setRatingModalPosition] = useState<{ top: number; left: number } | null>(null);
   const [playerState, setPlayerState] = useState<{ list: Video[], index: number, isShortsList: boolean } | null>(null);
-  const [activeTab, setActiveTab] = useState<Tab>('satsang');
+  const [activeTab, setActiveTab] = useState<string>('poetry');
+  const [scrolled, setScrolled] = useState(false);
+  const ratingButtonRef = useRef<HTMLButtonElement>(null);
 
   const [theme, setTheme] = useState(() => {
     if (typeof window !== 'undefined') {
@@ -36,7 +42,7 @@ const App: React.FC = () => {
     }
     return 'dark';
   });
-  
+
   const calculateAverageRating = useCallback(() => {
     try {
       const storedRatings = localStorage.getItem('gks_ratings');
@@ -50,7 +56,7 @@ const App: React.FC = () => {
       console.error("Failed to parse ratings from localStorage", error);
     }
   }, []);
-  
+
   useEffect(() => {
     calculateAverageRating();
     if (localStorage.getItem('gks_hasRated')) {
@@ -65,267 +71,130 @@ const App: React.FC = () => {
     localStorage.setItem('theme', theme);
   }, [theme]);
 
-  // Add scroll listener for header effects
-  useEffect(() => {
-    const handleScroll = () => {
-      const header = document.querySelector('header');
-      if (header) {
-        if (window.scrollY > 20) {
-          header.classList.add('scrolled');
-        } else {
-          header.classList.remove('scrolled');
-        }
-      }
-    };
+  const toggleTheme = () => setTheme(prevTheme => (prevTheme === 'dark' ? 'light' : 'dark'));
 
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const toggleTheme = () => {
-    setTheme(prevTheme => (prevTheme === 'dark' ? 'light' : 'dark'));
-  };
-  
   useEffect(() => {
-    if(showIntro) return; // Don't start quote interval during intro
-
-    const quoteInterval = setInterval(() => {
-      setIsQuoteVisible(false); // Start fade out
+    const quoteTimer = setInterval(() => {
+      setIsQuoteVisible(false);
       setTimeout(() => {
-        setCurrentQuoteIndex(prevIndex => (prevIndex + 1) % QUOTES.length);
-        setIsQuoteVisible(true); // Start fade in
-      }, 500); // Wait for fade out to complete
-    }, 7000); // Change quote every 7 seconds
+        setCurrentQuoteIndex(prev => (prev + 1) % QUOTES.length);
+        setIsQuoteVisible(true);
+      }, 500);
+    }, 7000);
+    return () => clearInterval(quoteTimer);
+  }, [QUOTES.length]);
 
-    return () => clearInterval(quoteInterval);
-  }, [showIntro, QUOTES.length]);
-  
+  const handleFeedbackClick = () => setIsSurveyOpen(true);
+
   const handleSurveySubmit = (data: SurveyData) => {
     try {
-      const storedRatings = localStorage.getItem('gks_ratings');
-      const ratings: number[] = storedRatings ? JSON.parse(storedRatings) : [];
+      const ratings = JSON.parse(localStorage.getItem('gks_ratings') || '[]');
       ratings.push(data.rating);
       localStorage.setItem('gks_ratings', JSON.stringify(ratings));
       localStorage.setItem('gks_hasRated', 'true');
       setHasUserRated(true);
-      calculateAverageRating(); // Recalculate and update display
+      calculateAverageRating();
     } catch (error) {
-      console.error("Failed to save rating to localStorage", error);
+      console.error("Could not save rating", error);
     }
   };
 
-  const handleOpenRatingModal = (event: React.MouseEvent<HTMLButtonElement>) => {
-    const rect = event.currentTarget.getBoundingClientRect();
-    setRatingModalPosition({
-      top: rect.bottom + 12, // 12px below the icon
-      left: rect.left + rect.width / 2, // Centered horizontally
-    });
+  const handleRatingButtonClick = () => {
+    if (ratingButtonRef.current) {
+      const rect = ratingButtonRef.current.getBoundingClientRect();
+      setRatingModalPosition({ top: rect.bottom + 10, left: rect.left + rect.width / 2 });
+    }
     setIsRatingModalOpen(true);
   };
 
-  const handleOpenPlayer = (list: Video[], index: number, isShortsList: boolean) => {
-    setPlayerState({ list, index, isShortsList });
+  const openPlayer = (list: Video[], index: number) => {
+    const isShorts = list === VIDEOS || list === SATSANG_CLIPS;
+    setPlayerState({ list, index, isShortsList: isShorts });
   };
-
-  const handleClosePlayer = () => {
-    setPlayerState(null);
-  };
-
-  const handleNextVideo = () => {
-    setPlayerState(prev => {
-        if (!prev) return null;
-        const nextIndex = (prev.index + 1) % prev.list.length;
-        return { ...prev, index: nextIndex };
-    });
-  };
-
-  const handlePrevVideo = () => {
-    setPlayerState(prev => {
-        if (!prev) return null;
-        const prevIndex = (prev.index - 1 + prev.list.length) % prev.list.length;
-        return { ...prev, index: prevIndex };
-    });
-  };
-
-  if (showIntro) {
-    return <IntroAnimation onFinish={() => setShowIntro(false)} />;
-  }
   
-  const currentVideo = playerState ? playerState.list[playerState.index] : null;
+  const closePlayer = () => setPlayerState(null);
+
+  const playNext = () => {
+    if (!playerState) return;
+    const nextIndex = (playerState.index + 1) % playerState.list.length;
+    setPlayerState(ps => ps ? { ...ps, index: nextIndex } : null);
+  };
+
+  const playPrev = () => {
+    if (!playerState) return;
+    const prevIndex = (playerState.index - 1 + playerState.list.length) % playerState.list.length;
+    setPlayerState(ps => ps ? { ...ps, index: prevIndex } : null);
+  };
+  
+  const renderActiveTabContent = () => {
+    const animationClass = "animate-[fade-in-up_0.5s_ease-out]";
+    switch(activeTab) {
+      case 'poetry':
+        return <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 ${animationClass}`}>{POETRY.map(poem => <PoetryCard key={poem.id} poem={poem} />)}</div>;
+      case 'books':
+        return <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 ${animationClass}`}>{BOOKS.map(book => <BookCard key={book.id} book={book} />)}</div>;
+      case 'satsang':
+        return <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 ${animationClass}`}>{SATSANG_CLIPS.map((video, i) => <VideoCard key={`${video.id}-${i}`} video={video} videoNumber={i + 1} onOpenPlayer={() => openPlayer(SATSANG_CLIPS, i)} titlePrefix={t.clipTitlePrefix} useModalPlayer={true} isShort={true} />)}</div>;
+      case 'videos':
+        return <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 ${animationClass}`}>{VIDEOS.map((video, i) => <VideoCard key={`${video.id}-${i}`} video={video} videoNumber={i + 1} onOpenPlayer={() => openPlayer(VIDEOS, i)} titlePrefix={t.videoTitlePrefix} useModalPlayer={true} isShort={true} />)}</div>;
+      default: return null;
+    }
+  };
+
+  if (showIntro) return <IntroAnimation onFinish={() => setShowIntro(false)} />;
+
+  const currentQuote = QUOTES[currentQuoteIndex];
 
   return (
-    <div className="min-h-screen text-gray-800 dark:text-white" style={{animation: 'fade-in-up 0.8s ease-out both'}}>
-      {isSurveyOpen && (
-        <SurveyModal
-          isOpen={isSurveyOpen}
-          onClose={() => setIsSurveyOpen(false)}
-          onSubmit={handleSurveySubmit}
-        />
-      )}
-      
-      <RatingModal
-        isOpen={isRatingModalOpen}
-        onClose={() => {
-            setIsRatingModalOpen(false);
-            setRatingModalPosition(null);
-        }}
-        rating={averageRatingInfo.rating}
-        count={averageRatingInfo.count}
-        position={ratingModalPosition}
-      />
-
-      <VideoPlayerModal
-        isOpen={!!playerState}
-        onClose={handleClosePlayer}
-        onNext={handleNextVideo}
-        onPrev={handlePrevVideo}
-        video={currentVideo}
-        isShort={playerState?.isShortsList}
-      />
-      
-      {!hasUserRated && (
-        <button
-          onClick={() => setIsSurveyOpen(true)}
-          className="fixed bottom-6 right-6 z-20 w-16 h-16 rounded-full btn-premium shadow-lg flex items-center justify-center animate-gentle-bounce transform-gpu"
-          aria-label={t.feedbackButton}
-          title={t.feedbackButton}
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
-            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-          </svg>
-        </button>
-      )}
-
-      <div className="fixed top-4 right-4 z-20 flex items-center space-x-2">
-        <button
-          onClick={toggleLanguage}
-          className="p-2 w-10 h-10 flex items-center justify-center rounded-full btn-premium-secondary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-gold font-bold text-lg"
-          aria-label={t.toggleLanguage}
-          title={t.toggleLanguage}
-        >
-          {language === 'en' ? 'हि' : 'EN'}
-        </button>
-        <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
-      </div>
-      
-      <header className="py-8 sticky top-0 z-10">
-        <div className="container mx-auto text-center px-4 relative">
-          <h1 className="text-4xl md:text-6xl tracking-widest text-brand-maroon dark:text-brand-gold title-decorative transition-font-size duration-400">{t.headerTitle}</h1>
-          <p className="text-lg mt-2 tracking-wider text-black/60 dark:text-white/80">{t.headerSubtitle}</p>
-           
-           <div className="h-16 flex items-center justify-center mt-2">
-              <div className="relative w-full h-10 flex items-center justify-center">
-                  <p 
-                  className={`transition-all duration-500 ease-in-out text-sm md:text-base italic text-black/70 dark:text-white/70 absolute inset-0 ${isQuoteVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2'}`}
-                  >
-                  "{QUOTES[currentQuoteIndex].text}"
-                  <br/>
-                  <span className="font-semibold not-italic">- {QUOTES[currentQuoteIndex].author}</span>
-                  </p>
-              </div>
-          </div>
+    <>
+      <header className={`sticky top-0 z-30 px-4 md:px-8 py-6 transition-all duration-300 ${scrolled ? 'scrolled' : ''}`}>
+        <div className="container mx-auto flex flex-col items-center text-center">
+            <h1 className="text-4xl md:text-6xl font-serif-decorative tracking-widest text-brand-maroon dark:text-brand-gold title-decorative transition-all duration-300">{t.headerTitle}</h1>
+            <p className="mt-2 text-sm md:text-base text-black/70 dark:text-white/70">{t.headerSubtitle}</p>
+            <div className="relative mt-4 h-16 w-full max-w-3xl flex items-center justify-center overflow-hidden">
+                <div className={`transition-all duration-500 ease-in-out ${isQuoteVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}>
+                    <p className="text-base md:text-lg italic text-black/80 dark:text-white/80">"{currentQuote.text}"</p>
+                    <p className="mt-1 text-sm text-black/60 dark:text-white/60">- {currentQuote.author}</p>
+                </div>
+            </div>
+            <div className="absolute top-4 right-4 flex items-center space-x-2">
+                <button onClick={toggleLanguage} className="p-2 w-10 h-10 rounded-full btn-premium-secondary" title={t.toggleLanguage}>
+                    <span className="font-bold text-lg">{language === 'en' ? 'हि' : 'En'}</span>
+                </button>
+                <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
+            </div>
         </div>
       </header>
 
-      <main>
-        <nav className="my-8 flex justify-center items-center gap-2 md:gap-4 p-4">
-            <div className="flex items-center bg-brand-maroon/5 dark:bg-brand-gold/5 p-1 rounded-full">
-                <button onClick={() => setActiveTab('satsang')} className={`tab-button ${activeTab === 'satsang' ? 'tab-active' : ''}`}>
-                    {t.satsangSectionTitle}
-                </button>
-                <button onClick={() => setActiveTab('books')} className={`tab-button ${activeTab === 'books' ? 'tab-active' : ''}`}>
-                    {t.booksSectionTitle}
-                </button>
-                <button onClick={() => setActiveTab('videos')} className={`tab-button ${activeTab === 'videos' ? 'tab-active' : ''}`}>
-                    {t.sectionTitle}
-                </button>
-            </div>
-        </nav>
-
-        <div key={activeTab} style={{ animation: 'fade-in-up 0.6s ease-out both' }}>
-          {activeTab === 'satsang' && (
-            <section className="my-12 mx-auto max-w-7xl p-5">
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8">
-                {SATSANG_CLIPS.map((video, index) => (
-                  <div 
-                    className="card-container" 
-                    key={`${video.id}-${index}`}
-                    style={{ animation: `fade-in-up 0.5s ${index * 0.05}s ease-out both` }}
-                  >
-                    <VideoCard 
-                      video={video} 
-                      videoNumber={index + 1}
-                      titlePrefix={t.clipTitlePrefix}
-                      useModalPlayer={false}
-                    />
-                  </div>
-                ))}
-              </div>
-            </section>
-          )}
-
-          {activeTab === 'books' && (
-            <section className="my-12 mx-auto max-w-7xl p-5">
-              <div className="flex justify-center gap-8 flex-wrap">
-                {BOOKS.map((book, index) => (
-                  <div
-                    className="card-container w-full max-w-xs"
-                    key={book.id}
-                    style={{ animation: `fade-in-up 0.5s ${index * 0.05}s ease-out both` }}
-                  >
-                    <BookCard book={book} />
-                  </div>
-                ))}
-              </div>
-            </section>
-          )}
-
-          {activeTab === 'videos' && (
-            <section className="my-12 mx-auto max-w-7xl p-5">
-              <div className="flex justify-center items-center mb-12 w-full">
-                <div className="w-24 h-px bg-gradient-to-r from-transparent via-brand-maroon/50 to-brand-maroon/50 dark:via-brand-gold/50 dark:to-brand-gold/50"></div>
-                <button
-                  onClick={handleOpenRatingModal}
-                  title={t.viewRating}
-                  aria-label={t.viewRating}
-                  className="mx-4 group"
-                >
-                  <svg 
-                    className="w-24 h-24 text-brand-maroon/80 dark:text-brand-gold/80 transition-transform duration-300 group-hover:scale-110"
-                    viewBox="0 0 24 24" 
-                    fill="currentColor" 
-                    xmlns="http://www.w3.org/2000/svg"
-                    aria-hidden="true"
-                  >
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-5.5-2.5l1.5-3.5 1.5 3.5h-3zm4-1.5l1.5-3.5 1.5 3.5h-3zm4.5 1.5l1.5-3.5 1.5 3.5h-3zM12 5c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
-                  </svg>
-                </button>
-                <div className="w-24 h-px bg-gradient-to-l from-transparent via-brand-maroon/50 to-brand-maroon/50 dark:via-brand-gold/50 dark:to-brand-gold/50"></div>
-              </div>
-              
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8">
-                {VIDEOS.map((video, index) => (
-                  <div 
-                    className="card-container" 
-                    key={`${video.id}-${index}`}
-                    style={{ animation: `fade-in-up 0.5s ${index * 0.05}s ease-out both` }}
-                  >
-                    <VideoCard 
-                      video={video} 
-                      videoNumber={index + 1}
-                      titlePrefix={t.videoTitlePrefix}
-                      useModalPlayer={false}
-                    />
-                  </div>
-                ))}
-              </div>
-            </section>
-          )}
-        </div>
+      <main className="container mx-auto px-4 md:px-8 py-8">
+        <CarouselNavigator tabs={TABS} activeTab={activeTab} setActiveTab={setActiveTab} />
+        <div className="mt-8">{renderActiveTabContent()}</div>
       </main>
-    </div>
+
+      <div className="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-3">
+        {averageRatingInfo.count > 0 && (
+          <button ref={ratingButtonRef} onClick={handleRatingButtonClick} className="py-2 px-4 rounded-full text-sm font-bold btn-premium-secondary flex items-center gap-2" title={t.viewRating}>
+              <svg className="w-5 h-5" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
+              <span>{averageRatingInfo.rating.toFixed(1)}</span>
+          </button>
+        )}
+        {!hasUserRated && (
+          <button onClick={handleFeedbackClick} className="py-2 px-4 rounded-full text-sm font-bold btn-premium animate-gentle-bounce" title={t.feedbackButton}>
+            {t.feedbackButton}
+          </button>
+        )}
+      </div>
+      
+      <SurveyModal isOpen={isSurveyOpen} onClose={() => setIsSurveyOpen(false)} onSubmit={handleSurveySubmit} />
+      <RatingModal isOpen={isRatingModalOpen} onClose={() => setIsRatingModalOpen(false)} rating={averageRatingInfo.rating} count={averageRatingInfo.count} position={ratingModalPosition} />
+      {playerState && <VideoPlayerModal isOpen={true} onClose={closePlayer} onNext={playNext} onPrev={playPrev} video={playerState.list[playerState.index]} isShort={playerState.isShortsList} />}
+    </>
   );
 };
 
