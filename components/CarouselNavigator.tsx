@@ -49,7 +49,8 @@ const CarouselNavigator: React.FC<CarouselNavigatorProps> = ({ tabs, activeTab, 
                 >
                     <div className="carousel-card-bg" style={{ backgroundImage: `url(${tab.imageUrl})` }} />
                     <div className="carousel-card-overlay" />
-                    <h2 className="carousel-card-title">{t[tab.titleKey]}</h2>
+                    {/* Fix: Cast translation value to string to resolve ReactNode type error. */}
+                    <h2 className="carousel-card-title">{t[tab.titleKey] as string}</h2>
                 </button>
             ))}
         </div>

@@ -26,7 +26,6 @@ const BookCard: React.FC<BookCardProps> = ({ book }) => {
       <div className="p-2" style={{ transform: 'translateZ(20px)' }}>
         <div className="relative w-full overflow-hidden rounded-md border-2 border-brand-maroon/20 dark:border-brand-gold/30 group-hover:border-brand-maroon/80 dark:group-hover:border-brand-gold/80 transition-all aspect-[2/3] shadow-lg">
           <img src={thumbnailUrl} alt={`Cover for ${title}`} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy" decoding="async"/>
-          <div className="shine-overlay"></div>
         </div>
       </div>
       <div className="p-4 pt-2 text-center flex-grow flex flex-col justify-between" style={{ transform: 'translateZ(40px)' }}>

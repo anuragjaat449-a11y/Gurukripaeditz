@@ -17,102 +17,84 @@ const PhotoGallery: React.FC = () => {
             setModalIndex(index);
         }
     };
-    const closeModal = () => setModalIndex(null);
 
-    const handleNext = () => {
+    // Fix: Added modal control functions and JSX return to complete the component.
+    const closeModal = () => {
+        setModalIndex(null);
+    };
+
+    const nextImage = () => {
         if (modalIndex !== null) {
             setModalIndex((modalIndex + 1) % timelineImages.length);
         }
     };
-    
-    const handlePrev = () => {
+
+    const prevImage = () => {
         if (modalIndex !== null) {
             setModalIndex((modalIndex - 1 + timelineImages.length) % timelineImages.length);
         }
     };
 
     return (
-        <section>
-            <div className="max-w-4xl mx-auto mb-12 text-center glass-card p-6 md:p-8">
+        <div className="space-y-12">
+            <div className="text-center">
                 <h2 className="text-4xl font-serif-decorative text-brand-maroon dark:text-brand-gold">{t.kirpalSinghTitle}</h2>
-                <p className="mt-2 text-lg text-black/80 dark:text-white/80">{t.photoGallerySubheading}</p>
-                <div className="mt-6 text-left space-y-4 text-black/80 dark:text-white/80 max-w-3xl mx-auto font-sans">
-                    <p>{t.kirpalSinghP1}</p>
-                </div>
+                <p className="mt-2 text-lg text-black/70 dark:text-white/70">{t.photoGallerySubheading}</p>
+                <p className="mt-4 max-w-3xl mx-auto text-black/80 dark:text-white/80">{t.kirpalSinghP1}</p>
             </div>
 
-            <div className="relative container mx-auto px-4">
-                <div className="absolute left-4 md:left-1/2 w-1 h-full bg-brand-maroon/20 dark:bg-brand-gold/20 -translate-x-1/2" aria-hidden="true"></div>
+            <div className="relative">
+                <div className="absolute left-1/2 top-0 h-full w-0.5 bg-brand-maroon/20 dark:bg-brand-gold/20 -translate-x-1/2" aria-hidden="true"></div>
                 
-                <div className="relative">
+                <div className="space-y-16">
                     {TIMELINE_EVENTS.map((event, index) => {
-                        const image = GALLERY_IMAGES.find(img => img.id === event.imageId);
-                        if (!image) return null;
-
-                        const title = language === 'hi' ? event.titleHi : event.titleEn;
-                        const description = language === 'hi' ? event.descriptionHi : event.descriptionEn;
-                        const altText = language === 'hi' ? image.altHi : image.altEn;
-
+                        const image = timelineImages.find(img => img.id === event.imageId);
                         const isLeft = index % 2 === 0;
 
-                        const content = (
-                            <div className="w-full md:w-5/12">
-                                <div className="glass-card p-6 rounded-lg w-full">
-                                    <p className="text-3xl font-serif-decorative text-brand-maroon dark:text-brand-gold mb-2">{event.year}</p>
-                                    <h3 className="text-2xl font-semibold mb-3">{title}</h3>
-                                    
-                                    <div className="my-4 card-container group/image">
-                                        <div 
-                                            onClick={() => openModal(image.id)}
-                                            className="glass-card p-1 rounded-lg shadow-xl cursor-pointer overflow-hidden"
-                                        >
-                                            <img 
-                                                src={image.thumbnailUrl} 
-                                                alt={altText}
-                                                className="rounded-md w-full object-cover aspect-[16/10] group-hover/image:scale-110 transition-transform duration-300"
-                                            />
-                                        </div>
-                                    </div>
-
-                                    <p className="text-base text-black/80 dark:text-white/80 leading-relaxed">{description}</p>
-                                </div>
+                        const textBlock = (
+                            <div className={`glass-card p-6 max-w-md ${isLeft ? 'text-right' : 'text-left'}`}>
+                                <p className="text-2xl font-bold font-serif-decorative text-brand-maroon dark:text-brand-gold">{event.year}</p>
+                                <p className="mt-2 text-xl font-semibold">{language === 'hi' ? event.titleHi : event.titleEn}</p>
+                                <p className="mt-2 text-black/70 dark:text-white/70">{language === 'hi' ? event.descriptionHi : event.descriptionEn}</p>
                             </div>
                         );
 
+                        const imageBlock = (
+                            image && (
+                                <button onClick={() => openModal(image.id)} className="block max-w-md rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300 transform hover:scale-105">
+                                    <img src={image.thumbnailUrl} alt={language === 'hi' ? image.altHi : image.altEn} className="w-full h-auto object-cover" />
+                                </button>
+                            )
+                        );
+                        
                         return (
-                            <div key={event.year} className="mb-12 flex justify-center md:justify-between md:flex-row items-center w-full">
-                                {isLeft ? (
-                                    <>
-                                        {content}
-                                        <div className="w-2/12 hidden md:flex justify-center">
-                                             <div className="w-6 h-6 rounded-full bg-brand-maroon dark:bg-brand-gold shadow-md ring-4 ring-brand-cream dark:ring-black"></div>
-                                        </div>
-                                        <div className="w-5/12 hidden md:block"></div>
-                                    </>
-                                ) : (
-                                    <>
-                                        <div className="w-5/12 hidden md:block"></div>
-                                        <div className="w-2/12 hidden md:flex justify-center">
-                                             <div className="w-6 h-6 rounded-full bg-brand-maroon dark:bg-brand-gold shadow-md ring-4 ring-brand-cream dark:ring-black"></div>
-                                        </div>
-                                        {content}
-                                    </>
-                                )}
+                            <div key={event.year} className="relative">
+                                <div className="flex items-center">
+                                    <div className="w-1/2 px-8 flex justify-end">
+                                        {isLeft ? textBlock : imageBlock}
+                                    </div>
+                                    <div className="w-1/2 px-8 flex justify-start">
+                                        {isLeft ? imageBlock : textBlock}
+                                    </div>
+                                </div>
+                                <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-brand-maroon dark:bg-brand-gold rounded-full border-4 border-brand-cream dark:border-black z-10"></div>
                             </div>
                         );
                     })}
                 </div>
             </div>
-            
-            <ImageModal 
-                images={timelineImages}
-                currentIndex={modalIndex}
-                onClose={closeModal}
-                onNext={handleNext}
-                onPrev={handlePrev}
-            />
-        </section>
+
+            {modalIndex !== null && (
+                <ImageModal
+                    images={timelineImages}
+                    currentIndex={modalIndex}
+                    onClose={closeModal}
+                    onNext={nextImage}
+                    onPrev={prevImage}
+                />
+            )}
+        </div>
     );
-}
+};
 
 export default PhotoGallery;

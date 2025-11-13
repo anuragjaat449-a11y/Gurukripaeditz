@@ -1,8 +1,7 @@
 
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { VIDEOS, SATSANG_CLIPS, BOOKS, Video, POETRY, Poem } from './constants';
-import VideoCard from './components/VideoCard';
+import { BOOKS, POETRY, Poem } from './constants';
 import BookCard from './components/BookCard';
 import PoetryCard from './components/PoetryCard';
 import IntroAnimation from './components/IntroAnimation';
@@ -10,16 +9,13 @@ import ThemeToggle from './components/ThemeToggle';
 import SurveyModal, { SurveyData } from './components/SurveyModal';
 import RatingModal from './components/RatingModal';
 import { useLanguage } from './contexts/LanguageContext';
-import VideoPlayerModal from './components/VideoPlayerModal';
 import CarouselNavigator, { CarouselTab } from './components/CarouselNavigator';
 import PhotoGallery from './components/PhotoGallery';
 
 const TABS: CarouselTab[] = [
   { id: 'poetry', titleKey: 'poetrySectionTitle', imageUrl: 'https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=1973&auto=format&fit=crop' },
   { id: 'books', titleKey: 'booksSectionTitle', imageUrl: 'https://images.unsplash.com/photo-1495446815901-a7297e633e8d?q=80&w=2070&auto=format&fit=crop' },
-  { id: 'satsang', titleKey: 'satsangSectionTitle', imageUrl: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=1998&auto=format&fit=crop' },
   { id: 'gallery', titleKey: 'photoGallerySectionTitle', imageUrl: 'https://www.kirpal-sagar.org/images/content/sant-kirpal-singh/sant-kirpal-singh-001-xl.jpg' },
-  { id: 'videos', titleKey: 'sectionTitle', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/e/e1/Sant_Rajinder_Singh_Ji_Maharaj_in_white_turban_and_white_kurta_pajama.jpg' },
 ];
 
 const App: React.FC = () => {
@@ -33,7 +29,6 @@ const App: React.FC = () => {
   const [averageRatingInfo, setAverageRatingInfo] = useState({ rating: 0, count: 0 });
   const [isRatingModalOpen, setIsRatingModalOpen] = useState(false);
   const [ratingModalPosition, setRatingModalPosition] = useState<{ top: number; left: number } | null>(null);
-  const [playerState, setPlayerState] = useState<{ list: Video[], index: number, isShortsList: boolean } | null>(null);
   const [activeTab, setActiveTab] = useState<string>('poetry');
   const [scrolled, setScrolled] = useState(false);
   const ratingButtonRef = useRef<HTMLButtonElement>(null);
@@ -164,25 +159,6 @@ const App: React.FC = () => {
     setIsRatingModalOpen(true);
   };
 
-  const openPlayer = (list: Video[], index: number) => {
-    const isShorts = list === VIDEOS || list === SATSANG_CLIPS;
-    setPlayerState({ list, index, isShortsList: isShorts });
-  };
-  
-  const closePlayer = () => setPlayerState(null);
-
-  const playNext = () => {
-    if (!playerState) return;
-    const nextIndex = (playerState.index + 1) % playerState.list.length;
-    setPlayerState(ps => ps ? { ...ps, index: nextIndex } : null);
-  };
-
-  const playPrev = () => {
-    if (!playerState) return;
-    const prevIndex = (playerState.index - 1 + playerState.list.length) % playerState.list.length;
-    setPlayerState(ps => ps ? { ...ps, index: prevIndex } : null);
-  };
-  
   const renderActiveTabContent = () => {
     const animationClass = "animate-[fade-in-up_0.5s_ease-out]";
     switch(activeTab) {
@@ -202,12 +178,8 @@ const App: React.FC = () => {
         );
       case 'books':
         return <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 ${animationClass}`}>{BOOKS.map(book => <BookCard key={book.id} book={book} />)}</div>;
-      case 'satsang':
-        return <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 ${animationClass}`}>{SATSANG_CLIPS.map((video, i) => <VideoCard key={`${video.id}-${i}`} video={video} videoNumber={i + 1} onOpenPlayer={() => openPlayer(SATSANG_CLIPS, i)} titlePrefix={t.clipTitlePrefix} useModalPlayer={true} isShort={true} />)}</div>;
       case 'gallery':
         return <div className={animationClass}><PhotoGallery /></div>;
-      case 'videos':
-        return <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 ${animationClass}`}>{VIDEOS.map((video, i) => <VideoCard key={`${video.id}-${i}`} video={video} videoNumber={i + 1} onOpenPlayer={() => openPlayer(VIDEOS, i)} titlePrefix={t.videoTitlePrefix} useModalPlayer={true} isShort={true} />)}</div>;
       default: return null;
     }
   };
@@ -258,7 +230,6 @@ const App: React.FC = () => {
       
       <SurveyModal isOpen={isSurveyOpen} onClose={() => setIsSurveyOpen(false)} onSubmit={handleSurveySubmit} />
       <RatingModal isOpen={isRatingModalOpen} onClose={() => setIsRatingModalOpen(false)} rating={averageRatingInfo.rating} count={averageRatingInfo.count} position={ratingModalPosition} />
-      {playerState && <VideoPlayerModal isOpen={true} onClose={closePlayer} onNext={playNext} onPrev={playPrev} video={playerState.list[playerState.index]} isShort={playerState.isShortsList} />}
     </>
   );
 };

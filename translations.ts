@@ -5,8 +5,6 @@ export const translations = {
     // App.tsx
     headerTitle: "GURU KRIPA SHORTZ",
     headerSubtitle: "Inspired by Sant Rajinder Singh Ji Maharaj",
-    sectionTitle: "Shortz",
-    satsangSectionTitle: "Satsang Clips",
     booksSectionTitle: "Spiritual Books",
     poetrySectionTitle: "Poetry",
     photoGallerySectionTitle: "Photo Gallery",
@@ -25,21 +23,6 @@ export const translations = {
       { text: "We are all children of the same one God, and our souls are parcels of that divine light.", author: "Sant Rajinder Singh Ji Maharaj" },
     ],
     
-    // VideoCard.tsx
-    videoTitlePrefix: "Video",
-    clipTitlePrefix: "Clip",
-    watch: "Watch",
-    download: "Download",
-    downloadStarting: "Starting...",
-    downloadStarted: "Started!",
-    videoUnavailable: "Video Unavailable",
-    thumbnailAlt: "Thumbnail for {titlePrefix} #{videoNumber}",
-    playVideoAria: "Play {titlePrefix} #{videoNumber} in the app",
-    youTubePlayerTitle: "YouTube player for {titlePrefix} #{videoNumber}",
-    watchOnYoutube: "Watch {titlePrefix} #{videoNumber} on YouTube",
-    videoUnavailableAria: "{titlePrefix} #{videoNumber} is unavailable",
-    notAvailable: "N/A",
-
     // BookCard.tsx
     readPdf: "Read PDF",
     listenAudio: "Listen Audio",
@@ -84,8 +67,6 @@ export const translations = {
     // App.tsx
     headerTitle: "गुरु कृपा शॉर्ट्स",
     headerSubtitle: "संत राजिंदर सिंह जी महाराज से प्रेरित",
-    sectionTitle: "शॉर्ट्स",
-    satsangSectionTitle: "सत्संग क्लिप्स",
     booksSectionTitle: "आध्यात्मिक पुस्तकें",
     poetrySectionTitle: "कविता",
     photoGallerySectionTitle: "फोटो गैलरी",
@@ -104,21 +85,6 @@ export const translations = {
       { text: "हम सब एक ही ईश्वर की संतान हैं, और हमारी आत्माएं उस दिव्य प्रकाश का अंश हैं।", author: "संत राजिंदर सिंह जी महाराज" },
     ],
     
-    // VideoCard.tsx
-    videoTitlePrefix: "वीडियो",
-    clipTitlePrefix: "क्लिप",
-    watch: "देखें",
-    download: "डाउनलोड",
-    downloadStarting: "शुरू हो रहा है...",
-    downloadStarted: "शुरू हुआ!",
-    videoUnavailable: "वीडियो अनुपलब्ध",
-    thumbnailAlt: "{titlePrefix} #{videoNumber} का थंबनेल",
-    playVideoAria: "ऐप में {titlePrefix} #{videoNumber} चलाएं",
-    youTubePlayerTitle: "{titlePrefix} #{videoNumber} के लिए यूट्यूब प्लेयर",
-    watchOnYoutube: "यूट्यूब पर {titlePrefix} #{videoNumber} देखें",
-    videoUnavailableAria: "{titlePrefix} #{videoNumber} अनुपलब्ध है",
-    notAvailable: "लागू नहीं",
-
     // BookCard.tsx
     readPdf: "पीडीएफ पढ़ें",
     listenAudio: "ऑडियो सुनें",

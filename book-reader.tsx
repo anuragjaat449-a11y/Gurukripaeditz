@@ -62,6 +62,9 @@ const BookReader = () => {
 
         const renderAllPages = async () => {
             for (let i = 1; i <= pdfDoc.numPages; i++) {
+                // Yield to the main thread before rendering each page to prevent freezing the UI
+                await new Promise(resolve => setTimeout(resolve, 0));
+                
                 setLoadingMessage(`Rendering page ${i} of ${pdfDoc.numPages}...`);
                 const page = await pdfDoc.getPage(i);
                 
@@ -123,7 +126,7 @@ const BookReader = () => {
             {showBook && (
                 <div className="controls">
                     <button onClick={handlePrev} disabled={currentPage === 0}>Previous</button>
-                    <span className="page-number">{currentPage} of {totalPages}</span>
+                    <span className="page-number">{currentPage + 1} of {totalPages}</span>
                     <button onClick={handleNext} disabled={currentPage >= totalPages - 1}>Next</button>
                 </div>
             )}
