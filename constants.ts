@@ -1,5 +1,8 @@
 
 
+
+
+
 export interface Video {
     id: string; // youtube ID or GDrive file ID
     type: 'youtube' | 'gdrive';
@@ -39,19 +42,19 @@ export interface GalleryImage {
 }
 
 export const GALLERY_IMAGES: GalleryImage[] = [
-    { id: 'k1', thumbnailUrl: 'https://upload.wikimedia.org/wikipedia/commons/4/43/Sant_Kirpal_Singh.jpg', fullUrl: 'https://upload.wikimedia.org/wikipedia/commons/4/43/Sant_Kirpal_Singh.jpg', altEn: 'A portrait of Sant Kirpal Singh Ji Maharaj', altHi: 'संत किरपाल सिंह जी महाराज का एक चित्र' },
-    { id: 'k2', thumbnailUrl: 'https://www.sant-kirpal-singh.org/images/Kirpal_Singh_vortrag_1972_FFM.jpg', fullUrl: 'https://www.sant-kirpal-singh.org/images/Kirpal_Singh_vortrag_1972_FFM.jpg', altEn: 'Sant Kirpal Singh Ji Maharaj in a thoughtful pose', altHi: 'संत किरपाल सिंह जी महाराज एक विचारशील मुद्रा में' },
-    { id: 'k3', thumbnailUrl: 'https://www.sant-kirpal-singh.org/images/Kirpal_Singh_1972_tour_FFM.jpg', fullUrl: 'https://www.sant-kirpal-singh.org/images/Kirpal_Singh_1972_tour_FFM.jpg', altEn: 'Sant Kirpal Singh Ji Maharaj speaking to an audience', altHi: 'संत किरपाल सिंह जी महाराज एक सभा को संबोधित करते हुए' },
-    { id: 'k4', thumbnailUrl: 'https://www.soren.schmidt.name/SKS/Bilder/Kirpal.jpeg', fullUrl: 'https://www.soren.schmidt.name/SKS/Bilder/Kirpal.jpeg', altEn: 'A smiling photo of Sant Kirpal Singh Ji Maharaj', altHi: 'संत किरपाल सिंह जी महाराज की एक मुस्कुराती हुई तस्वीर' },
-    { id: 'k5', thumbnailUrl: 'https://www.sant-kirpal-singh.org/images/Sant_Kirpal_Singh_und_Dr._Harbhajan_Singh_in_Kalifornien_1972.jpg', fullUrl: 'https://www.sant-kirpal-singh.org/images/Sant_Kirpal_Singh_und_Dr._Harbhajan_Singh_in_Kalifornien_1972.jpg', altEn: 'Sant Kirpal Singh Ji Maharaj during a tour abroad', altHi: 'संत किरपाल सिंह जी महाराज विदेश यात्रा के दौरान' },
-    { id: 'k6', thumbnailUrl: 'https://www.sant-kirpal-singh.org/images/Kirpal_Singh_im_gespraech_1972.jpg', fullUrl: 'https://www.sant-kirpal-singh.org/images/Kirpal_Singh_im_gespraech_1972.jpg', altEn: 'A candid moment of Sant Kirpal Singh Ji Maharaj', altHi: 'संत किरपाल सिंह जी महाराज का एक स्पष्ट क्षण' },
-    { id: 'k7', thumbnailUrl: 'https://www.soren.schmidt.name/SKS/Bilder/Kirpal_Singh2.jpeg', fullUrl: 'https://www.soren.schmidt.name/SKS/Bilder/Kirpal_Singh2.jpeg', altEn: 'Sant Kirpal Singh Ji Maharaj in meditation', altHi: 'संत किरपाल सिंह जी महाराज ध्यान में' },
-    { id: 'k8', thumbnailUrl: 'https://www.sant-kirpal-singh.org/images/Sant_Kirpal_Singh_in_seinem_Haus_in_Delhi.jpg', fullUrl: 'https://www.sant-kirpal-singh.org/images/Sant_Kirpal_Singh_in_seinem_Haus_in_Delhi.jpg', altEn: 'Sant Kirpal Singh Ji Maharaj sitting on a chair', altHi: 'संत किरपाल सिंह जी महाराज एक कुर्सी पर बैठे हुए' },
-    { id: 'k9', thumbnailUrl: 'https://www.soren.schmidt.name/SKS/Bilder/Sawan_und_Kirpal.jpeg', fullUrl: 'https://www.soren.schmidt.name/SKS/Bilder/Sawan_und_Kirpal.jpeg', altEn: 'Sant Kirpal Singh Ji Maharaj with his Master, Baba Sawan Singh Ji', altHi: 'संत किरपाल सिंह जी महाराज अपने गुरु, बाबा सावन सिंह जी के साथ' },
-    { id: 'k10', thumbnailUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Sawan_Ashram_gate_Delhi.jpg/1280px-Sawan_Ashram_gate_Delhi.jpg', fullUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Sawan_Ashram_gate_Delhi.jpg/1280px-Sawan_Ashram_gate_Delhi.jpg', altEn: 'Sawan Ashram in Delhi, India', altHi: 'सावन आश्रम, दिल्ली, भारत' },
-    { id: 'k11', thumbnailUrl: 'https://www.sant-kirpal-singh.org/images/Kirpal_Singh_bei_der_Weltkonferenz_der_Religionen_1957.jpg', fullUrl: 'https://www.sant-kirpal-singh.org/images/Kirpal_Singh_bei_der_Weltkonferenz_der_Religionen_1957.jpg', altEn: 'Sant Kirpal Singh Ji speaking at the World Fellowship of Religions', altHi: 'संत किरपाल सिंह जी विश्व धर्म सम्मेलन में बोलते हुए' },
-    { id: 'k12', thumbnailUrl: 'https://www.sant-kirpal-singh.org/images/Sant_Kirpal_Singh_und_Dr._Harbhajan_Singh_in_Kalifornien_1972.jpg', fullUrl: 'https://www.sant-kirpal-singh.org/images/Sant_Kirpal_Singh_und_Dr._Harbhajan_Singh_in_Kalifornien_1972.jpg', altEn: 'Sant Kirpal Singh Ji on one of his world tours', altHi: 'संत किरपाल सिंह जी अपनी एक विश्व यात्रा पर' },
-    { id: 'k15', thumbnailUrl: 'https://www.sant-kirpal-singh.org/images/Kirpal_Singh_Weltkonferenz_ueber_die_Einheit_des_Menschen_1974.jpg', fullUrl: 'https://www.sant-kirpal-singh.org/images/Kirpal_Singh_Weltkonferenz_ueber_die_Einheit_des_Menschen_1974.jpg', altEn: 'Sant Kirpal Singh Ji at the World Conference on Unity of Man', altHi: 'संत किरपाल सिंह जी मानव एकता पर विश्व सम्मेलन में' },
+    { id: 'k1', thumbnailUrl: 'https://drive.google.com/thumbnail?id=1yGyOXM4HOwtA38tI5C3mpoPWbDQRyQ1S&sz=w800', fullUrl: 'https://drive.google.com/thumbnail?id=1yGyOXM4HOwtA38tI5C3mpoPWbDQRyQ1S&sz=w1280', altEn: 'A portrait of Sant Kirpal Singh Ji Maharaj', altHi: 'संत किरपाल सिंह जी महाराज का एक चित्र' },
+    { id: 'k2', thumbnailUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Sant_Kirpal_Singh_Ji_Maharaj.jpg/800px-Sant_Kirpal_Singh_Ji_Maharaj.jpg', fullUrl: 'https://upload.wikimedia.org/wikipedia/commons/d/dd/Sant_Kirpal_Singh_Ji_Maharaj.jpg', altEn: 'Sant Kirpal Singh Ji Maharaj in a thoughtful pose', altHi: 'संत किरपाल सिंह जी महाराज एक विचारशील मुद्रा में' },
+    { id: 'k3', thumbnailUrl: 'https://drive.google.com/thumbnail?id=1-raL_oWOXZdp8nr4hT21H7DctvUfFSKh&sz=w800', fullUrl: 'https://drive.google.com/thumbnail?id=1-raL_oWOXZdp8nr4hT21H7DctvUfFSKh&sz=w1280', altEn: 'Sant Kirpal Singh Ji Maharaj speaking to an audience', altHi: 'संत किरपाल सिंह जी महाराज एक सभा को संबोधित करते हुए' },
+    { id: 'k4', thumbnailUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Sant_Kirpal_Singh_portrait.jpg/800px-Sant_Kirpal_Singh_portrait.jpg', fullUrl: 'https://upload.wikimedia.org/wikipedia/commons/a/a2/Sant_Kirpal_Singh_portrait.jpg', altEn: 'A smiling photo of Sant Kirpal Singh Ji Maharaj', altHi: 'संत किरपाल सिंह जी महाराज की एक मुस्कुराती हुई तस्वीर' },
+    { id: 'k5', thumbnailUrl: 'https://drive.google.com/thumbnail?id=1ZibbB1oi8M4NPoCTEypkquDGe3dymSeG&sz=w800', fullUrl: 'https://drive.google.com/thumbnail?id=1ZibbB1oi8M4NPoCTEypkquDGe3dymSeG&sz=w1280', altEn: 'Sant Kirpal Singh Ji Maharaj during a tour abroad', altHi: 'संत किरपाल सिंह जी महाराज विदेश यात्रा के दौरान' },
+    { id: 'k6', thumbnailUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Sant_Kirpal_Singh_with_followers.jpg/1024px-Sant_Kirpal_Singh_with_followers.jpg', fullUrl: 'https://upload.wikimedia.org/wikipedia/commons/5/5a/Sant_Kirpal_Singh_with_followers.jpg', altEn: 'A candid moment of Sant Kirpal Singh Ji Maharaj', altHi: 'संत किरपाल सिंह जी महाराज का एक स्पष्ट क्षण' },
+    { id: 'k7', thumbnailUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Sant_Kirpal_Singh_portrait.jpg/800px-Sant_Kirpal_Singh_portrait.jpg', fullUrl: 'https://upload.wikimedia.org/wikipedia/commons/a/a2/Sant_Kirpal_Singh_portrait.jpg', altEn: 'Sant Kirpal Singh Ji Maharaj in meditation', altHi: 'संत किरपाल सिंह जी महाराज ध्यान में' },
+    { id: 'k8', thumbnailUrl: 'https://drive.google.com/thumbnail?id=1Cxzm6sxR7yz9_uIUBPoQxtAPNwG6RXf0&sz=w800', fullUrl: 'https://drive.google.com/thumbnail?id=1Cxzm6sxR7yz9_uIUBPoQxtAPNwG6RXf0&sz=w1280', altEn: 'An infant photograph of Sant Kirpal Singh Ji Maharaj', altHi: 'संत किरपाल सिंह जी महाराज की एक शिशु तस्वीर' },
+    { id: 'k9', thumbnailUrl: 'https://drive.google.com/thumbnail?id=1R32zSfHp05ZUtREudJb7wEol8lGDZaLs&sz=w800', fullUrl: 'https://drive.google.com/thumbnail?id=1R32zSfHp05ZUtREudJb7wEol8lGDZaLs&sz=w1280', altEn: 'Sant Kirpal Singh Ji Maharaj with his Master, Baba Sawan Singh Ji', altHi: 'संत किरपाल सिंह जी महाराज अपने गुरु, बाबा सावन सिंह जी के साथ' },
+    { id: 'k10', thumbnailUrl: 'https://drive.google.com/thumbnail?id=1FxM8ipIXi__i0WODSXs-5BDjGbFkyBtG&sz=w800', fullUrl: 'https://drive.google.com/thumbnail?id=1FxM8ipIXi__i0WODSXs-5BDjGbFkyBtG&sz=w1280', altEn: 'Sawan Ashram in Delhi, India', altHi: 'सावन आश्रम, दिल्ली, भारत' },
+    { id: 'k11', thumbnailUrl: 'https://drive.google.com/thumbnail?id=1WXhaORL9cQQ9eEKQCtaREucC7eOAos0t&sz=w800', fullUrl: 'https://drive.google.com/thumbnail?id=1WXhaORL9cQQ9eEKQCtaREucC7eOAos0t&sz=w1280', altEn: 'Sant Kirpal Singh Ji speaking at the World Fellowship of Religions', altHi: 'संत किरपाल सिंह जी विश्व धर्म सम्मेलन में बोलते हुए' },
+    { id: 'k12', thumbnailUrl: 'https://drive.google.com/thumbnail?id=1cfHFnqBlKnCe4PD_ksB7EOUxmMKFPJOG&sz=w800', fullUrl: 'https://drive.google.com/thumbnail?id=1cfHFnqBlKnCe4PD_ksB7EOUxmMKFPJOG&sz=w1280', altEn: 'Sant Kirpal Singh Ji on one of his world tours', altHi: 'संत किरपाल सिंह जी अपनी एक विश्व यात्रा पर' },
+    { id: 'k15', thumbnailUrl: 'https://drive.google.com/thumbnail?id=1U0ntU9FbnpANWpPYBqgHWeH52q3F76V_&sz=w800', fullUrl: 'https://drive.google.com/thumbnail?id=1U0ntU9FbnpANWpPYBqgHWeH52q3F76V_&sz=w1280', altEn: 'Sant Kirpal Singh Ji at the World Conference on Unity of Man', altHi: 'संत किरपाल सिंह जी मानव एकता पर विश्व सम्मेलन में' },
 ];
 
 export interface TimelineEvent {
@@ -972,5 +975,805 @@ export const POETRY: Poem[] = [
         ],
         meaningEn: 'The seeker realizes that different paths, philosophies, and practices can be confusing. The ultimate truth is that the goal is not to perfect a method or a "path," but to reach the "destination," which is the Beloved Himself. He is the beginning, the journey, and the end.',
         meaningHi: 'साधक को एहसास होता है कि अलग-अलग रास्ते भटका सकते हैं। असली सच यह है कि लक्ष्य किसी रास्ते को पूरा करना नहीं, बल्कि "मंज़िल" तक पहुँचना है, और वह मंज़िल खुद भगवान हैं। वही शुरुआत, सफ़र और अंत हैं।'
+    },
+    {
+        id: 'poem-51',
+        author: 'Sant Darshan Singh Ji Maharaj',
+        titleEn: 'The True Friend',
+        titleHi: 'सच्चा दोस्त',
+        textEn: [
+            'In this world of fleeting friendships,',
+            'You are the only friend who never leaves my side.',
+        ],
+        textHi: [
+            'इस बदलते दोस्तों की दुनिया में,',
+            'बस तू ही एक ऐसा दोस्त है जो कभी मेरा साथ नहीं छोड़ता।',
+        ],
+        meaningEn: 'This couplet contrasts the temporary nature of worldly relationships with the eternal companionship of the Divine. The poet expresses that God or the Master is the only constant and true friend who remains with the soul through all circumstances.',
+        meaningHi: 'यह कविता दुनिया के अस्थायी रिश्तों और भगवान के शाश्वत साथ के बीच का अंतर बताती है। कवि कहते हैं कि केवल भगवान या गुरु ही सच्चे और स्थायी मित्र हैं जो हर हाल में आत्मा के साथ रहते हैं।'
+    },
+    {
+        id: 'poem-52',
+        author: 'Sant Darshan Singh Ji Maharaj',
+        titleEn: 'The Empty Heart',
+        titleHi: 'खाली दिल',
+        textEn: [
+            'Empty your heart of everything but Him,',
+            'For the king does not enter a house already occupied.',
+        ],
+        textHi: [
+            'अपने दिल को उसके सिवा हर चीज़ से खाली कर दो,',
+            'क्योंकि बादशाह पहले से भरे हुए घर में दाखिल नहीं होता।',
+        ],
+        meaningEn: 'This verse teaches the necessity of detachment for spiritual progress. To experience the presence of God (the "king"), the heart must be emptied of worldly desires and attachments. Only a pure and vacant heart can become a worthy vessel for the Divine.',
+        meaningHi: 'यह कविता आध्यात्मिक उन्नति के लिए वैराग्य की आवश्यकता सिखाती है। भगवान ("बादशाह") का अनुभव करने के लिए, दिल को दुनिया की इच्छाओं और मोह से खाली करना पड़ता है। केवल एक शुद्ध और खाली दिल ही भगवान के रहने के योग्य बन सकता है।'
+    },
+    {
+        id: 'poem-53',
+        author: 'Sant Darshan Singh Ji Maharaj',
+        titleEn: 'The Law of Love',
+        titleHi: 'प्रेम का विधान',
+        textEn: [
+            'In the law of love, the first condition is to lose your head,',
+            'If you cannot, then do not step onto this path.',
+        ],
+        textHi: [
+            'इश्क़ के क़ानून में, पहली शर्त है सर दे देना,',
+            'अगर यह मंज़ूर नहीं, तो इस राह पर क़दम न रखना।',
+        ],
+        meaningEn: 'This highlights the radical nature of divine love. "Losing your head" means surrendering the ego, intellect, and personal will completely. It is a path of total self-annihilation, and the poet warns that without this readiness to surrender, one should not even begin the journey.',
+        meaningHi: 'यह दिव्य प्रेम के क्रांतिकारी स्वरूप को उजागर करता है। "सर दे देना" का अर्थ है अहंकार, बुद्धि और व्यक्तिगत इच्छा को पूरी तरह से त्याग देना। यह पूर्ण आत्म-विनाश का मार्ग है, और कवि चेतावनी देते हैं कि इस समर्पण की तैयारी के बिना, किसी को यह यात्रा शुरू भी नहीं करनी चाहिए।'
+    },
+    {
+        id: 'poem-54',
+        author: 'Sant Darshan Singh Ji Maharaj',
+        titleEn: 'The Veiled Face',
+        titleHi: 'नक़ाबपोश चेहरा',
+        textEn: [
+            'You have veiled Your face with the beauty of Your own creation,',
+            'I was lost in the veil, forgetting the Face behind it.',
+        ],
+        textHi: [
+            'तूने अपनी ही बनाई कायनात की खूबसूरती से अपना चेहरा छुपा लिया,',
+            'मैं नक़ाब में ही खो गया, और उसके पीछे का चेहरा भूल गया।',
+        ],
+        meaningEn: 'The beauty of the material world (the "veil") is a manifestation of God, but it can also become a distraction. The seeker laments having been mesmerized by the creation, forgetting the ultimate goal of seeing the Creator.',
+        meaningHi: 'भौतिक दुनिया की सुंदरता ("नक़ाब") भगवान की ही एक रचना है, लेकिन यह ध्यान भटकाने वाली भी हो सकती है। साधक इस बात पर अफ़सोस करता है कि वह सृष्टि की सुंदरता में इतना खो गया कि बनाने वाले को देखने का असली लक्ष्य ही भूल गया।'
+    },
+    {
+        id: 'poem-55',
+        author: 'Sant Darshan Singh Ji Maharaj',
+        titleEn: 'The Divine Thief',
+        titleHi: 'दिव्य चोर',
+        textEn: [
+            'You are a wondrous thief who has stolen my heart,',
+            'And now, having lost everything, I feel like a king.',
+        ],
+        textHi: [
+            'तू भी क्या अजब चोर है जिसने मेरा दिल चुरा लिया,',
+            'अब सब कुछ खोकर, मैं खुद को बादशाह महसूस करता हूँ।',
+        ],
+        meaningEn: 'This is a loving complaint to the Beloved. When God "steals" the seeker\'s heart, it means He captures their love and attention completely. By losing the heart to God, the seeker is freed from all worldly attachments and anxieties, which makes them feel spiritually rich and liberated ("like a king").',
+        meaningHi: 'यह प्रियतम से एक प्रेमपूर्ण शिकायत है। जब भगवान साधक का दिल "चुरा" लेते हैं, तो इसका मतलब है कि वे उसका पूरा प्यार और ध्यान अपनी ओर खींच लेते हैं। भगवान को दिल देकर, साधक दुनिया के सभी मोह और चिंताओं से मुक्त हो जाता है, जिससे वह आध्यात्मिक रूप से अमीर और स्वतंत्र ("एक बादशाह की तरह") महसूस करता है।'
+    },
+    {
+        id: 'poem-56',
+        author: 'Sant Darshan Singh Ji Maharaj',
+        titleEn: 'The Ocean in a Drop',
+        titleHi: 'बूँद में सागर',
+        textEn: [
+            'Do not mistake me for a mere drop of water,',
+            'I have held the entire ocean within my heart.',
+        ],
+        textHi: [
+            'मुझे पानी की महज़ एक बूँद समझने की ग़लती न करना,',
+            'मैंने पूरे सागर को अपने दिल में समा रखा है।',
+        ],
+        meaningEn: 'This verse speaks from the state of God-realization. The soul (the "drop"), upon merging with the Divine (the "ocean"), realizes its own infinite nature. It is no longer just a part, but contains the consciousness of the whole within itself.',
+        meaningHi: 'यह कविता ईश्वर-प्राप्ति की अवस्था से बोलती है। आत्मा ("बूँद"), जब परमात्मा ("सागर") में विलीन हो जाती है, तो उसे अपनी अनंत प्रकृति का एहसास होता है। यह अब केवल एक अंश नहीं है, बल्कि अपने भीतर संपूर्ण की चेतना को समाहित किए हुए है।'
+    },
+    {
+        id: 'poem-57',
+        author: 'Sant Darshan Singh Ji Maharaj',
+        titleEn: 'The Religion of Love',
+        titleHi: 'प्रेम का मज़हब',
+        textEn: [
+            'My religion is love, my scripture is the Beloved\'s face,',
+            'My place of worship is the lane where my Beloved dwells.',
+        ],
+        textHi: [
+            'मेरा मज़हब इश्क़ है, मेरी किताब महबूब का चेहरा है,',
+            'मेरी इबादतगाह वह गली है जहाँ मेरा यार रहता है।',
+        ],
+        meaningEn: 'The poet transcends all external religious formalities. For the lover of God, the only true "religion" is love itself. The direct vision of the Beloved is the only "scripture," and closeness to Him is the only "place of worship."',
+        meaningHi: 'कवि सभी बाहरी धार्मिक औपचारिकताओं से ऊपर उठ जाता है। ईश्वर के प्रेमी के लिए, एकमात्र सच्चा "धर्म" स्वयं प्रेम है। प्रियतम का सीधा दर्शन ही एकमात्र "पवित्र ग्रंथ" है, और उसके निकट रहना ही एकमात्र "पूजा स्थल" है।'
+    },
+    {
+        id: 'poem-58',
+        author: 'Sant Darshan Singh Ji Maharaj',
+        titleEn: 'The Conversation of Eyes',
+        titleHi: 'आँखों की गुफ़्तगू',
+        textEn: [
+            'What need is there for words between you and me?',
+            'Let our eyes do the talking, for they know the language of the heart.',
+        ],
+        textHi: [
+            'तेरे और मेरे दरमियान लफ़्ज़ों की क्या ज़रूरत है?',
+            'आँखों को बात करने दे, क्योंकि वे दिल की ज़ुबान जानती हैं।',
+        ],
+        meaningEn: 'This describes the silent, deep communication between the disciple and the Master. Spiritual transmission often occurs beyond words, through a glance or a look that conveys volumes of love, grace, and understanding directly to the soul.',
+        meaningHi: 'यह शिष्य और गुरु के बीच के मौन, गहरे संवाद का वर्णन करता है। आध्यात्मिक संचार अक्सर शब्दों से परे होता है, एक नज़र या दृष्टि के माध्यम से जो सीधे आत्मा तक प्रेम, कृपा और समझ की गहराई को पहुंचाती है।'
+    },
+    {
+        id: 'poem-59',
+        author: 'Sant Darshan Singh Ji Maharaj',
+        titleEn: 'The True Intoxication',
+        titleHi: 'सच्चा नशा',
+        textEn: [
+            'The intoxication of worldly wine fades by morning,',
+            'The wine I have drunk from His eyes keeps me intoxicated for a lifetime.',
+        ],
+        textHi: [
+            'दुनिया की शराब का नशा तो सुबह उतर जाता है,',
+            'जो शराब मैंने उसकी आँखों से पी है, वह उम्र भर का नशा देती है।',
+        ],
+        meaningEn: 'The poet contrasts the fleeting pleasure of worldly intoxication with the everlasting bliss of divine love. The "wine from His eyes" is the grace of the Master, which bestows a permanent state of spiritual ecstasy that never diminishes.',
+        meaningHi: 'कवि दुनिया के नशे के क्षणिक आनंद और दिव्य प्रेम के शाश्वत आनंद के बीच अंतर करता है। "उसकी आँखों से पी गई शराब" गुरु की कृपा है, जो आध्यात्मिक परमानंद की एक स्थायी अवस्था प्रदान करती है जो कभी कम नहीं होती।'
+    },
+    {
+        id: 'poem-60',
+        author: 'Sant Darshan Singh Ji Maharaj',
+        titleEn: 'The Condition for a Vision',
+        titleHi: 'दीदार की शर्त',
+        textEn: [
+            'If you wish to see Him, then first, lose sight of yourself,',
+            'For the Beloved cannot be seen as long as "you" remain.',
+        ],
+        textHi: [
+            'अगर उसे देखने की हसरत है, तो पहले खुद को देखना छोड़ दे,',
+            'क्योंकि जब तक "तू" बाक़ी है, यार नज़र नहीं आ सकता।',
+        ],
+        meaningEn: 'This verse reiterates the necessity of annihilating the ego. The sense of a separate self ("you") acts as a barrier that prevents the vision of God. Only when the ego is completely dissolved can the soul experience its unity with the Divine.',
+        meaningHi: 'यह कविता अहंकार को मिटाने की आवश्यकता को दोहराती है। एक अलग "मैं" की भावना एक बाधा के रूप में कार्य करती है जो ईश्वर के दर्शन को रोकती है। केवल जब अहंकार पूरी तरह से भंग हो जाता है, तभी आत्मा परमात्मा के साथ अपनी एकता का अनुभव कर सकती है।'
+    },
+    {
+        id: 'poem-61',
+        author: 'Sant Darshan Singh Ji Maharaj',
+        titleEn: 'The Awakened Heart',
+        titleHi: 'जागा हुआ दिल',
+        textEn: [
+            'A heart that has awakened to His love,',
+            'Finds a hundred Kaabas within its own self.',
+        ],
+        textHi: [
+            'जो दिल उसके इश्क़ में जाग गया,',
+            'वह अपने ही अंदर सैकड़ों काबे पाता है।',
+        ],
+        meaningEn: 'The Kaaba is the holiest shrine in Islam. The poet states that once the heart is filled with divine love, it becomes the true sanctuary. The inner spiritual experience is far superior to any external pilgrimage, as God Himself resides within that awakened heart.',
+        meaningHi: 'काबा इस्लाम का सबसे पवित्र तीर्थ है। कवि कहता है कि जब दिल दिव्य प्रेम से भर जाता है, तो वह सच्चा तीर्थ बन जाता है। आंतरिक आध्यात्मिक अनुभव किसी भी बाहरी तीर्थयात्रा से कहीं बेहतर है, क्योंकि स्वयं ईश्वर उस जागे हुए दिल में निवास करते हैं।'
+    },
+    {
+        id: 'poem-62',
+        author: 'Sant Darshan Singh Ji Maharaj',
+        titleEn: 'The Complaint of the Reed Flute',
+        titleHi: 'बांसुरी की शिकायत',
+        textEn: [
+            'Listen to the reed flute, it tells a tale of separation,',
+            'Ever since I was cut from the reed bed, I have been crying.',
+        ],
+        textHi: [
+            'बांसुरी को सुनो, यह जुदाई की कहानी कहती है,',
+            'जब से मुझे सरकंडे के जंगल से काटा गया है, मैं रो रही हूँ।',
+        ],
+        meaningEn: 'This classic Sufi metaphor, famously used by Rumi, is adopted here. The "reed flute" is the human soul. Its music is a cry of longing for its source, the "reed bed" (God), from which it has been separated.',
+        meaningHi: 'यह प्रसिद्ध सूफी रूपक, जिसे रूमी ने प्रसिद्ध रूप से इस्तेमाल किया था, यहाँ अपनाया गया है। "बांसुरी" मानव आत्मा है। इसका संगीत अपने स्रोत, "सरकंडे के जंगल" (ईश्वर) के लिए तड़प की एक पुकार है, जिससे इसे अलग कर दिया गया है।'
+    },
+    {
+        id: 'poem-63',
+        author: 'Sant Darshan Singh Ji Maharaj',
+        titleEn: 'The Way of the Lover',
+        titleHi: 'आशिक़ का तरीक़ा',
+        textEn: [
+            'Neither in the mosque, nor in the temple, nor in the church do I reside,',
+            'I, the lover, live in the heart of my Beloved.',
+        ],
+        textHi: [
+            'न मस्जिद में, न मंदिर में, न गिरजे में रहता हूँ,',
+            'मैं आशिक़ हूँ, अपने यार के दिल में रहता हूँ।',
+        ],
+        meaningEn: 'The true lover of God is not confined to any physical place of worship. Their entire existence is centered around the Beloved. Their true "residence" is a state of constant remembrance and absorption in the love of God.',
+        meaningHi: 'ईश्वर का सच्चा प्रेमी किसी भी भौतिक पूजा स्थल तक सीमित नहीं है। उसका पूरा अस्तित्व प्रियतम के इर्द-गिर्द केंद्रित है। उसका सच्चा "निवास" ईश्वर के प्रेम में निरंतर स्मरण और लीन रहने की अवस्था है।'
+    },
+    {
+        id: 'poem-64',
+        author: 'Sant Darshan Singh Ji Maharaj',
+        titleEn: 'The Cure for All Ills',
+        titleHi: 'हर मर्ज़ की दवा',
+        textEn: [
+            'The doctors offered many cures, but none could heal me,',
+            'The only cure for my heart was a glimpse of my Beloved.',
+        ],
+        textHi: [
+            'हकीमों ने बहुत इलाज बताए, पर कोई शिफ़ा न दे सका,',
+            'मेरे दिल का इलाज तो बस मेरे महबूब का एक दीदार था।',
+        ],
+        meaningEn: 'The fundamental sickness of the soul is its separation from God. No worldly remedy can cure this spiritual ailment. The only true healing comes from the "glimpse" (darshan) or experience of the Divine, which alone can bring peace and wholeness.',
+        meaningHi: 'आत्मा की मूल बीमारी ईश्वर से उसका अलगाव है। कोई भी सांसारिक उपाय इस आध्यात्मिक बीमारी को ठीक नहीं कर सकता। एकमात्र सच्चा उपचार "दीदार" या परमात्मा के अनुभव से मिलता है, जो अकेले ही शांति और पूर्णता ला सकता है।'
+    },
+    {
+        id: 'poem-65',
+        author: 'Sant Darshan Singh Ji Maharaj',
+        titleEn: 'The Secret of Life',
+        titleHi: 'ज़िंदगी का राज़',
+        textEn: [
+            'I thought life was about gaining, but it is about losing,',
+            'I found true life only when I lost myself in You.',
+        ],
+        textHi: [
+            'मैं समझता था कि ज़िंदगी पाने का नाम है, पर यह तो खोने का नाम है,',
+            'मैंने सच्ची ज़िंदगी तभी पाई जब मैंने खुद को तुझमें खो दिया।',
+        ],
+        meaningEn: 'This verse reveals a spiritual paradox. The world teaches us to accumulate wealth, power, and possessions. However, the spiritual path teaches that true fulfillment ("true life") is found not in gaining, but in "losing" the ego and merging with the Divine.',
+        meaningHi: 'यह कविता एक आध्यात्मिक विरोधाभास को उजागर करती है। दुनिया हमें धन, शक्ति और संपत्ति जमा करना सिखाती है। हालाँकि, आध्यात्मिक मार्ग सिखाता है कि सच्ची संतुष्टि ("सच्ची ज़िंदगी") पाने में नहीं, बल्कि अहंकार को "खोने" और परमात्मा में विलीन होने में है।'
+    },
+    {
+        id: 'poem-66',
+        author: 'Sant Darshan Singh Ji Maharaj',
+        titleEn: 'The World, a Dream',
+        titleHi: 'दुनिया, एक ख़्वाब',
+        textEn: [
+            'This world is but a dream from which we must awaken,',
+            'O Lord, grant me the grace to open my inner eye.',
+        ],
+        textHi: [
+            'यह दुनिया बस एक ख़्वाब है जिससे हमें जागना है,',
+            'ऐ मालिक, मुझे अपनी अंदर की आँख खोलने की कृपा प्रदान कर।',
+        ],
+        meaningEn: 'From the spiritual perspective, our worldly existence is like a dream compared to the higher reality. The poet prays for the awakening of the "inner eye" (the third eye or Shiv Netra), which allows the soul to perceive the reality beyond this illusion.',
+        meaningHi: 'आध्यात्मिक दृष्टिकोण से, हमारा सांसारिक अस्तित्व उच्च वास्तविकता की तुलना में एक सपने जैसा है। कवि "आंतरिक आंख" (तीसरी आंख या शिव नेत्र) के जागरण के लिए प्रार्थना करता है, जो आत्मा को इस भ्रम से परे की वास्तविकता को देखने की अनुमति देती है।'
+    },
+    {
+        id: 'poem-67',
+        author: 'Sant Darshan Singh Ji Maharaj',
+        titleEn: 'The Sound of Silence',
+        titleHi: 'सन्नाटे की आवाज़',
+        textEn: [
+            'There is a sound that resonates in the deepest silence,',
+            'It is Your call, and my soul dances to its rhythm.',
+        ],
+        textHi: [
+            'गहरे सन्नाटे में एक आवाज़ गूँजती है,',
+            'यह तेरी पुकार है, और मेरी रूह इसकी धुन पर नाचती है।',
+        ],
+        meaningEn: 'This refers to the Anhad Shabad, the Unstruck Melody. It is the "sound of silence" because it is not heard with the physical ears but with the inner ear of the soul during meditation. This divine music is the call of the Beloved, drawing the soul back home.',
+        meaningHi: 'यह अनहद शब्द, यानी बिना बजाए बजने वाली धुन को संदर्भित करता है। यह "सन्नाटे की आवाज़" है क्योंकि इसे भौतिक कानों से नहीं बल्कि ध्यान के दौरान आत्मा के आंतरिक कान से सुना जाता है। यह दिव्य संगीत प्रियतम की पुकार है, जो आत्मा को वापस घर बुला रही है।'
+    },
+    {
+        id: 'poem-68',
+        author: 'Sant Darshan Singh Ji Maharaj',
+        titleEn: 'The Only Knowledge',
+        titleHi: 'एकमात्र ज्ञान',
+        textEn: [
+            'I read countless books, but remained ignorant,',
+            'True knowledge came when I learned to read the page of my own heart.',
+        ],
+        textHi: [
+            'मैंने अनगिनत किताबें पढ़ीं, पर अनजान ही रहा,',
+            'सच्चा ज्ञान तब मिला जब मैंने अपने दिल का पन्ना पढ़ना सीखा।',
+        ],
+        meaningEn: 'Intellectual or scriptural knowledge is limited. The poet emphasizes that true wisdom comes not from external sources, but from introspection. The "page of the heart" is the inner self, where all divine secrets are revealed through direct experience in meditation.',
+        meaningHi: 'बौद्धिक या शास्त्रीय ज्ञान सीमित है। कवि इस बात पर जोर देता है कि सच्ची बुद्धि बाहरी स्रोतों से नहीं, बल्कि आत्म-निरीक्षण से आती है। "दिल का पन्ना" आंतरिक स्व है, जहाँ ध्यान में प्रत्यक्ष अनुभव के माध्यम से सभी दिव्य रहस्य प्रकट होते हैं।'
+    },
+    {
+        id: 'poem-69',
+        author: 'Sant Darshan Singh Ji Maharaj',
+        titleEn: 'The Perfect Pearl',
+        titleHi: 'कामिल मोती',
+        textEn: [
+            'I dived into the ocean of the world and found only shells,',
+            'The perfect pearl I sought was hidden within a single tear of longing.',
+        ],
+        textHi: [
+            'मैं दुनिया के समंदर में गोता लगाया और सिर्फ़ सीपियाँ पाईं,',
+            'जिस कामिल मोती की मुझे तलाश थी, वह तड़प के एक आँसू में छिपा था।',
+        ],
+        meaningEn: 'Worldly pursuits ("ocean of the world") yield worthless things ("shells"). The most precious spiritual treasure ("the perfect pearl") is found not in the outer world, but within the seeker\'s own heart, specifically within the state of intense, prayerful longing ("a tear of longing").',
+        meaningHi: 'सांसारिक खोज ("दुनिया का समंदर") बेकार चीजें ("सीपियाँ") देती है। सबसे कीमती आध्यात्मिक खजाना ("कामिल मोती") बाहरी दुनिया में नहीं, बल्कि साधक के अपने दिल के भीतर, विशेष रूप से तीव्र, प्रार्थनापूर्ण तड़प ("तड़प का एक आँसू") की अवस्था में पाया जाता है।'
+    },
+    {
+        id: 'poem-70',
+        author: 'Sant Darshan Singh Ji Maharaj',
+        titleEn: 'The Point and the Circle',
+        titleHi: 'नुक्ता और दायरा',
+        textEn: [
+            'I wandered the circumference, but the center remained elusive,',
+            'You taught me that the path to the circle lies through its very point.',
+        ],
+        textHi: [
+            'मैं दायरे की परिधि पर भटकता रहा, पर केंद्र elusive रहा,',
+            'तूने मुझे सिखाया कि दायरे का रास्ता उसके नुक्ते से होकर जाता है।',
+        ],
+        meaningEn: 'This is a metaphor for spiritual seeking. The "circumference" represents external rituals and searches. The "center" or "point" is the soul, the gateway within. The Master teaches that to understand the whole (the circle of creation), one must first go to the center point within oneself.',
+        meaningHi: 'यह आध्यात्मिक खोज के लिए एक रूपक है। "परिधि" बाहरी अनुष्ठानों और खोजों का प्रतिनिधित्व करती है। "केंद्र" या "नुक्ता" आत्मा है, भीतर का प्रवेश द्वार। गुरु सिखाते हैं कि संपूर्ण (सृष्टि का दायरा) को समझने के लिए, पहले अपने भीतर के केंद्र बिंदु पर जाना होगा।'
+    },
+    {
+        id: 'poem-71',
+        author: 'Sant Darshan Singh Ji Maharaj',
+        titleEn: 'The Dust of the Master\'s Lane',
+        titleHi: 'मुर्शिद के कूचे की ख़ाक',
+        textEn: [
+            'The dust of my Master\'s lane is the kohl for my eyes,',
+            'It has granted me a vision that sees beyond the veil of this world.',
+        ],
+        textHi: [
+            'मेरे मुर्शिद के कूचे की ख़ाक मेरी आँखों का सुरमा है,',
+            'इसने मुझे ऐसी नज़र दी है जो दुनिया के पर्दे के पार देखती है।',
+        ],
+        meaningEn: 'Kohl is used to beautify and clarify the eyes. Here, the "dust of the Master\'s lane" (symbolizing humility and closeness to him) acts as a spiritual kohl, purifying the seeker\'s inner vision and allowing them to perceive spiritual realities.',
+        meaningHi: 'सुरमा आँखों को सुंदर बनाने और साफ़ करने के लिए इस्तेमाल किया जाता है। यहाँ, "गुरु के कूचे की ख़ाक" (विनम्रता और उनके प्रति निकटता का प्रतीक) एक आध्यात्मिक सुरमे के रूप में कार्य करती है, जो साधक की आंतरिक दृष्टि को शुद्ध करती है और उन्हें आध्यात्मिक वास्तविकताओं को देखने की अनुमति देती है।'
+    },
+    {
+        id: 'poem-72',
+        author: 'Sant Darshan Singh Ji Maharaj',
+        titleEn: 'The Heart\'s Fire',
+        titleHi: 'दिल की आग',
+        textEn: [
+            'Let the fire of Your love burn away everything in my heart,',
+            'Until nothing remains but the ashes of my surrendered self.',
+        ],
+        textHi: [
+            'तेरे इश्क़ की आग मेरे दिल में सब कुछ जला दे,',
+            'जब तक कि मेरे समर्पित स्व की राख के सिवा कुछ न बचे।',
+        ],
+        meaningEn: 'The poet prays for a complete purification through divine love. This "fire" is not destructive but transformative. It is meant to burn away all impurities—ego, desires, karmas—leaving only the pure essence of a soul completely surrendered to the Divine.',
+        meaningHi: 'कवि दिव्य प्रेम के माध्यम से पूर्ण शुद्धि के लिए प्रार्थना करता है। यह "आग" विनाशकारी नहीं बल्कि परिवर्तनकारी है। इसका उद्देश्य सभी अशुद्धियों—अहंकार, इच्छाओं, कर्मों—को जलाना है, जिससे केवल परमात्मा को पूरी तरह से समर्पित आत्मा का शुद्ध सार बच जाए।'
+    },
+    {
+        id: 'poem-73',
+        author: 'Sant Darshan Singh Ji Maharaj',
+        titleEn: 'The True Wealth',
+        titleHi: 'सच्ची दौलत',
+        textEn: [
+            'The kings of this world are beggars in the lane of love,',
+            'The only true wealth is the pain of longing for You.',
+        ],
+        textHi: [
+            'इस दुनिया के बादशाह इश्क़ की गली में भिखारी हैं,',
+            'एकमात्र सच्ची दौलत तेरी याद में तड़पने का दर्द है।',
+        ],
+        meaningEn: 'This verse inverts worldly values. Material wealth and power are meaningless compared to spiritual riches. For a mystic, the most treasured possession is "viraha," the intense pain of separation from God, because this pain is the very engine of the spiritual journey.',
+        meaningHi: 'यह कविता सांसारिक मूल्यों को उलट देती है। आध्यात्मिक धन की तुलना में भौतिक धन और शक्ति अर्थहीन हैं। एक रहस्यवादी के लिए, सबसे कीमती संपत्ति "विरह" है, ईश्वर से अलगाव का तीव्र दर्द, क्योंकि यह दर्द ही आध्यात्मिक यात्रा का मुख्य इंजन है।'
+    },
+    {
+        id: 'poem-74',
+        author: 'Sant Darshan Singh Ji Maharaj',
+        titleEn: 'The Homeless Wanderer',
+        titleHi: 'बेघर बंजारा',
+        textEn: [
+            'I am a homeless wanderer in both worlds,',
+            'My only address is the dust on Your doorstep.',
+        ],
+        textHi: [
+            'मैं दोनों जहान में एक बेघर बंजारा हूँ,',
+            'मेरा एकमात्र पता तेरी दहलीज़ की धूल है।',
+        ],
+        meaningEn: 'The seeker feels detached from the material world and has not yet reached the ultimate spiritual home. In this state, their only identity and place of belonging is in extreme humility and closeness to the Master ("the dust on Your doorstep").',
+        meaningHi: 'साधक भौतिक दुनिया से अलग महसूस करता है और अभी तक अंतिम आध्यात्मिक घर तक नहीं पहुंचा है। इस अवस्था में, उसकी एकमात्र पहचान और अपनेपन की जगह अत्यधिक विनम्रता और गुरु के प्रति निकटता ("तेरी दहलीज़ की धूल") है।'
+    },
+    {
+        id: 'poem-75',
+        author: 'Sant Darshan Singh Ji Maharaj',
+        titleEn: 'The Reflection in the Water',
+        titleHi: 'पानी में अक्स',
+        textEn: [
+            'The fool tries to catch the moon\'s reflection in the water,',
+            'The wise one looks up and beholds the moon itself.',
+        ],
+        textHi: [
+            'नादान पानी में चाँद का अक्स पकड़ने की कोशिश करता है,',
+            'समझदार ऊपर देखकर खुद चाँद को निहारता है।',
+        ],
+        meaningEn: 'This metaphor distinguishes between indirect and direct spiritual knowledge. The "reflection" is the beauty of the created world and scriptural knowledge. The "moon itself" is the direct experience of God. The poet advises seeking the source, not its reflection.',
+        meaningHi: 'यह रूपक अप्रत्यक्ष और प्रत्यक्ष आध्यात्मिक ज्ञान के बीच अंतर करता है। "अक्स" बनाई गई दुनिया की सुंदरता और शास्त्रीय ज्ञान है। "खुद चाँद" ईश्वर का प्रत्यक्ष अनुभव है। कवि स्रोत की तलाश करने की सलाह देता है, न कि उसके प्रतिबिंब की।'
+    },
+    {
+        id: 'poem-76',
+        author: 'Sant Darshan Singh Ji Maharaj',
+        titleEn: 'The Guest of the Heart',
+        titleHi: 'दिल का मेहमान',
+        textEn: [
+            'For years my heart was an empty, desolate house,',
+            'Since You became its guest, it has turned into a festive garden.',
+        ],
+        textHi: [
+            'बरसों तक मेरा दिल एक खाली, वीरान घर था,',
+            'जब से तू इसका मेहमान बना है, यह एक उत्सव का बाग़ बन गया है।',
+        ],
+        meaningEn: 'Before spiritual awakening, the heart is "empty" and devoid of true joy. When the presence of the Divine ("the guest") is felt within, the heart is transformed, filled with the perpetual "festive" bliss and beauty of a blooming garden.',
+        meaningHi: 'आध्यात्मिक जागृति से पहले, दिल "खाली" और सच्चे आनंद से रहित होता है। जब भीतर परमात्मा ("मेहमान") की उपस्थिति महसूस होती है, तो दिल बदल जाता है, और एक खिले हुए बगीचे के स्थायी "उत्सव" आनंद और सुंदरता से भर जाता है।'
+    },
+    {
+        id: 'poem-77',
+        author: 'Sant Darshan Singh Ji Maharaj',
+        titleEn: 'The Only Question',
+        titleHi: 'एक ही सवाल',
+        textEn: [
+            'I have only one question for the learned and the wise,',
+            'If you have not seen Him, what have you seen?',
+        ],
+        textHi: [
+            'मेरा आलिमों और अक़्लमंदों से बस एक ही सवाल है,',
+            'अगर तुमने उसे नहीं देखा, तो क्या देखा है?',
+        ],
+        meaningEn: 'This boldly challenges the value of all worldly knowledge and experience if it does not lead to God-realization. The poet asserts that the ultimate purpose of perception and knowledge is to see God. Everything else is secondary and ultimately meaningless.',
+        meaningHi: 'यह साहसपूर्वक सभी सांसारिक ज्ञान और अनुभव के मूल्य को चुनौती देता है यदि वह ईश्वर-प्राप्ति की ओर नहीं ले जाता है। कवि जोर देकर कहता है कि धारणा और ज्ञान का अंतिम उद्देश्य ईश्वर को देखना है। बाकी सब कुछ गौण और अंततः अर्थहीन है।'
+    },
+    {
+        id: 'poem-78',
+        author: 'Sant Darshan सिंह जी महाराज',
+        titleEn: 'The Soul\'s Story',
+        titleHi: 'रूह की दास्ताँ',
+        textEn: [
+            'Don\'t ask me for stories of this world,',
+            'My breath itself is a tale of longing for another world.',
+        ],
+        textHi: [
+            'मुझसे इस दुनिया के क़िस्से न पूछो,',
+            'मेरी तो हर साँस ही किसी और दुनिया की तड़प की दास्ताँ है।',
+        ],
+        meaningEn: 'The seeker has lost interest in worldly matters. Their entire being is consumed by the yearning for their true spiritual home. Every breath is a reminder of their separation and their desire to return to the divine source.',
+        meaningHi: 'साधक ने सांसारिक मामलों में रुचि खो दी है। उसका पूरा अस्तित्व अपने सच्चे आध्यात्मिक घर के लिए तड़प से भर गया है। हर साँस उसे अपने अलगाव और दिव्य स्रोत पर लौटने की उसकी इच्छा की याद दिलाती है।'
+    },
+    {
+        id: 'poem-79',
+        author: 'Sant Darshan Singh Ji Maharaj',
+        titleEn: 'The Master\'s Hand',
+        titleHi: 'मुर्शिद का हाथ',
+        textEn: [
+            'I was drowning in the ocean of existence,',
+            'A hand reached out from the unseen and saved me; it was Yours.',
+        ],
+        textHi: [
+            'मैं वजूद के समंदर में डूब रहा था,',
+            'ग़ैब से एक हाथ आया और मुझे बचा लिया; वह हाथ तेरा था।',
+        ],
+        meaningEn: 'This describes the saving grace of the spiritual Master. The "ocean of existence" is the cycle of birth and death and worldly suffering. The seeker acknowledges that it was the Master\'s grace ("Your hand") that rescued them from this perilous state.',
+        meaningHi: 'यह आध्यात्मिक गुरु की बचाने वाली कृपा का वर्णन करता है। "वजूद का समंदर" जन्म और मृत्यु का चक्र और सांसारिक दुख है। साधक स्वीकार करता है कि यह गुरु की कृपा ("तेरा हाथ") थी जिसने उन्हें इस खतरनाक स्थिति से बचाया।'
+    },
+    {
+        id: 'poem-80',
+        author: 'Sant Darshan Singh Ji Maharaj',
+        titleEn: 'The Debt of Love',
+        titleHi: 'इश्क़ का क़र्ज़',
+        textEn: [
+            'How can I ever repay the debt of a single glance of Your grace?',
+            'Even if I offer my life a thousand times, it would not be enough.',
+        ],
+        textHi: [
+            'मैं तेरी एक निगाह-ए-करम का क़र्ज़ कैसे चुका सकता हूँ?',
+            'अगर मैं हज़ार बार भी अपनी जान दे दूँ, तो भी यह काफ़ी नहीं होगा।',
+        ],
+        meaningEn: 'The seeker feels an overwhelming sense of gratitude for the Master\'s grace. A single moment of that grace is considered so priceless that no sacrifice, not even giving one\'s life repeatedly, can ever be sufficient to repay it.',
+        meaningHi: 'साधक गुरु की कृपा के लिए अत्यधिक कृतज्ञता की भावना महसूस करता है। उस कृपा का एक क्षण इतना अनमोल माना जाता है कि कोई भी बलिदान, यहाँ तक कि बार-बार अपनी जान देना भी, उसे चुकाने के लिए कभी भी पर्याप्त नहीं हो सकता।'
+    },
+    {
+        id: 'poem-81',
+        author: 'Sant Darshan Singh Ji Maharaj',
+        titleEn: 'The Center of My World',
+        titleHi: 'मेरी दुनिया का मरकज़',
+        textEn: [
+            'The world revolves around its axis,',
+            'My world revolves around the thought of You.',
+        ],
+        textHi: [
+            'दुनिया अपने मेहवर के गिर्द घूमती है,',
+            'मेरी दुनिया तेरे ख़याल के गिर्द घूमती है।',
+        ],
+        meaningEn: 'This expresses a state of complete single-pointed devotion. For the seeker, the central, organizing principle of their entire existence—their thoughts, feelings, and actions—is the remembrance and love of the Beloved.',
+        meaningHi: 'यह पूर्ण एकनिष्ठ भक्ति की स्थिति को व्यक्त करता है। साधक के लिए, उसके पूरे अस्तित्व—उसके विचारों, भावनाओं और कार्यों—का केंद्रीय, संगठित सिद्धांत प्रियतम का स्मरण और प्रेम है।'
+    },
+    {
+        id: 'poem-82',
+        author: 'Sant Darshan Singh Ji Maharaj',
+        titleEn: 'The True Prayer',
+        titleHi: 'सच्ची दुआ',
+        textEn: [
+            'My prayer is not in words, but in the silent turning of my heart,',
+            'Like a sunflower, it constantly seeks Your light.',
+        ],
+        textHi: [
+            'मेरी दुआ लफ़्ज़ों में नहीं, बल्कि मेरे दिल के ख़ामोश मुड़ने में है,',
+            'सूरजमुखी की तरह, यह हमेशा तेरे नूर की तलाश में रहता है।',
+        ],
+        meaningEn: 'True prayer is not a formulated request but an unceasing, natural orientation of the soul towards God. Like a sunflower that instinctively follows the sun, the awakened heart constantly and silently yearns for the divine light.',
+        meaningHi: 'सच्ची प्रार्थना एक तैयार की गई विनती नहीं है, बल्कि आत्मा का ईश्वर की ओर एक निरंतर, स्वाभाविक झुकाव है। जैसे एक सूरजमुखी सहज रूप से सूर्य का अनुसरण करता है, वैसे ही जागा हुआ दिल लगातार और चुपचाप दिव्य प्रकाश के लिए तरसता है।'
+    },
+    {
+        id: 'poem-83',
+        author: 'Sant Darshan Singh Ji Maharaj',
+        titleEn: 'The Logic of Love',
+        titleHi: 'इश्क़ की मंतिक़',
+        textEn: [
+            'The intellect asked for proof, my heart simply bowed its head,',
+            'The logic of love is beyond all reason and argument.',
+        ],
+        textHi: [
+            'अक़्ल ने सुबूत मांगा, मेरे दिल ने बस सर झुका दिया,',
+            'इश्क़ की मंतिक़ हर दलील और बहस से परे है।',
+        ],
+        meaningEn: 'This verse highlights the conflict between intellect and faith. The mind demands rational proof, but the heart, in matters of love and spirituality, operates on faith, intuition, and surrender. Divine love is an experience that transcends logic.',
+        meaningHi: 'यह कविता बुद्धि और विश्वास के बीच के संघर्ष को उजागर करती है। मन तर्कसंगत प्रमाण मांगता है, लेकिन दिल, प्रेम और आध्यात्मिकता के मामलों में, विश्वास, अंतर्ज्ञान और समर्पण पर काम करता है। दिव्य प्रेम एक ऐसा अनुभव है जो तर्क से परे है।'
+    },
+    {
+        id: 'poem-84',
+        author: 'Sant Darshan Singh Ji Maharaj',
+        titleEn: 'The Ocean of Formlessness',
+        titleHi: 'बे-सूरत का समंदर',
+        textEn: [
+            'Every form I see is a wave on the ocean of Formlessness,',
+            'I have learned to see the ocean in every wave.',
+        ],
+        textHi: [
+            'हर सूरत जो मैं देखता हूँ, वह बे-सूरत के समंदर की एक लहर है,',
+            'मैंने हर लहर में समंदर देखना सीख लिया है।',
+        ],
+        meaningEn: 'This expresses the Vedantic or Sufi realization of unity in diversity. All the diverse forms of creation ("waves") are temporary manifestations of the one, formless reality ("ocean"). The realized soul perceives this underlying unity in all things.',
+        meaningHi: 'यह वेदांत या सूफी की अनेकता में एकता की अनुभूति को व्यक्त करता है। सृष्टि के सभी विविध रूप ("लहरें") एक, निराकार वास्तविकता ("समंदर") की अस्थायी अभिव्यक्तियाँ हैं। सिद्ध आत्मा सभी चीजों में इस अंतर्निहित एकता को देखती है।'
+    },
+    {
+        id: 'poem-85',
+        author: 'Sant Darshan Singh Ji Maharaj',
+        titleEn: 'The Pilgrim\'s Goal',
+        titleHi: 'यात्री का लक्ष्य',
+        textEn: [
+            'The pilgrim longs to reach the shrine,',
+            'My pilgrimage ends where I lose myself and only You remain.',
+        ],
+        textHi: [
+            'तीर्थयात्री काबा पहुँचने को तरसता है,',
+            'मेरी तीर्थयात्रा वहाँ ख़त्म होती है जहाँ मैं खो जाता हूँ और बस तू रह जाता है।',
+        ],
+        meaningEn: 'The goal of the spiritual journey is not to arrive at a physical or even a spiritual location. The true destination is a state of consciousness—the annihilation of the self, where the illusion of a separate identity is lost and only God remains.',
+        meaningHi: 'आध्यात्मिक यात्रा का लक्ष्य किसी भौतिक या आध्यात्मिक स्थान पर पहुँचना नहीं है। सच्चा गंतव्य चेतना की एक अवस्था है—स्वयं का विनाश, जहाँ एक अलग पहचान का भ्रम खो जाता है और केवल ईश्वर ही रहता है।'
+    },
+    {
+        id: 'poem-86',
+        author: 'Sant Darshan Singh Ji Maharaj',
+        titleEn: 'A Single Breath',
+        titleHi: 'एक साँस',
+        textEn: [
+            'A single breath spent in Your remembrance,',
+            'Is more valuable than a hundred lifetimes spent in heedlessness.',
+        ],
+        textHi: [
+            'एक साँस जो तेरी याद में गुज़रे,',
+            'ग़फ़लत में गुज़री सौ ज़िंदगियों से ज़्यादा क़ीमती है।',
+        ],
+        meaningEn: 'This verse emphasizes the immense value of conscious spiritual practice. Even a moment of sincere remembrance of God is spiritually more potent and worthwhile than long periods of life lived without spiritual awareness.',
+        meaningHi: 'यह कविता सचेत आध्यात्मिक अभ्यास के immense मूल्य पर जोर देती है। ईश्वर का ईमानदारी से स्मरण का एक क्षण भी आध्यात्मिक जागरूकता के बिना बिताए गए जीवन की लंबी अवधियों से आध्यात्मिक रूप से अधिक शक्तिशाली और सार्थक है।'
+    },
+    {
+        id: 'poem-87',
+        author: 'Sant Darshan Singh Ji Maharaj',
+        titleEn: 'The Unread Letter',
+        titleHi: 'अनपढ़ा ख़त',
+        textEn: [
+            'The human body is a letter sent to you from God,',
+            'Alas, you have spent your life without ever reading its contents.',
+        ],
+        textHi: [
+            'यह इंसानी जिस्म ख़ुदा का भेजा हुआ एक ख़त है तेरे नाम,',
+            'अफ़सोस, तूने ज़िंदगी गुज़ार दी और इसका मज़मून पढ़ा ही नहीं।',
+        ],
+        meaningEn: 'The human form is a precious and rare opportunity for God-realization. It is like a "letter" from God containing the secret of how to return to Him. The tragedy is that most people live and die without "reading" it, i.e., without undertaking the inner journey it was designed for.',
+        meaningHi: 'मानव रूप ईश्वर-प्राप्ति के लिए एक कीमती और दुर्लभ अवसर है। यह ईश्वर का एक "ख़त" जैसा है जिसमें उस तक लौटने का रहस्य है। त्रासदी यह है कि अधिकांश लोग इसे "पढ़े" बिना ही जीते और मर जाते हैं, यानी उस आंतरिक यात्रा को किए बिना जिसके लिए इसे बनाया गया था।'
+    },
+    {
+        id: 'poem-88',
+        author: 'Sant Darshan Singh Ji Maharaj',
+        titleEn: 'The Spark and the Sun',
+        titleHi: 'चिंगारी और सूरज',
+        textEn: [
+            'I was a mere spark, You are the infinite sun,',
+            'By Your grace, the spark has realized it was never separate from the sun.',
+        ],
+        textHi: [
+            'मैं एक मामूली चिंगारी था, तू असीम सूरज है,',
+            'तेरी कृपा से, चिंगारी को एहसास हुआ कि वह सूरज से कभी अलग थी ही नहीं।',
+        ],
+        meaningEn: 'The soul ("spark") is a part of God ("sun"). In its state of ignorance, it feels small and separate. Through divine grace, it comes to the realization that its essence is the same as its source, and the separation was only an illusion.',
+        meaningHi: 'आत्मा ("चिंगारी") ईश्वर ("सूरज") का एक हिस्सा है। अपनी अज्ञानता की स्थिति में, यह छोटा और अलग महसूस करती है। दैवीय कृपा के माध्यम से, उसे यह एहसास होता है कि उसका सार उसके स्रोत के समान ही है, और अलगाव केवल एक भ्रम था।'
+    },
+    {
+        id: 'poem-89',
+        author: 'Sant Darshan Singh Ji Maharaj',
+        titleEn: 'The Way to His Lane',
+        titleHi: 'उसके कूचे का रास्ता',
+        textEn: [
+            'The way to the Beloved\'s lane passes through the marketplace of infamy,',
+            'Be prepared to lose your honor if you wish to walk this path.',
+        ],
+        textHi: [
+            'यार के कूचे का रास्ता रुस्वाई के बाज़ार से होकर गुज़रता है,',
+            'अगर इस राह पर चलना है तो अपनी इज़्ज़त खोने को तैयार रह।',
+        ],
+        meaningEn: 'The path of true devotion often requires going against societal norms and expectations. The seeker must be willing to endure ridicule and lose their worldly reputation ("infamy") for the sake of their love for God.',
+        meaningHi: 'सच्ची भक्ति के मार्ग पर अक्सर सामाजिक मानदंडों और अपेक्षाओं के विरुद्ध जाना पड़ता है। साधक को ईश्वर के प्रति अपने प्रेम के लिए उपहास सहने और अपनी सांसारिक प्रतिष्ठा ("रुस्वाई") खोने के लिए तैयार रहना चाहिए।'
+    },
+    {
+        id: 'poem-90',
+        author: 'Sant Darshan Singh Ji Maharaj',
+        titleEn: 'The Final Plea',
+        titleHi: 'आख़िरी इल्तिजा',
+        textEn: [
+            'When my final breath arrives, let this be my only plea,',
+            'Let my eyes be fixed on You, and Your name be on my tongue.',
+        ],
+        textHi: [
+            'जब मेरी आख़िरी साँस आए, तो बस यही इल्तिजा हो,',
+            'मेरी आँखें तुझ पर टिकी हों, और ज़बान पर तेरा नाम हो।',
+        ],
+        meaningEn: 'This is the ultimate aspiration of a devotee. They pray that at the moment of death, their consciousness is completely absorbed in the Beloved—seeing Him with their inner eye and remembering Him with their last breath, ensuring a graceful transition.',
+        meaningHi: 'यह एक भक्त की अंतिम आकांक्षा है। वे प्रार्थना करते हैं कि मृत्यु के क्षण में, उनकी चेतना पूरी तरह से प्रियतम में लीन हो—उन्हें अपनी आंतरिक आंख से देखते हुए और अपनी अंतिम सांस के साथ उन्हें याद करते हुए, एक सुंदर पारगमन सुनिश्चित करते हुए।'
+    },
+     {
+        id: 'poem-91',
+        author: 'Sant Darshan Singh Ji Maharaj',
+        titleEn: 'The Silent Complaint',
+        titleHi: 'ख़ामोश गिला',
+        textEn: [
+            'My silence is a complaint against Your indifference,',
+            'Listen to the story my unblinking eyes tell.',
+        ],
+        textHi: [
+            'मेरी ख़ामोशी तेरी बेरुखी के ख़िलाफ़ एक गिला है,',
+            'मेरी बे-मिसाल आँखों की कहानी को सुन।',
+        ],
+        meaningEn: 'In the state of intense longing, the seeker feels the Beloved is distant. Their silent, tearful meditation is a form of complaint, a plea for grace. The constant vigil ("unblinking eyes") is itself a story of their unwavering love and pain.',
+        meaningHi: 'तीव्र तड़प की अवस्था में, साधक को लगता है कि प्रियतम दूर है। उनका मौन, अश्रुपूर्ण ध्यान एक प्रकार की शिकायत है, कृपा के लिए एक प्रार्थना। निरंतर जागरण ("बे-मिसाल आँखें") ही उनके अटूट प्रेम और दर्द की कहानी है।'
+    },
+    {
+        id: 'poem-92',
+        author: 'Sant Darshan Singh Ji Maharaj',
+        titleEn: 'The World and the Heart',
+        titleHi: 'दुनिया और दिल',
+        textEn: [
+            'The world is too small to contain my love for You,',
+            'Yet my small heart contains both You and the world.',
+        ],
+        textHi: [
+            'यह दुनिया तेरे लिए मेरे इश्क़ को समाने के लिए बहुत छोटी है,',
+            'फिर भी मेरा छोटा सा दिल तुझे और दुनिया दोनों को समाए हुए है।',
+        ],
+        meaningEn: 'A mystical paradox. The love for God is infinite and cannot be contained by the entire universe. Yet, the human heart, when expanded by love, has the capacity to hold the Infinite Beloved, making it greater than the cosmos itself.',
+        meaningHi: 'एक रहस्यमय विरोधाभास। ईश्वर के लिए प्रेम अनंत है और इसे पूरे ब्रह्मांड में नहीं समाया जा सकता। फिर भी, मानव हृदय, जब प्रेम से फैलता है, तो उसमें अनंत प्रियतम को धारण करने की क्षमता होती है, जो इसे ब्रह्मांड से भी बड़ा बना देता है।'
+    },
+    {
+        id: 'poem-93',
+        author: 'Sant Darshan Singh Ji Maharaj',
+        titleEn: 'The True Prostration',
+        titleHi: 'सच्चा सजदा',
+        textEn: [
+            'I offered a prostration in which I did not lift my head again,',
+            'For the one who has found Your doorstep needs no other shrine.',
+        ],
+        textHi: [
+            'मैंने एक ऐसा सजदा किया कि फिर सर नहीं उठाया,',
+            'क्योंकि जिसे तेरी दहलीज़ मिल गई, उसे किसी और काबे की ज़रूरत नहीं।',
+        ],
+        meaningEn: 'True prostration (sajda) is not a physical act but a permanent state of surrender. Once the seeker has found the true Master ("Your doorstep"), their ego is permanently bowed, and they no longer need to search for God in any other place.',
+        meaningHi: 'सच्चा सजदा एक शारीरिक क्रिया नहीं बल्कि समर्पण की एक स्थायी अवस्था है। जब साधक को सच्चा गुरु ("तेरी दहलीज़") मिल जाता है, तो उसका अहंकार स्थायी रूप से झुक जाता है, और उसे किसी अन्य स्थान पर ईश्वर को खोजने की आवश्यकता नहीं रहती।'
+    },
+    {
+        id: 'poem-94',
+        author: 'Sant Darshan Singh Ji Maharaj',
+        titleEn: 'The Color of Submission',
+        titleHi: 'रंग-ए-तस्लीम',
+        textEn: [
+            'Dye me in Your color, O Dyer of hearts,',
+            'So that my own color ceases to exist.',
+        ],
+        textHi: [
+            'मुझे अपने रंग में रंग दे, ऐ दिलों के रंगरेज़,',
+            'ताकि मेरा अपना कोई रंग बाक़ी न रहे।',
+        ],
+        meaningEn: 'The seeker prays to be completely absorbed into the being of the Beloved. They wish for their individual identity and personality ("my own color") to be completely effaced and replaced by the divine consciousness ("Your color").',
+        meaningHi: 'साधक प्रियतम के अस्तित्व में पूरी तरह से विलीन होने की प्रार्थना करता है। वह चाहता है कि उसकी व्यक्तिगत पहचान और व्यक्तित्व ("मेरा अपना रंग") पूरी तरह से मिट जाए और उसकी जगह दिव्य चेतना ("तेरा रंग") ले ले।'
+    },
+    {
+        id: 'poem-95',
+        author: 'Sant Darshan Singh Ji Maharaj',
+        titleEn: 'The Madman\'s Wisdom',
+        titleHi: 'दीवाने की समझ',
+        textEn: [
+            'The wise call me mad, and the mad call me wise,',
+            'Only You and I know the secret of my condition.',
+        ],
+        textHi: [
+            'अक़्लमंद मुझे दीवाना कहते हैं, और दीवाने मुझे अक़्लमंद,',
+            'मेरी हालत का राज़ तो बस तू जानता है या मैं।',
+        ],
+        meaningEn: 'The lover of God lives in a state that is incomprehensible to the worldly-wise. Their actions may seem like madness. Yet, in their "madness" of divine love lies a higher wisdom. Only the lover and the Beloved understand this sacred relationship.',
+        meaningHi: 'ईश्वर का प्रेमी एक ऐसी अवस्था में रहता है जो दुनिया के समझदार लोगों के लिए समझ से बाहर है। उसके कार्य पागलपन जैसे लग सकते हैं। फिर भी, उसके दिव्य प्रेम के "पागलपन" में एक उच्च ज्ञान निहित है। केवल प्रेमी और प्रियतम ही इस पवित्र रिश्ते को समझते हैं।'
+    },
+    {
+        id: 'poem-96',
+        author: 'Sant Darshan Singh Ji Maharaj',
+        titleEn: 'The Agony and the Ecstasy',
+        titleHi: 'दर्द और दवा',
+        textEn: [
+            'You are the source of my pain, and You are its only cure,',
+            'How strange is my ailment, that the doctor himself is the disease.',
+        ],
+        textHi: [
+            'तू ही मेरे दर्द का सबब है, और तू ही इसकी एकमात्र दवा,',
+            'मेरा मर्ज़ भी क्या अजीब है, कि हकीम खुद ही बीमारी है।',
+        ],
+        meaningEn: 'The pain of separation is caused by the absence of the Beloved, yet the only cure for that pain is the Beloved Himself. This beautiful paradox captures the all-encompassing nature of God in the seeker\'s life, being both the cause of longing and its ultimate fulfillment.',
+        meaningHi: 'जुदाई का दर्द प्रियतम की अनुपस्थिति के कारण होता है, फिर भी उस दर्द का एकमात्र इलाज स्वयं प्रियतम है। यह सुंदर विरोधाभास साधक के जीवन में ईश्वर की सर्वव्यापी प्रकृति को दर्शाता है, जो तड़प का कारण भी है और उसकी अंतिम पूर्ति भी।'
+    },
+    {
+        id: 'poem-97',
+        author: 'Sant Darshan Singh Ji Maharaj',
+        titleEn: 'The Two Worlds',
+        titleHi: 'दो जहान',
+        textEn: [
+            'Give the two worlds to those who desire them,',
+            'For me, a single particle of dust from Your lane is enough.',
+        ],
+        textHi: [
+            'दोनों जहान उन्हें दे दे जो इसके तलबगार हैं,',
+            'मेरे लिए तो तेरे कूचे का एक ज़र्रा ही काफ़ी है।',
+        ],
+        meaningEn: 'The poet renounces all rewards, both earthly and heavenly ("the two worlds"). The ultimate desire is not for paradise or worldly pleasure, but for the profound humility and nearness to the Beloved symbolized by the "dust from Your lane".',
+        meaningHi: 'कवि सांसारिक और स्वर्गीय ("दोनों जहान") सभी पुरस्कारों का त्याग करता है। अंतिम इच्छा स्वर्ग या सांसारिक सुख के लिए नहीं है, बल्कि "तेरे कूचे की धूल" द्वारा प्रतीक गहन विनम्रता और प्रियतम के प्रति निकटता के लिए है।'
+    },
+    {
+        id: 'poem-98',
+        author: 'Sant Darshan Singh Ji Maharaj',
+        titleEn: 'Beyond Reason',
+        titleHi: 'अक़्ल से परे',
+        textEn: [
+            'Let reason wander in its own labyrinths,',
+            'The path of love begins where reason ends.',
+        ],
+        textHi: [
+            'अक़्ल को उसकी अपनी गलियों में भटकने दे,',
+            'इश्क़ का रास्ता वहाँ से शुरू होता है जहाँ अक़्ल की हद ख़त्म होती है।',
+        ],
+        meaningEn: 'This verse emphasizes that the spiritual journey of love cannot be navigated by the rational mind. The intellect has its limits. True spiritual experience and the mysteries of divine love are accessible only when one transcends logic and embraces faith and intuition.',
+        meaningHi: 'यह कविता इस बात पर जोर देती है कि प्रेम की आध्यात्मिक यात्रा को तार्किक मन से नहीं तय किया जा सकता है। बुद्धि की अपनी सीमाएँ हैं। सच्चा आध्यात्मिक अनुभव और दिव्य प्रेम के रहस्य केवल तभी सुलभ होते हैं जब कोई तर्क से परे जाकर विश्वास और अंतर्ज्ञान को अपनाता है।'
+    },
+    {
+        id: 'poem-99',
+        author: 'Sant Darshan Singh Ji Maharaj',
+        titleEn: 'The Broken Heart',
+        titleHi: 'शिकस्ता दिल',
+        textEn: [
+            'Do not look down upon my broken heart,',
+            'For the Beloved often chooses to reside in ruins.',
+        ],
+        textHi: [
+            'मेरे शिकस्ता दिल को हिकारत से न देख,',
+            'यार तो अक्सर वीரானوں में ही रहना पसंद करता है।',
+        ],
+        meaningEn: 'A "broken heart" in this context is one that is broken from worldly attachments and filled with humility and longing for God. Such a heart, free from pride, becomes a suitable dwelling place for the Divine, who values humility over worldly perfection.',
+        meaningHi: 'इस संदर्भ में "टूटा हुआ दिल" वह है जो सांसारिक मोह से टूट गया है और ईश्वर के लिए विनम्रता और तड़प से भर गया है। ऐसा हृदय, जो अभिमान से मुक्त है, परमात्मा के लिए एक उपयुक्त निवास स्थान बन जाता है, जो सांसारिक पूर्णता पर विनम्रता को महत्व देता है।'
+    },
+    {
+        id: 'poem-100',
+        author: 'Sant Darshan Singh Ji Maharaj',
+        titleEn: 'The End of the Story',
+        titleHi: 'कहानी का अंत',
+        textEn: [
+            'The story began when "I" and "You" were two,',
+            'It ended when "I" ceased to be, and only "You" remained.',
+        ],
+        textHi: [
+            'कहानी तब शुरू हुई जब "मैं" और "तू" दो थे,',
+            'यह तब ख़त्म हुई जब "मैं" न रहा, और सिर्फ़ "तू" रह गया।',
+        ],
+        meaningEn: 'This couplet beautifully summarizes the entire mystical journey. It begins with the illusion of duality (the seeker and God as separate). The journey culminates in the state of unity or fana, where the individual self ("I") is completely annihilated in the Divine Being ("You").',
+        meaningHi: 'यह दोहा पूरी रहस्यमय यात्रा का सुंदर सारांश प्रस्तुत करता है। यह द्वैत के भ्रम से शुरू होता है (साधक और ईश्वर अलग-अलग हैं)। यात्रा एकता या "फ़ना" की स्थिति में समाप्त होती है, जहाँ व्यक्तिगत स्व ("मैं") पूरी तरह से दिव्य अस्तित्व ("तू") में विलीन हो जाता है।'
     }
 ];

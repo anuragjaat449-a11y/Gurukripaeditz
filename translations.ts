@@ -29,6 +29,19 @@ export const translations = {
     watchVideo: "Watch Video",
     takeQuiz: "Take Quiz",
 
+    // Fix: Add missing translations for video components.
+    // VideoCard.tsx & VideoPlayerModal.tsx
+    videoUnavailableAria: "Video {titlePrefix} #{videoNumber} is currently unavailable",
+    playVideoAria: "Play video {titlePrefix} #{videoNumber}",
+    thumbnailAlt: "Thumbnail for video {titlePrefix} #{videoNumber}",
+    youTubePlayerTitle: "YouTube Player for {titlePrefix} #{videoNumber}",
+    videoUnavailable: "Video Unavailable",
+    watch: "Watch",
+    download: "Download",
+    downloadStarting: "Starting...",
+    downloadStarted: "Download Started!",
+    notAvailable: "Not Available",
+
     // PoetryCard.tsx
     listenToPoem: "Listen to Poem",
     showMeaning: "Show Meaning",
@@ -59,7 +72,9 @@ export const translations = {
     next: "Next",
     previous: "Previous",
 
-    // Poetry Reset Message
+    // Poetry Section
+    poetryCollectionTitle: "A Selection of Divine Verse",
+    poetryCollectionSubtitle: "Sant Darshan Singh Ji Maharaj composed over 700 ghazals and poems. This collection presents a curated selection of his profound work.",
     poetryResetTitle: "You've seen all the poems!",
     poetryResetSubtitle: "Enjoy them again from the beginning.",
   },
@@ -91,6 +106,19 @@ export const translations = {
     watchVideo: "वीडियो देखें",
     takeQuiz: "प्रश्नोत्तरी करें",
     
+    // Fix: Add missing translations for video components.
+    // VideoCard.tsx & VideoPlayerModal.tsx
+    videoUnavailableAria: "वीडियो {titlePrefix} #{videoNumber} अभी अनुपलब्ध है",
+    playVideoAria: "वीडियो {titlePrefix} #{videoNumber} चलाएं",
+    thumbnailAlt: "वीडियो {titlePrefix} #{videoNumber} के लिए थंबनेल",
+    youTubePlayerTitle: "वीडियो {titlePrefix} #{videoNumber} के लिए यूट्यूब प्लेयर",
+    videoUnavailable: "वीडियो अनुपलब्ध है",
+    watch: "देखें",
+    download: "डाउनलोड करें",
+    downloadStarting: "शुरू हो रहा है...",
+    downloadStarted: "डाउनलोड शुरू हुआ!",
+    notAvailable: "उपलब्ध नहीं है",
+
     // PoetryCard.tsx
     listenToPoem: "कविता सुनें",
     showMeaning: "अर्थ देखें",
@@ -120,8 +148,10 @@ export const translations = {
     close: "बंद करें",
     next: "अगला",
     previous: "पिछला",
-    
-    // Poetry Reset Message
+
+    // Poetry Section
+    poetryCollectionTitle: "दिव्य छंदों का एक चयन",
+    poetryCollectionSubtitle: "संत दर्शन सिंह जी महाराज ने ७०० से अधिक ग़ज़लें और कविताएँ रचीं। यह संग्रह उनके गहन कार्यों का एक क्यूरेटेड चयन प्रस्तुत करता है।",
     poetryResetTitle: "आपने सारी कविताएँ देख ली हैं!",
     poetryResetSubtitle: "शुरू से फिर से उनका आनंद लें।",
   }

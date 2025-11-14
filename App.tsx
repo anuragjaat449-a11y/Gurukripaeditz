@@ -15,7 +15,7 @@ import PhotoGallery from './components/PhotoGallery';
 const TABS: CarouselTab[] = [
   { id: 'poetry', titleKey: 'poetrySectionTitle', imageUrl: 'https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=1973&auto=format&fit=crop' },
   { id: 'books', titleKey: 'booksSectionTitle', imageUrl: 'https://images.unsplash.com/photo-1495446815901-a7297e633e8d?q=80&w=2070&auto=format&fit=crop' },
-  { id: 'gallery', titleKey: 'photoGallerySectionTitle', imageUrl: 'https://www.kirpal-sagar.org/images/content/sant-kirpal-singh/sant-kirpal-singh-001-xl.jpg' },
+  { id: 'gallery', titleKey: 'photoGallerySectionTitle', imageUrl: 'https://drive.google.com/thumbnail?id=1Y0Grz5-ADCsnfFbWJ6RfBKTpzk26CFBV&sz=w800' },
 ];
 
 const App: React.FC = () => {
@@ -165,6 +165,10 @@ const App: React.FC = () => {
       case 'poetry':
         return (
           <>
+            <div className={`mb-8 p-6 text-center glass-card text-brand-maroon dark:text-brand-gold ${animationClass}`}>
+                <h4 className="font-serif text-xl font-bold">{t.poetryCollectionTitle}</h4>
+                <p className="mt-2 text-black/80 dark:text-white/80">{t.poetryCollectionSubtitle}</p>
+            </div>
             {showPoetryResetMessage && (
               <div className={`mb-8 p-4 text-center glass-card text-brand-maroon dark:text-brand-gold ${animationClass}`}>
                 <p className="font-semibold">{t.poetryResetTitle}</p>
