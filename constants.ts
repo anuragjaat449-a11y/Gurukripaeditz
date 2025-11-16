@@ -3,6 +3,9 @@
 
 
 
+
+
+
 export interface Video {
     id: string; // youtube ID or GDrive file ID
     type: 'youtube' | 'gdrive';
@@ -55,6 +58,14 @@ export const GALLERY_IMAGES: GalleryImage[] = [
     { id: 'k11', thumbnailUrl: 'https://drive.google.com/thumbnail?id=1WXhaORL9cQQ9eEKQCtaREucC7eOAos0t&sz=w800', fullUrl: 'https://drive.google.com/thumbnail?id=1WXhaORL9cQQ9eEKQCtaREucC7eOAos0t&sz=w1280', altEn: 'Sant Kirpal Singh Ji speaking at the World Fellowship of Religions', altHi: 'संत किरपाल सिंह जी विश्व धर्म सम्मेलन में बोलते हुए' },
     { id: 'k12', thumbnailUrl: 'https://drive.google.com/thumbnail?id=1cfHFnqBlKnCe4PD_ksB7EOUxmMKFPJOG&sz=w800', fullUrl: 'https://drive.google.com/thumbnail?id=1cfHFnqBlKnCe4PD_ksB7EOUxmMKFPJOG&sz=w1280', altEn: 'Sant Kirpal Singh Ji on one of his world tours', altHi: 'संत किरपाल सिंह जी अपनी एक विश्व यात्रा पर' },
     { id: 'k15', thumbnailUrl: 'https://drive.google.com/thumbnail?id=1U0ntU9FbnpANWpPYBqgHWeH52q3F76V_&sz=w800', fullUrl: 'https://drive.google.com/thumbnail?id=1U0ntU9FbnpANWpPYBqgHWeH52q3F76V_&sz=w1280', altEn: 'Sant Kirpal Singh Ji at the World Conference on Unity of Man', altHi: 'संत किरपाल सिंह जी मानव एकता पर विश्व सम्मेलन में' },
+    { id: 'd1', thumbnailUrl: 'https://drive.google.com/thumbnail?id=1MMUFWMhonUYv_62rNSDc1Tjn-7p_I_6B&sz=w800', fullUrl: 'https://drive.google.com/thumbnail?id=1MMUFWMhonUYv_62rNSDc1Tjn-7p_I_6B&sz=w1280', altEn: 'A young Sant Darshan Singh Ji Maharaj', altHi: 'युवा संत दर्शन सिंह जी महाराज' },
+    { id: 'd2', thumbnailUrl: 'https://drive.google.com/thumbnail?id=1Y0_6sEA6cls_n82NILVNTgJ4WB_vdGIX&sz=w800', fullUrl: 'https://drive.google.com/thumbnail?id=1Y0_6sEA6cls_n82NILVNTgJ4WB_vdGIX&sz=w1280', altEn: 'Sant Darshan Singh Ji Maharaj with his father, Sant Kirpal Singh Ji Maharaj', altHi: 'संत दर्शन सिंह जी महाराज अपने पिता संत किरपाल सिंह जी महाराज के साथ' },
+    { id: 'd3', thumbnailUrl: 'https://drive.google.com/thumbnail?id=1DGHPCqGYHzs87xxAn44gL2Aq5-6uIPZO&sz=w800', fullUrl: 'https://drive.google.com/thumbnail?id=1DGHPCqGYHzs87xxAn44gL2Aq5-6uIPZO&sz=w1280', altEn: 'Sant Darshan Singh Ji Maharaj, a renowned poet of mysticism', altHi: 'संत दर्शन सिंह जी महाराज, रहस्यवाद के एक प्रसिद्ध कवि' },
+    { id: 'd4', thumbnailUrl: 'https://drive.google.com/thumbnail?id=1-V2nJ_xY6zR_aP5bB8cE9dF7gI_kL_mD&sz=w800', fullUrl: 'https://drive.google.com/thumbnail?id=1-V2nJ_xY6zR_aP5bB8cE9dF7gI_kL_mD&sz=w1280', altEn: 'Sant Darshan Singh Ji Maharaj giving a spiritual discourse (Satsang)', altHi: 'संत दर्शन सिंह जी महाराज एक आध्यात्मिक प्रवचन (सत्संग) देते हुए' },
+    { id: 'd5', thumbnailUrl: 'https://drive.google.com/thumbnail?id=1HQd2tHw0YXQlgpKujlu15l8VKL7KKyGz&sz=w800', fullUrl: 'https://drive.google.com/thumbnail?id=1HQd2tHw0YXQlgpKujlu15l8VKL7KKyGz&sz=w1280', altEn: 'Sant Darshan Singh Ji Maharaj during one of his world tours', altHi: 'संत दर्शन सिंह जी महाराज अपनी एक विश्व यात्रा के दौरान' },
+    { id: 'd6', thumbnailUrl: 'https://drive.google.com/thumbnail?id=19PDUwidhXK4VUUZ4N3n2XblnmG2YxFgn&sz=w800', fullUrl: 'https://drive.google.com/thumbnail?id=19PDUwidhXK4VUUZ4N3n2XblnmG2YxFgn&sz=w1280', altEn: 'Sant Darshan Singh Ji Maharaj at a World Conference on Mysticism', altHi: 'संत दर्शन सिंह जी महाराज रहस्यवाद पर विश्व सम्मेलन में' },
+    { id: 'd7', thumbnailUrl: 'https://drive.google.com/thumbnail?id=1gEFI_DhIePLeLyCuDYaTHJyTEVSj7EhN&sz=w800', fullUrl: 'https://drive.google.com/thumbnail?id=1gEFI_DhIePLeLyCuDYaTHJyTEVSj7EhN&sz=w1280', altEn: 'Kirpal Bagh, the center for Sawan Kirpal Ruhani Mission in Delhi', altHi: 'कृपाल बाग, दिल्ली में सावन कृपाल रूहानी मिशन का केंद्र' },
+    { id: 'd8', thumbnailUrl: 'https://drive.google.com/thumbnail?id=1jqjIjVYEit-CTdIfVKjh6loOMdAhbucE&sz=w800', fullUrl: 'https://drive.google.com/thumbnail?id=1jqjIjVYEit-CTdIfVKjh6loOMdAhbucE&sz=w1280', altEn: 'A portrait of Sant Darshan Singh Ji Maharaj in his later years', altHi: 'संत दर्शन सिंह जी महाराज का उनके बाद के वर्षों का एक चित्र' },
 ];
 
 export interface TimelineEvent {
@@ -138,6 +149,65 @@ export const TIMELINE_EVENTS: TimelineEvent[] = [
     descriptionEn: 'In February 1974, He convened the first World Conference on Unity of Man. On August 21, 1974, having completed his mission on earth, Sant Kirpal Singh Ji Maharaj left his physical body, leaving behind a legacy of love and a universal teaching for all humanity.',
     descriptionHi: 'फरवरी 1974 में, उन्होंने मानव एकता पर पहला विश्व सम्मेलन आयोजित किया। 21 अगस्त, 1974 को, पृथ्वी पर अपना मिशन पूरा करने के बाद, संत किरपाल सिंह जी महाराज ने अपना भौतिक शरीर छोड़ दिया, और अपने पीछे प्रेम की विरासत और पूरी मानवता के लिए एक सार्वभौमिक शिक्षा छोड़ गए।',
     imageId: 'k15'
+  }
+];
+
+export const DARSHAN_SINGH_TIMELINE_EVENTS: TimelineEvent[] = [
+  {
+    year: '1921',
+    titleEn: 'Birth and Heritage',
+    titleHi: 'जन्म और विरासत',
+    descriptionEn: 'Sant Darshan Singh Ji Maharaj was born on September 14, 1921, to his illustrious father and Master, Sant Kirpal Singh Ji Maharaj. From an early age, he was immersed in a deeply spiritual environment.',
+    descriptionHi: 'संत दर्शन सिंह जी महाराज का जन्म 14 सितंबर, 1921 को उनके यशस्वी पिता और गुरु, संत किरपाल सिंह जी महाराज के घर हुआ था। छोटी उम्र से ही, वह गहरे आध्यात्मिक वातावरण में डूबे हुए थे।',
+    imageId: 'd1'
+  },
+  {
+    year: '1942',
+    titleEn: 'Government Service & Poetic Beginnings',
+    titleHi: 'सरकारी सेवा और काव्य की शुरुआत',
+    descriptionEn: 'He entered government service in 1942 and served for 37 years, while simultaneously nurturing his gift for mystical poetry. He wrote under the pen name "Darshan".',
+    descriptionHi: 'उन्होंने 1942 में सरकारी सेवा में प्रवेश किया और 37 वर्षों तक सेवा की, साथ ही साथ अपनी रहस्यमय कविता की प्रतिभा को भी निखारा। उन्होंने "दर्शन" के उपनाम से लिखा।',
+    imageId: 'd3'
+  },
+  {
+    year: '1974',
+    titleEn: 'Carrying the Torch Forward',
+    titleHi: 'मशाल को आगे बढ़ाते हुए',
+    descriptionEn: 'After the passing of Sant Kirpal Singh Ji Maharaj, he took up the spiritual mission entrusted to him, guiding souls on the path of Sant Mat.',
+    descriptionHi: 'संत किरपाल सिंह जी महाराज के महाप्रयाण के बाद, उन्होंने उन्हें सौंपे गए आध्यात्मिक मिशन को संभाला और आत्माओं को संत मत के मार्ग पर मार्गदर्शन किया।',
+    imageId: 'd2'
+  },
+  {
+    year: '1978',
+    titleEn: 'First of Many World Tours',
+    titleHi: 'अनेक विश्व यात्राओं में से पहली',
+    descriptionEn: 'He embarked on his first of four world tours, traveling to Europe, the Americas, and Africa to share the universal message of love and inner experience.',
+    descriptionHi: 'उन्होंने अपनी चार विश्व यात्राओं में से पहली यात्रा शुरू की, प्रेम और आंतरिक अनुभव के सार्वभौमिक संदेश को साझा करने के लिए यूरोप, अमेरिका और अफ्रीका की यात्रा की।',
+    imageId: 'd5'
+  },
+  {
+    year: '1981',
+    titleEn: 'Founding of Sawan Kirpal Ruhani Mission',
+    titleHi: 'सावन कृपाल रूहानी मिशन की स्थापना',
+    descriptionEn: 'He founded the Sawan Kirpal Ruhani Mission (Science of Spirituality) to continue the work of his predecessors and established its international headquarters, Kirpal Bagh, in Delhi.',
+    descriptionHi: 'उन्होंने अपने पूर्ववर्तियों के काम को जारी रखने के लिए सावन कृपाल रूहानी मिशन (आध्यात्मिकता का विज्ञान) की स्थापना की और दिल्ली में इसका अंतरराष्ट्रीय मुख्यालय, कृपाल बाग, स्थापित किया।',
+    imageId: 'd7'
+  },
+  {
+    year: '1988',
+    titleEn: 'World Conference on Mysticism',
+    titleHi: 'रहस्यवाद पर विश्व सम्मेलन',
+    descriptionEn: 'He convened the 6th World Conference of the World Fellowship of Religions and the 15th International Human Unity Conference, emphasizing interfaith harmony and the core unity of all spiritual paths.',
+    descriptionHi: 'उन्होंने विश्व धर्म सम्मेलन के छठे विश्व सम्मेलन और 15वें अंतर्राष्ट्रीय मानव एकता सम्मेलन का आयोजन किया, जिसमें अंतर-धार्मिक सद्भाव और सभी आध्यात्मिक मार्गों की मूल एकता पर जोर दिया गया।',
+    imageId: 'd6'
+  },
+  {
+    year: '1989',
+    titleEn: 'Merging with the Light',
+    titleHi: 'ज्योति में ज्योति लीन',
+    descriptionEn: 'On May 30, 1989, Sant Darshan Singh Ji Maharaj left his physical body, leaving behind a rich legacy of spiritual poetry and a global mission dedicated to peace and self-knowledge.',
+    descriptionHi: '30 मई, 1989 को, संत दर्शन सिंह जी महाराज ने अपना भौतिक शरीर छोड़ दिया, और अपने पीछे आध्यात्मिक कविता की एक समृद्ध विरासत और शांति और आत्म-ज्ञान को समर्पित एक वैश्विक मिशन छोड़ गए।',
+    imageId: 'd8'
   }
 ];
 
