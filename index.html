@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Cinzel+Decorative:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <script>
       tailwind.config = {
-        darkMode: 'class', // Enable class-based dark mode
+        darkMode: 'class',
         theme: {
           extend: {
             animation: {
@@ -44,34 +44,19 @@
       }
     </script>
     <style>
-      /* --- GLOBAL STYLES & ANIMATIONS --- */
       body { 
-        background-color: #FFF8E1; /* brand-cream */ 
+        background-color: #FFF8E1; 
         transition: background-color 0.5s ease; 
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
       }
-      .dark body { background-color: transparent; } /* Let the animated BG show through */
+      .dark body { background-color: transparent; }
       #root { position: relative; z-index: 0; }
       
-      @keyframes gradient-animate { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
       @keyframes subtle-glow-title { 0%, 100% { text-shadow: 0 0 8px rgba(255, 215, 0, 0.4); } 50% { text-shadow: 0 0 16px rgba(255, 215, 0, 0.8), 0 0 24px rgba(255, 215, 0, 0.6); } }
       @keyframes fade-in-up { from { opacity: 0; transform: translateY(20px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
-      @keyframes pop-in-from-top { from { opacity: 0; transform: translateY(-10px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
-      @keyframes pop-out-to-top { from { opacity: 1; transform: translateY(0) scale(1); } to { opacity: 0; transform: translateY(-10px) scale(0.95); } }
-      @keyframes fade-out-down { from { opacity: 1; transform: translateY(0) scale(1); } to { opacity: 0; transform: translateY(20px) scale(0.98); } }
-      
-      /* --- INTRO ANIMATION STYLES --- */
-      @keyframes intro-container-fade-out { from { opacity: 1; } to { opacity: 0; } }
-      @keyframes intro-text-fade { 0% { opacity: 0; transform: translateY(15px); } 15% { opacity: 1; transform: translateY(0); } 85% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(-15px); } }
-      @keyframes intro-logo-enter { from { opacity: 0; transform: scale(0.85); } to { opacity: 1; transform: scale(1); } }
-      @keyframes intro-logo-exit { from { opacity: 1; transform: scale(1); } to { opacity: 0; transform: scale(0.85); } }
-      @keyframes intro-title-enter { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-      @keyframes intro-bg-zoom { from { transform: scale(1); } to { transform: scale(1.1); } }
-      @keyframes divine-light-pulse { 0%, 100% { opacity: 0.5; transform: scale(0.95); } 50% { opacity: 0.8; transform: scale(1.05); } }
-      @keyframes flicker { 0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { transform: scaleY(1) skewX(0); opacity: 1; } 20%, 24%, 55% { transform: scaleY(1.05) skewX(1.5deg); opacity: 0.95; } }
-      
-      /* --- BACKGROUND STYLES --- */
+      @keyframes divine-light-pulse { 0%, 100% { opacity: 0.5; transform: scale(1); } 50% { opacity: 0.8; transform: scale(1.1); } }
+
       .light-mode-bg {
         position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: -2;
         background: radial-gradient(ellipse at top, #fff8e1, transparent),
@@ -87,209 +72,166 @@
         overflow: hidden;
       }
       
-      /* --- STARRY NIGHT SKY EFFECT (PERFORMANCE OPTIMIZED) --- */
       .stars {
         position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-        background-repeat: repeat;
-        will-change: transform; /* Hint to browser */
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1000' height='1000'%3E%3Cg fill='%23ffffff'%3E%3Ccircle r='1' cx='100' cy='100' opacity='0.6'/%3E%3Ccircle r='0.5' cx='200' cy='500' opacity='0.4'/%3E%3Ccircle r='0.8' cx='300' cy='300' opacity='0.7'/%3E%3Ccircle r='0.6' cx='400' cy='800' opacity='0.5'/%3E%3Ccircle r='1' cx='550' cy='150' opacity='0.8'/%3E%3Ccircle r='0.5' cx='650' cy='950' opacity='0.4'/%3E%3Ccircle r='0.8' cx='800' cy='450' opacity='0.7'/%3E%3Ccircle r='1' cx='950' cy='50' opacity='0.6'/%3E%3Ccircle r='0.7' cx='50' cy='700' opacity='0.5'/%3E%3Ccircle r='0.9' cx='150' cy='900' opacity='0.8'/%3E%3Ccircle r='0.6' cx='250' cy='200' opacity='0.4'/%3E%3Ccircle r='1' cx='350' cy='600' opacity='0.7'/%3E%3Ccircle r='0.5' cx='450' cy='400' opacity='0.5'/%3E%3Ccircle r='0.8' cx='600' cy='850' opacity='0.8'/%3E%3Ccircle r='0.75' cx='750' cy='250' opacity='0.4'/%3E%3Ccircle r='1' cx='900' cy='650' opacity='0.7'/%3E%3C/g%3E%3C/svg%3E");
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1000' height='1000'%3E%3Cg fill='%23ffffff'%3E%3Ccircle r='1' cx='100' cy='100' opacity='0.6'/%3E%3Ccircle r='0.5' cx='200' cy='500' opacity='0.4'/%3E%3Ccircle r='0.8' cx='300' cy='300' opacity='0.7'/%3E%3Ccircle r='1' cx='550' cy='150' opacity='0.8'/%3E%3Ccircle r='0.8' cx='800' cy='450' opacity='0.7'/%3E%3Ccircle r='0.9' cx='150' cy='900' opacity='0.8'/%3E%3Ccircle r='1' cx='350' cy='600' opacity='0.7'/%3E%3Ccircle r='0.8' cx='600' cy='850' opacity='0.8'/%3E%3Ccircle r='1' cx='900' cy='650' opacity='0.7'/%3E%3C/g%3E%3C/svg%3E");
         background-size: 500px 500px;
         z-index: -3;
       }
 
-      /* --- HEADER STYLES --- */
-      header { transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
       header.scrolled {
-        padding-top: 1rem;
-        padding-bottom: 1rem;
-        background-color: rgba(255, 248, 225, 0.8); /* brand-cream with transparency */
+        background-color: rgba(255, 248, 225, 0.8);
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
-        box-shadow: 0 4px 6px -1px rgba(128, 0, 0, 0.1), 0 2px 4px -2px rgba(128, 0, 0, 0.1);
       }
-      .dark header.scrolled {
-        background-color: rgba(9, 10, 15, 0.7); 
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
-      }
-      header.scrolled h1 { font-size: 2.25rem; }
-      @media (min-width: 768px) { header.scrolled h1 { font-size: 3rem; } }
-      .title-decorative { font-family: 'Cinzel Decorative', serif; text-shadow: 0 0 5px rgba(255, 255, 255, 0.5), 0 0 10px rgba(128,0,0,0.3), 0 2px 2px rgba(0,0,0,0.2); animation: subtle-glow-title 6s ease-in-out infinite; }
+      .dark header.scrolled { background-color: rgba(9, 10, 15, 0.7); }
+      .title-decorative { font-family: 'Cinzel Decorative', serif; animation: subtle-glow-title 6s ease-in-out infinite; }
 
-      /* --- CAROUSEL NAVIGATION --- */
-      .carousel-container {
-        display: flex;
-        overflow-x: auto;
-        scroll-behavior: smooth;
-        -webkit-overflow-scrolling: touch;
-        scroll-snap-type: x mandatory;
-        padding: 1rem 0;
-        margin-bottom: 2rem;
-        gap: 1rem;
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-      }
-      .carousel-container::-webkit-scrollbar {
-        display: none;
-      }
-      .carousel-container::before,
-      .carousel-container::after {
-        content: '';
-        flex-shrink: 0;
-        width: calc(50% - 100px); /* Adjust 100px based on half of the card width */
-      }
-      
-      .carousel-card {
+      /* --- SPIRITUAL BUTTON HALO --- */
+      .btn-spiritual-halo {
         position: relative;
-        flex-shrink: 0;
-        width: 200px;
-        height: 250px;
-        border-radius: 1rem;
-        overflow: hidden;
+        border: 2px solid rgba(128, 0, 0, 0.1);
+        box-shadow: 0 0 0 1px rgba(255, 215, 0, 0.3);
+        background: rgba(255, 248, 225, 0.2);
+        backdrop-filter: blur(4px);
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .btn-spiritual-halo:hover {
+        border-color: #800000;
+        box-shadow: 0 0 15px rgba(255, 215, 0, 0.6), 0 0 0 2px rgba(128, 0, 0, 0.2);
+        transform: scale(1.08);
+      }
+      .dark .btn-spiritual-halo {
+        background: rgba(0, 0, 0, 0.3);
+        border-color: rgba(255, 215, 0, 0.2);
+      }
+      .dark .btn-spiritual-halo:hover {
+        border-color: #FFD700;
+        box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+      }
+
+      /* --- UPDATED CIRCULAR NAVIGATION --- */
+      .nav-circles-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1.5rem;
+        padding: 1.5rem 0;
+        margin-bottom: 2rem;
+        flex-wrap: wrap; /* Ensure it wraps on very small screens if necessary */
+      }
+
+      .nav-circle-item {
+        position: relative;
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
         cursor: pointer;
-        border: 2px solid transparent;
-        transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-        transform: scale(0.9);
-        opacity: 0.7;
-        scroll-snap-align: center;
-        -webkit-tap-highlight-color: transparent;
+        transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
         outline: none;
-        background: transparent;
+        border: 2px solid rgba(128, 0, 0, 0.15);
+        background-color: #111;
+        overflow: visible;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
       }
       
-      .carousel-card:focus-visible {
-        border-color: #FFD700;
-        box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.5);
+      .dark .nav-circle-item {
+        border-color: rgba(255, 215, 0, 0.2);
       }
 
-      .carousel-card.active {
-        transform: scale(1);
-        opacity: 1;
-        border-color: #800000;
-        box-shadow: 0 10px 30px -5px rgba(128, 0, 0, 0.3);
-      }
-      .dark .carousel-card.active {
-        border-color: #FFD700;
-        box-shadow: 0 10px 30px -5px rgba(255, 215, 0, 0.25);
-      }
-
-
-      .carousel-card-bg {
+      .nav-circle-image {
         position: absolute;
-        inset: 0;
-        width: 100%;
-        height: 100%;
+        inset: 4px;
+        border-radius: 50%;
         background-size: cover;
         background-position: center;
-        transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-      }
-      .carousel-card:hover .carousel-card-bg, .carousel-card.active .carousel-card-bg {
-        transform: scale(1.05);
+        z-index: 1;
+        transition: transform 0.5s ease;
       }
 
-      .carousel-card-overlay {
+      .nav-circle-overlay {
         position: absolute;
-        inset: 0;
-        background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 50%);
-        transition: background 0.3s ease;
-      }
-      .dark .carousel-card-overlay {
-        background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 60%);
-      }
-      .carousel-card.active .carousel-card-overlay {
-        background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 70%);
+        inset: 4px;
+        border-radius: 50%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 2;
+        transition: background 0.4s ease;
       }
 
-      .carousel-card-title {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        padding: 1.25rem 1rem;
-        font-family: 'Cinzel Decorative', serif;
-        font-size: 1.125rem; /* Adjusted for better wrapping */
-        line-height: 1.2;
+      .nav-circle-label {
+        position: relative;
+        z-index: 3;
         color: white;
-        text-align: center;
-        text-shadow: 0 2px 5px rgba(0,0,0,0.5);
-        transition: all 0.3s ease;
-        transform: translateY(0);
+        font-family: 'Cinzel', serif;
+        font-size: 0.75rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        padding: 0 5px;
+        text-shadow: 0 1px 4px rgba(0,0,0,0.8);
+        pointer-events: none;
+        letter-spacing: 0.05em;
       }
-      .carousel-card.active .carousel-card-title {
-        transform: translateY(-5px);
+
+      .nav-circle-item:hover {
+        transform: scale(1.05);
+        border-color: rgba(255, 215, 0, 0.5);
+      }
+
+      .nav-circle-item.active {
+        transform: scale(1.15);
+        border: 3px solid #FFD700;
+        box-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
+        z-index: 10;
+      }
+
+      .nav-circle-item.active .nav-circle-overlay {
+        background: rgba(0, 0, 0, 0.2);
+      }
+      
+      .nav-circle-item.active::after {
+        content: '';
+        position: absolute;
+        inset: -8px;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 215, 0, 0.3);
+        animation: divine-light-pulse 2s ease-in-out infinite;
       }
 
       @media (min-width: 640px) {
-        .carousel-container::before,
-        .carousel-container::after {
-          width: calc(50% - 125px); /* Adjust 125px based on half of the wider card width */
+        .nav-circle-item {
+          width: 120px;
+          height: 120px;
         }
-
-        .carousel-card {
-          width: 250px;
-          height: 300px;
-        }
-
-        .carousel-card-title {
-          padding: 1.5rem 1rem;
-          font-size: 1.4rem; /* Adjusted for larger cards */
+        .nav-circle-label {
+          font-size: 0.85rem;
         }
       }
 
-      /* --- 3D GLASSMORPHISM CARDS (Performance Optimized) --- */
-      .card-container { position: relative; }
+      /* --- GLASS CARDS --- */
       .glass-card {
-        transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-        background: rgba(255, 255, 255, 0.6); /* Slightly more opaque for readability without blur */
-        border-radius: 0.75rem; /* 12px */
+        background: rgba(255, 255, 255, 0.6);
+        border-radius: 0.75rem;
         border: 1px solid rgba(255, 255, 255, 0.2);
         box-shadow: 0 8px 32px 0 rgba(128, 0, 0, 0.1);
       }
       .dark .glass-card {
-        background: rgba(20, 27, 40, 0.65); /* Slightly more opaque */
+        background: rgba(20, 27, 40, 0.65);
         border: 1px solid rgba(255, 215, 0, 0.15);
         box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
       }
-      .card-container:hover .glass-card {
-        transform: translateY(-8px) scale(1.02); /* Simpler transform */
-        box-shadow: 0 16px 35px -8px rgba(128, 0, 0, 0.2);
-      }
-      .dark .card-container:hover .glass-card {
-        box-shadow: 0 16px 35px -8px rgba(0, 0, 0, 0.5);
-      }
       
-      /* --- PREMIUM BUTTON STYLES --- */
-      .btn-premium, .btn-premium-secondary {
-        position: relative;
-        overflow: hidden;
-        transition: all 0.3s ease;
-        transform: translateZ(0); /* Promotes to a new layer for performance */
-        -webkit-tap-highlight-color: transparent;
-        outline: none;
-        border: none;
-      }
-      .btn-premium:focus, .btn-premium-secondary:focus {
-        box-shadow: 0 0 0 3px rgba(128, 0, 0, 0.3);
-      }
-      .dark .btn-premium:focus, .dark .btn-premium-secondary:focus {
-        box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.4);
-      }
       .btn-premium {
         background: linear-gradient(135deg, #a00000, #800000);
         color: #FFF8E1;
-        box-shadow: 0 4px 15px 0 rgba(128, 0, 0, 0.4);
       }
       .dark .btn-premium {
         background: linear-gradient(135deg, #FFD700, #F0C400);
         color: #4b0000;
-        text-shadow: none;
-        box-shadow: 0 4px 20px 0 rgba(255, 215, 0, 0.35);
-      }
-      .btn-premium:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 7px 20px 0 rgba(128, 0, 0, 0.5);
-      }
-      .dark .btn-premium:hover {
-        box-shadow: 0 7px 25px 0 rgba(255, 215, 0, 0.45);
       }
       .btn-premium-secondary {
         background-color: rgba(128, 0, 0, 0.05);
@@ -301,55 +243,10 @@
         color: #FFD700;
         border: 2px solid rgba(255, 215, 0, 0.3);
       }
-      .btn-premium-secondary:hover {
-        background-color: #800000;
-        color: #FFF8E1;
-        border-color: #800000;
-      }
-      .dark .btn-premium-secondary:hover {
-        background-color: #FFD700;
-        color: #4b0000;
-        border-color: #FFD700;
-      }
-      .btn-disabled {
-        background-color: #ccc !important;
-        color: #888 !important;
-        cursor: not-allowed !important;
-        opacity: 0.7 !important;
-        border: none !important;
-        box-shadow: none !important;
-      }
-      .dark .btn-disabled {
-        background-color: #444 !important;
-        color: #999 !important;
-      }
       
-      /* --- MISC UTILITIES --- */
-      .video-responsive {
-        position: relative;
-        padding-bottom: 177.77%; /* 9:16 aspect ratio for shorts */
-        height: 0;
-        overflow: hidden;
-      }
-      .video-responsive iframe {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        border: 0;
-      }
-
-      /* Hack for YouTube shorts which embed as landscape.
-        This scales and shifts the iframe to simulate a portrait view. */
-      .youtube-short-iframe-hack {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          width: 315%; /* Adjust this to zoom in more or less */
-          height: 100%;
-          transform: translate(-50%, -50%);
-      }
+      .video-responsive { position: relative; padding-bottom: 177.77%; height: 0; overflow: hidden; }
+      .video-responsive iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+      .youtube-short-iframe-hack { position: absolute; top: 50%; left: 50%; width: 315%; height: 100%; transform: translate(-50%, -50%); }
     </style>
   <script type="importmap">
 {

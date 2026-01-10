@@ -1,5 +1,3 @@
-
-
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { BOOKS, POETRY, Poem } from './constants';
 import BookCard from './components/BookCard';
@@ -211,9 +209,9 @@ const App: React.FC = () => {
                     <p className="mt-1 text-sm text-black/60 dark:text-white/60">- {currentQuote.author}</p>
                 </div>
             </div>
-            <div className="absolute top-4 right-4 flex items-center space-x-2">
-                <button onClick={toggleLanguage} className="p-2 w-10 h-10 rounded-full btn-premium-secondary" title={t.toggleLanguage}>
-                    <span className="font-bold text-lg">{language === 'en' ? 'हि' : 'En'}</span>
+            <div className="absolute top-4 right-4 flex items-center space-x-3">
+                <button onClick={toggleLanguage} className="p-2 w-10 h-10 rounded-full btn-spiritual-halo flex items-center justify-center" title={t.toggleLanguage}>
+                    <span className="font-bold text-lg text-brand-maroon dark:text-brand-gold">{language === 'en' ? 'हि' : 'En'}</span>
                 </button>
                 <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
             </div>

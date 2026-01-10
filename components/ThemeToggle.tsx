@@ -11,7 +11,7 @@ const ThemeToggle: React.FC<ThemeToggleProps> = ({ theme, toggleTheme }) => {
   return (
     <button
       onClick={toggleTheme}
-      className="p-2 w-10 h-10 flex items-center justify-center rounded-full btn-premium-secondary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-gold"
+      className="p-2 w-10 h-10 flex items-center justify-center rounded-full btn-spiritual-halo focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-gold group"
       aria-label={isDark ? 'Activate light mode' : 'Activate dark mode'}
       title={isDark ? 'Activate light mode' : 'Activate dark mode'}
     >
@@ -19,7 +19,7 @@ const ThemeToggle: React.FC<ThemeToggleProps> = ({ theme, toggleTheme }) => {
         {/* Sun Icon */}
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className={`absolute inset-0 transition-all duration-500 ease-in-out ${isDark ? 'transform rotate-90 opacity-0' : 'transform rotate-0 opacity-100'}`}
+          className={`absolute inset-0 transition-all duration-500 ease-in-out text-brand-maroon dark:text-brand-gold ${isDark ? 'transform rotate-90 opacity-0' : 'transform rotate-0 opacity-100'}`}
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -41,7 +41,7 @@ const ThemeToggle: React.FC<ThemeToggleProps> = ({ theme, toggleTheme }) => {
         {/* Moon Icon */}
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className={`absolute inset-0 transition-all duration-500 ease-in-out ${isDark ? 'transform rotate-0 opacity-100' : 'transform -rotate-90 opacity-0'}`}
+          className={`absolute inset-0 transition-all duration-500 ease-in-out text-brand-maroon dark:text-brand-gold ${isDark ? 'transform rotate-0 opacity-100' : 'transform -rotate-90 opacity-0'}`}
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
