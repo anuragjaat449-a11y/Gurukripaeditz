@@ -1,11 +1,3 @@
-
-
-
-
-
-
-
-
 export interface Video {
     id: string; // youtube ID or GDrive file ID
     type: 'youtube' | 'gdrive';
@@ -221,9 +213,7 @@ export const BOOKS: Book[] = [
         pdfUrl: 'https://drive.google.com/file/d/1rHLCvsrOWgdubA_uZJUZYOFqV30JJu9j/view?usp=drivesdk',
         audioUrl: 'https://drive.google.com/file/d/1cytP6SOQwXcBY8phaf7db8hZCi6vO7lL/view?usp=drivesdk',
         video: { id: '1JuFHZRQ_Df6z1qoKv7SfuM-w5b6HBe0e', type: 'gdrive' },
-        quizzes: [
-            { id: 'insaan-apne-aap-ko-jaan-quiz', titleEn: 'Take Quiz', titleHi: 'प्रश्नोत्तरी करें', url: 'https://notebooklm.google.com/notebook/b1d363e3-63fc-4796-b852-f122662cae7e?artifactId=607b87a3-2275-48f4-a794-4ddb7a2d7576' }
-        ],
+        // Quiz removed as requested
     },
     {
         id: 'jeevan-ka-uddeshya',
@@ -1524,7 +1514,7 @@ export const POETRY: Poem[] = [
             'अगर मैं हज़ार बार भी अपनी जान दे दूँ, तो भी यह काफ़ी नहीं होगा।',
         ],
         meaningEn: 'The seeker feels an overwhelming sense of gratitude for the Master\'s grace. A single moment of that grace is considered so priceless that no sacrifice, not even giving one\'s life repeatedly, can ever be sufficient to repay it.',
-        meaningHi: 'साधक गुरु की कृपा के लिए अत्यधिक कृतज्ञता की भावना महसूस करता है। उस कृपा का एक क्षण इतना अनमोल माना जाता है कि कोई भी बलिदान, यहाँ तक कि बार-बार अपनी जान देना भी, उसे चुकाने के लिए कभी भी पर्याप्त नहीं हो सकता।'
+        meaningHi: 'साधक गुरु की कृपा के लिए अत्यधिक कृतज्ञता की भावना महसूस करता है। उस कृपा का एक क्षण भी आध्यात्मिक जागरूकता के बिना बिताए गए जीवन की लंबी अवधियों से आध्यात्मिक रूप से अधिक शक्तिशाली और सार्थक है।'
     },
     {
         id: 'poem-81',
@@ -1738,7 +1728,7 @@ export const POETRY: Poem[] = [
         id: 'poem-94',
         author: 'Sant Darshan Singh Ji Maharaj',
         titleEn: 'The Color of Submission',
-        titleHi: 'रंग-ए-तस्लीम',
+        titleHi: 'र रंग-ए-तस्लीम',
         textEn: [
             'Dye me in Your color, O Dyer of hearts,',
             'So that my own color ceases to exist.',
@@ -1825,7 +1815,7 @@ export const POETRY: Poem[] = [
         ],
         textHi: [
             'मेरे शिकस्ता दिल को हिकारत से न देख,',
-            'यार तो अक्सर वीரானوں में ही रहना पसंद करता है।',
+            'यार तो अक्सर वीரானों में ही रहना पसंद करता है।',
         ],
         meaningEn: 'A "broken heart" in this context is one that is broken from worldly attachments and filled with humility and longing for God. Such a heart, free from pride, becomes a suitable dwelling place for the Divine, who values humility over worldly perfection.',
         meaningHi: 'इस संदर्भ में "टूटा हुआ दिल" वह है जो सांसारिक मोह से टूट गया है और ईश्वर के लिए विनम्रता और तड़प से भर गया है। ऐसा हृदय, जो अभिमान से मुक्त है, परमात्मा के लिए एक उपयुक्त निवास स्थान बन जाता है, जो सांसारिक पूर्णता पर विनम्रता को महत्व देता है।'
@@ -1836,14 +1826,4 @@ export const POETRY: Poem[] = [
         titleEn: 'The End of the Story',
         titleHi: 'कहानी का अंत',
         textEn: [
-            'The story began when "I" and "You" were two,',
-            'It ended when "I" ceased to be, and only "You" remained.',
-        ],
-        textHi: [
-            'कहानी तब शुरू हुई जब "मैं" और "तू" दो थे,',
-            'यह तब ख़त्म हुई जब "मैं" न रहा, और सिर्फ़ "तू" रह गया।',
-        ],
-        meaningEn: 'This couplet beautifully summarizes the entire mystical journey. It begins with the illusion of duality (the seeker and God as separate). The journey culminates in the state of unity or fana, where the individual self ("I") is completely annihilated in the Divine Being ("You").',
-        meaningHi: 'यह दोहा पूरी रहस्यमय यात्रा का सुंदर सारांश प्रस्तुत करता है। यह द्वैत के भ्रम से शुरू होता है (साधक और ईश्वर अलग-अलग हैं)। यात्रा एकता या "फ़ना" की स्थिति में समाप्त होती है, जहाँ व्यक्तिगत स्व ("मैं") पूरी तरह से दिव्य अस्तित्व ("तू") में विलीन हो जाता है।'
-    }
-];
+            'The story began when "I" and "You

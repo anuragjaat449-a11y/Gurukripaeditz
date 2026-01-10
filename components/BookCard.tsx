@@ -33,12 +33,6 @@ const BookCard: React.FC<BookCardProps> = ({ book }) => {
           {title}
         </h3>
         <div className="space-y-2">
-          {book.pdfUrl && (
-            <a href={`/book-reader.html?pdf=${encodeURIComponent(book.pdfUrl)}`} target="_blank" rel="noopener noreferrer" className="w-full inline-flex items-center justify-center py-2 px-4 rounded-md text-sm font-bold btn-premium-secondary">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clipRule="evenodd" /></svg>
-              <span>{t.readPdf}</span>
-            </a>
-          )}
           {book.audioUrl && (
             <a href={book.audioUrl} target="_blank" rel="noopener noreferrer" className="w-full inline-flex items-center justify-center py-2 px-4 rounded-md text-sm font-bold btn-premium-secondary">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path d="M18 3a1 1 0 00-1.196-.98l-15 2A1 1 0 001 5v10a1 1 0 001.196.98l15-2A1 1 0 0019 15V5a1 1 0 00-1-2zM3 6.892L17 5.108v2.002L3 8.892V6.892zm0 4.001L17 9.11v2.002L3 12.893V10.893z" /></svg>

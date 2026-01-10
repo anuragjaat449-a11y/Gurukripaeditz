@@ -1,5 +1,4 @@
 
-
 export const translations = {
   en: {
     // App.tsx
@@ -112,7 +111,7 @@ export const translations = {
     
     // BookCard.tsx
     readPdf: "पीडीएफ पढ़ें",
-    listenAudio: "ऑडियो सुनें",
+    listenAudio: "ऑड़ीओ सुनें",
     watchVideo: "वीडियो देखें",
     takeQuiz: "प्रश्नोत्तरी करें",
     
@@ -141,6 +140,8 @@ export const translations = {
     // SurveyModal.tsx
     surveyTitle: "अपनी प्रतिक्रिया साझा करें",
     surveySubtitle: "आप अपने अनुभव को कैसे रेट करेंगे?",
+    // Added missing surveyPlaceholder for Hindi translation
+    surveyPlaceholder: "कोई टिप्पणी या सुझाव? (वैकल्पिक)",
     cancel: "रद्द करें",
     submit: "भेजें",
     thankYou: "धन्यवाद!",
