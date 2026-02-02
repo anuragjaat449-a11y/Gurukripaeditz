@@ -1,5 +1,6 @@
+
 import React, { useState, useEffect } from 'react';
-import { useLanguage } from '../contexts/LanguageContext';
+import { translations } from '../translations';
 
 interface IntroAnimationProps {
   onFinish: () => void;
@@ -8,7 +9,10 @@ interface IntroAnimationProps {
 const IntroAnimation: React.FC<IntroAnimationProps> = ({ onFinish }) => {
   const [step, setStep] = useState(0);
   const [isExiting, setIsExiting] = useState(false);
-  const { t } = useLanguage();
+  
+  // Force English translations for the Intro Animation, irrespective of global context.
+  const t = translations.en;
+  
   const INTRO_TEXTS = [t.introQuote];
 
   const handleFinish = () => {

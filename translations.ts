@@ -1,3 +1,4 @@
+
 export const translations = {
   en: {
     // App.tsx
@@ -12,6 +13,14 @@ export const translations = {
     viewRating: "View community rating for this app",
     toggleLanguage: "Toggle language",
     goToTop: "Go to Top",
+    loadMore: "Reveal More Wisdom",
+    poetryDashboard: "Your Sacred Collection",
+    favoritesTitle: "Your Heart's Favorites",
+    progressTitle: "Path of Discovery",
+    poemsDiscovered: "{count} of {total} Insights Discovered",
+    noFavorites: "You haven't favorited any poems yet. Touch the heart icon on any poem to save it here.",
+    allPoemsSeen: "You have explored all the divine verses!",
+    
     quotes: [
       { text: "Meditation is the journey from the head to the heart.", author: "Sant Rajinder Singh Ji Maharaj" },
       { text: "Love is the only way back to God.", author: "Sant Darshan Singh Ji Maharaj" },
@@ -46,6 +55,10 @@ export const translations = {
     listenToPoem: "Listen to Poem",
     showMeaning: "Show Meaning",
     hideMeaning: "Hide Meaning",
+    markAsSeen: "Mark as Read",
+    alreadySeen: "Seen",
+    thumbsUpAria: "Mark this poem as read",
+    favoriteAria: "Add to favorites",
 
     // IntroAnimation.tsx
     skip: "SKIP",
@@ -99,6 +112,14 @@ export const translations = {
     viewRating: "इस ऐप के लिए सामुदायिक रेटिंग देखें",
     toggleLanguage: "भाषा बदलें",
     goToTop: "ऊपर जाएं",
+    loadMore: "और अंतर्दृष्टि खोजें",
+    poetryDashboard: "आपका पावन संग्रह",
+    favoritesTitle: "आपके दिल के पसंदीदा",
+    progressTitle: "खोज की राह",
+    poemsDiscovered: "{count} / {total} अंतर्दृष्टियां पढ़ी गईं",
+    noFavorites: "आपने अभी तक किसी भी कविता को पसंदीदा नहीं बनाया है। उसे यहाँ सहेजने के लिए किसी भी कविता पर दिल के आइकन को स्पर्श करें।",
+    allPoemsSeen: "आपने सभी दिव्य छंदों को देख लिया है!",
+    
     quotes: [
       { text: "ध्यान सिर से हृदय तक की यात्रा है।", author: "संत राजिंदर सिंह जी महाराज" },
       { text: "प्रेम ही ईश्वर के पास वापस जाने का एकमात्र रास्ता है।", author: "संत दर्शन सिंह जी महाराज" },
@@ -116,8 +137,6 @@ export const translations = {
     watchVideo: "वीडियो देखें",
     takeQuiz: "प्रश्नोत्तरी करें",
     
-    // Fix: Add missing translations for video components.
-    // VideoCard.tsx & VideoPlayerModal.tsx
     videoUnavailableAria: "वीडियो {titlePrefix} #{videoNumber} अभी अनुपलब्ध है",
     playVideoAria: "वीडियो {titlePrefix} #{videoNumber} चलाएं",
     thumbnailAlt: "वीडियो {titlePrefix} #{videoNumber} के लिए थंबनेल",
@@ -133,6 +152,10 @@ export const translations = {
     listenToPoem: "कविता सुनें",
     showMeaning: "अर्थ देखें",
     hideMeaning: "अर्थ छिपाएं",
+    markAsSeen: "पढ़ा हुआ मार्क करें",
+    alreadySeen: "देखी गई",
+    thumbsUpAria: "इस कविता को पढ़ा हुआ चिह्नित करें",
+    favoriteAria: "पसंदीदा में जोड़ें",
 
     // IntroAnimation.tsx
     skip: "छोड़ें",
@@ -141,7 +164,6 @@ export const translations = {
     // SurveyModal.tsx
     surveyTitle: "अपनी प्रतिक्रिया साझा करें",
     surveySubtitle: "आप अपने अनुभव को कैसे रेट करेंगे?",
-    // Added missing surveyPlaceholder for Hindi translation
     surveyPlaceholder: "कोई टिप्पणी या सुझाव? (वैकल्पिक)",
     cancel: "रद्द करें",
     submit: "भेजें",

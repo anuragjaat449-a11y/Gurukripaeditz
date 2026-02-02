@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+
+import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { BOOKS, POETRY, Poem } from './constants';
 import BookCard from './components/BookCard';
 import PoetryCard from './components/PoetryCard';
@@ -9,6 +10,7 @@ import RatingModal from './components/RatingModal';
 import { useLanguage } from './contexts/LanguageContext';
 import CarouselNavigator, { CarouselTab } from './components/CarouselNavigator';
 import PhotoGallery from './components/PhotoGallery';
+import PoetryDashboardModal from './components/PoetryDashboardModal';
 
 const TABS: CarouselTab[] = [
   { id: 'poetry', titleKey: 'poetrySectionTitle', imageUrl: 'https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=1973&auto=format&fit=crop' },
@@ -31,52 +33,76 @@ const App: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
   const ratingButtonRef = useRef<HTMLButtonElement>(null);
   
-  const [poetryToDisplay, setPoetryToDisplay] = useState<Poem[]>([]);
-  const [showPoetryResetMessage, setShowPoetryResetMessage] = useState(false);
+  // Poetry State
+  const [seenPoemIds, setSeenPoemIds] = useState<Set<string>>(new Set());
+  const [favoriteIds, setFavoriteIds] = useState<Set<string>>(new Set());
+  const [displayLimit, setDisplayLimit] = useState(5); // 5-5 Rule
+  const [isDashboardOpen, setIsDashboardOpen] = useState(false);
+  // We use a shuffled index list to keep the "Unseen" order random but consistent during a session
+  const [unseenShuffleOrder, setUnseenShuffleOrder] = useState<string[]>([]);
 
+  // Initialize Data
   useEffect(() => {
-    const initializePoetry = () => {
-      let seenIds: string[] = [];
-      try {
-        const storedIds = localStorage.getItem('seenPoemIds');
-        if (storedIds) {
-          seenIds = JSON.parse(storedIds);
-        }
-      } catch (e) {
-        console.error("Failed to parse seenPoemIds from localStorage", e);
-        seenIds = [];
-      }
-      
-      const seenIdSet = new Set(seenIds);
-      let unseenPoems = POETRY.filter(p => !seenIdSet.has(p.id));
-
-      if (unseenPoems.length === 0 && POETRY.length > 0) {
-        setShowPoetryResetMessage(true);
-        localStorage.removeItem('seenPoemIds');
-        unseenPoems = [...POETRY]; // Show all again
-      } else {
-        setShowPoetryResetMessage(false);
-      }
-
-      const shuffled = unseenPoems.sort(() => Math.random() - 0.5);
-      setPoetryToDisplay(shuffled);
-    };
-
-    initializePoetry();
-  }, []);
-
-  const handlePoemBecameVisible = useCallback((id: string) => {
     try {
-      const storedIds = localStorage.getItem('seenPoemIds');
-      const seenIds = storedIds ? new Set<string>(JSON.parse(storedIds)) : new Set<string>();
-      if (!seenIds.has(id)) {
-        seenIds.add(id);
-        localStorage.setItem('seenPoemIds', JSON.stringify(Array.from(seenIds)));
-      }
+      const storedSeen = localStorage.getItem('seenPoemIds');
+      if (storedSeen) setSeenPoemIds(new Set(JSON.parse(storedSeen)));
+      
+      const storedFavs = localStorage.getItem('favoritePoemIds');
+      if (storedFavs) setFavoriteIds(new Set(JSON.parse(storedFavs)));
+      
+      // Initial shuffle key generation for unseen items
+      setUnseenShuffleOrder(POETRY.map(p => p.id).sort(() => Math.random() - 0.5));
     } catch (e) {
-      console.error("Failed to update seenPoemIds in localStorage", e);
+      console.error("Storage initialization error", e);
     }
   }, []);
+
+  // Sort Poems: Unseen (randomized) -> Seen (sorted by ID or Title)
+  const sortedPoetry = useMemo(() => {
+    // Poems that are NOT in the seen set
+    const unseen = unseenShuffleOrder
+      .filter(id => !seenPoemIds.has(id))
+      .map(id => POETRY.find(p => p.id === id))
+      .filter((p): p is Poem => !!p);
+
+    // Poems that ARE in the seen set
+    const seen = POETRY
+        .filter(p => seenPoemIds.has(p.id))
+        .sort((a, b) => a.titleEn.localeCompare(b.titleEn)); // Sort seen alphabetically so they don't jump around
+        
+    return [...unseen, ...seen];
+  }, [seenPoemIds, unseenShuffleOrder]);
+
+  const handleMarkAsSeen = useCallback((id: string) => {
+    setSeenPoemIds(prev => {
+      const next = new Set(prev);
+      // Toggle logic: If user hits thumbs up again, unmark it? 
+      // Prompt says "thumbsup icon if anyone hit it the poetry don't appear at top again"
+      // Usually "seen" is additive. But let's allow toggle for UX flexibility or just add.
+      // Let's treat it as a "Mark Read" toggle.
+      if (next.has(id)) {
+          next.delete(id);
+      } else {
+          next.add(id);
+      }
+      localStorage.setItem('seenPoemIds', JSON.stringify(Array.from(next)));
+      return next;
+    });
+  }, []);
+
+  const handleToggleFavorite = useCallback((id: string) => {
+    setFavoriteIds(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      localStorage.setItem('favoritePoemIds', JSON.stringify(Array.from(next)));
+      return next;
+    });
+  }, []);
+
+  const handleLoadMore = () => {
+    setDisplayLimit(prev => Math.min(prev + 5, POETRY.length));
+  };
   
   const [theme, setTheme] = useState(() => {
     if (typeof window !== 'undefined') {
@@ -168,21 +194,40 @@ const App: React.FC = () => {
     const animationClass = "animate-[fade-in-up_0.5s_ease-out]";
     switch(activeTab) {
       case 'poetry':
+        // Slice based on 5-5 rule
+        const currentBatch = sortedPoetry.slice(0, displayLimit);
         return (
           <>
             <div className={`mb-8 p-6 text-center glass-card text-brand-maroon dark:text-brand-gold ${animationClass}`}>
                 <h4 className="font-serif text-xl font-bold">{t.poetryCollectionTitle}</h4>
                 <p className="mt-2 text-black/80 dark:text-white/80">{t.poetryCollectionSubtitle}</p>
             </div>
-            {showPoetryResetMessage && (
-              <div className={`mb-8 p-4 text-center glass-card text-brand-maroon dark:text-brand-gold ${animationClass}`}>
-                <p className="font-semibold">{t.poetryResetTitle}</p>
-                <p>{t.poetryResetSubtitle}</p>
+           
+            <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 ${animationClass}`}>
+              {currentBatch.map(poem => (
+                <PoetryCard 
+                  key={poem.id} 
+                  poem={poem} 
+                  isSeen={seenPoemIds.has(poem.id)}
+                  isFavorite={favoriteIds.has(poem.id)}
+                  onMarkAsSeen={() => handleMarkAsSeen(poem.id)}
+                  onToggleFavorite={() => handleToggleFavorite(poem.id)}
+                />
+              ))}
+            </div>
+
+            {/* Load More Button - 5-5 Rule */}
+            {displayLimit < POETRY.length && (
+              <div className="mt-12 flex justify-center pb-12">
+                <button 
+                  onClick={handleLoadMore}
+                  className="btn-premium px-12 py-4 rounded-full font-serif text-lg tracking-widest flex items-center gap-3 transition-all hover:scale-105 shadow-xl ring-4 ring-brand-gold/20"
+                >
+                  <span>{t.loadMore}</span>
+                  <svg className="w-5 h-5 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
               </div>
             )}
-            <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 ${animationClass}`}>
-              {poetryToDisplay.map(poem => <PoetryCard key={poem.id} poem={poem} onBecameVisible={handlePoemBecameVisible} />)}
-            </div>
           </>
         );
       case 'books':
@@ -256,15 +301,33 @@ const App: React.FC = () => {
               <span>{averageRatingInfo.rating.toFixed(1)}</span>
           </button>
         )}
-        {!hasUserRated && (
-          <button onClick={handleFeedbackClick} className="py-2 px-4 rounded-full text-sm font-bold btn-premium animate-gentle-bounce shadow-lg" title={t.feedbackButton}>
-            {t.feedbackButton}
-          </button>
-        )}
+
+        {/* Floating Dashboard Button (Replaces Feedback) */}
+        <button 
+          onClick={() => setIsDashboardOpen(true)} 
+          className="w-14 h-14 rounded-full flex items-center justify-center btn-premium shadow-xl animate-gentle-bounce group"
+          title={t.poetryDashboard}
+        >
+          <svg className="w-7 h-7 text-brand-maroon dark:text-brand-gold transition-transform group-hover:scale-125" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-7.714 2.143L11 21l-2.286-6.857L1 12l7.714-2.143L11 3z"></path>
+          </svg>
+        </button>
       </div>
       
       <SurveyModal isOpen={isSurveyOpen} onClose={() => setIsSurveyOpen(false)} onSubmit={handleSurveySubmit} />
       <RatingModal isOpen={isRatingModalOpen} onClose={() => setIsRatingModalOpen(false)} rating={averageRatingInfo.rating} count={averageRatingInfo.count} position={ratingModalPosition} />
+      
+      {/* Poetry Dashboard */}
+      <PoetryDashboardModal 
+        isOpen={isDashboardOpen} 
+        onClose={() => setIsDashboardOpen(false)}
+        seenCount={seenPoemIds.size}
+        favorites={POETRY.filter(p => favoriteIds.has(p.id))}
+        onMarkAsSeen={handleMarkAsSeen}
+        onToggleFavorite={handleToggleFavorite}
+        seenPoemIds={seenPoemIds}
+        favoritePoemIds={favoriteIds}
+      />
     </>
   );
 };
