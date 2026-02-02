@@ -213,7 +213,6 @@ export const BOOKS: Book[] = [
         pdfUrl: 'https://drive.google.com/file/d/1rHLCvsrOWgdubA_uZJUZYOFqV30JJu9j/view?usp=drivesdk',
         audioUrl: 'https://drive.google.com/file/d/1cytP6SOQwXcBY8phaf7db8hZCi6vO7lL/view?usp=drivesdk',
         video: { id: '1JuFHZRQ_Df6z1qoKv7SfuM-w5b6HBe0e', type: 'gdrive' },
-        // Quiz removed as requested
     },
     {
         id: 'jeevan-ka-uddeshya',
@@ -1258,7 +1257,7 @@ export const POETRY: Poem[] = [
             'मेरे दिल का इलाज तो बस मेरे महबूब का एक दीदार था।',
         ],
         meaningEn: 'The fundamental sickness of the soul is its separation from God. No worldly remedy can cure this spiritual ailment. The only true healing comes from the "glimpse" (darshan) or experience of the Divine, which alone can bring peace and wholeness.',
-        meaningHi: 'आत्मा की मूल बीमारी ईश्वर से उसका अलगाव है। कोई भी सांसारिक उपाय इस आध्यात्मिक बीमारी को ठीक नहीं कर सकता। एकमात्र सच्चा उपचार "दीदार" या परमात्मा के अनुभव से मिलता है, जो अकेले ही शांति और पूर्णता ला सकता है।'
+        meaningHi: 'आत्मा की मूल बीमारी ईश्वर से उसका अलगाव है। मुख्य रूप से, कोई भी सांसारिक उपाय इस आध्यात्मिक बीमारी को ठीक नहीं कर सकता। एकमात्र सच्चा उपचार "दीदार" या परमात्मा के अनुभव से मिलता है, जो अकेले ही शांति और पूर्णता ला सकता है।'
     },
     {
         id: 'poem-65',
@@ -1470,7 +1469,7 @@ export const POETRY: Poem[] = [
     },
     {
         id: 'poem-78',
-        author: 'Sant Darshan सिंह जी महाराज',
+        author: 'Sant Darshan Singh Ji Maharaj',
         titleEn: 'The Soul\'s Story',
         titleHi: 'रूह की दास्ताँ',
         textEn: [
@@ -1514,7 +1513,7 @@ export const POETRY: Poem[] = [
             'अगर मैं हज़ार बार भी अपनी जान दे दूँ, तो भी यह काफ़ी नहीं होगा।',
         ],
         meaningEn: 'The seeker feels an overwhelming sense of gratitude for the Master\'s grace. A single moment of that grace is considered so priceless that no sacrifice, not even giving one\'s life repeatedly, can ever be sufficient to repay it.',
-        meaningHi: 'साधक गुरु की कृपा के लिए अत्यधिक कृतज्ञता की भावना महसूस करता है। उस कृपा का एक क्षण भी आध्यात्मिक जागरूकता के बिना बिताए गए जीवन की लंबी अवधियों से आध्यात्मिक रूप से अधिक शक्तिशाली और सार्थक है।'
+        meaningHi: 'साधक गुरु की कृपा के लिए अत्यधिक कृतज्ञता की भावना महसूस करता है। उस कृपा का एक क्षण भी आध्यात्मिक जागरूकता के बिना बिताए गए जीवन की लंबी अभ्यासों से आध्यात्मिक रूप से अधिक शक्तिशाली और सार्थक है।'
     },
     {
         id: 'poem-81',
@@ -1626,7 +1625,7 @@ export const POETRY: Poem[] = [
             'अफ़सोस, तूने ज़िंदगी गुज़ार दी और इसका मज़मून पढ़ा ही नहीं।',
         ],
         meaningEn: 'The human form is a precious and rare opportunity for God-realization. It is like a "letter" from God containing the secret of how to return to Him. The tragedy is that most people live and die without "reading" it, i.e., without undertaking the inner journey it was designed for.',
-        meaningHi: 'मानव रूप ईश्वर-प्राप्ति के लिए एक कीमती और दुर्लभ अवसर है। यह ईश्वर का एक "ख़त" जैसा है जिसमें उस तक लौटने का रहस्य है। त्रासदी यह है कि अधिकांश लोग इसे "पढ़े" बिना ही जीते और मर जाते हैं, यानी उस आंतरिक यात्रा को किए बिना जिसके लिए इसे बनाया गया था।'
+        meaningHi: 'मानव रूप ईश्वर-प्राप्ति के लिए एक कीमती और दुर्लभ अवसर है। यह ईश्वर का एक "ख़त" जैसा है जिसमें उस तक लौटने का रहस्य है। त्रासदी यह है कि अधिकांश लोग इसे "पढे" बिना ही जीते और मर जाते हैं, यानी उस आंतरिक यात्रा को किए बिना जिसके लिए इसे बनाया गया था।'
     },
     {
         id: 'poem-88',
@@ -1690,7 +1689,7 @@ export const POETRY: Poem[] = [
             'मेरी बे-मिसाल आँखों की कहानी को सुन।',
         ],
         meaningEn: 'In the state of intense longing, the seeker feels the Beloved is distant. Their silent, tearful meditation is a form of complaint, a plea for grace. The constant vigil ("unblinking eyes") is itself a story of their unwavering love and pain.',
-        meaningHi: 'तीव्र तड़प की अवस्था में, साधक को लगता है कि प्रियतम दूर है। उनका मौन, अश्रुपूर्ण ध्यान एक प्रकार की शिकायत है, कृपा के लिए एक प्रार्थना। निरंतर जागरण ("बे-मिसाल आँखें") ही उनके अटूट प्रेम और दर्द की कहानी है।'
+        meaningHi: 'तीव्र तड़प की अवस्था में, साधक को लगता है कि प्रियतम दूर है। उनका मौन, अश्रुपूर्ण ध्यान एक प्रकार की शिकायत है, कृपा के लिए एक प्रार्थना। निरंतर जागरण ("बे-मिसाल आँखें") ही उनके अटूट प्रेम और दर्द की कहानी है।',
     },
     {
         id: 'poem-92',
@@ -1706,7 +1705,7 @@ export const POETRY: Poem[] = [
             'फिर भी मेरा छोटा सा दिल तुझे और दुनिया दोनों को समाए हुए है।',
         ],
         meaningEn: 'A mystical paradox. The love for God is infinite and cannot be contained by the entire universe. Yet, the human heart, when expanded by love, has the capacity to hold the Infinite Beloved, making it greater than the cosmos itself.',
-        meaningHi: 'एक रहस्यमय विरोधाभास। ईश्वर के लिए प्रेम अनंत है और इसे पूरे ब्रह्मांड में नहीं समाया जा सकता। फिर भी, मानव हृदय, जब प्रेम से फैलता है, तो उसमें अनंत प्रियतम को धारण करने की क्षमता होती है, जो इसे ब्रह्मांड से भी बड़ा बना देता है।'
+        meaningHi: 'एक रहस्यमय विरोधाभास। ईश्वर के लिए प्रेम अनंत है और इसे पूरे ब्रह्मांड में नहीं समाया जा सकता। फिर भी, मानव हृदय, जब प्रेम से फैलता है, तो उसमें अनंत प्रियतम को धारण करने की क्षमता होती है, जो इसे ब्रह्मांड से भी बड़ा बना देता है।',
     },
     {
         id: 'poem-93',
@@ -1722,7 +1721,7 @@ export const POETRY: Poem[] = [
             'क्योंकि जिसे तेरी दहलीज़ मिल गई, उसे किसी और काबे की ज़रूरत नहीं।',
         ],
         meaningEn: 'True prostration (sajda) is not a physical act but a permanent state of surrender. Once the seeker has found the true Master ("Your doorstep"), their ego is permanently bowed, and they no longer need to search for God in any other place.',
-        meaningHi: 'सच्चा सजदा एक शारीरिक क्रिया नहीं बल्कि समर्पण की एक स्थायी अवस्था है। जब साधक को सच्चा गुरु ("तेरी दहलीज़") मिल जाता है, तो उसका अहंकार स्थायी रूप से झुक जाता है, और उसे किसी अन्य स्थान पर ईश्वर को खोजने की आवश्यकता नहीं रहती।'
+        meaningHi: 'सच्चा सजदा एक शारीरिक क्रिया नहीं बल्कि समर्पण की एक स्थायी अवस्था है। जब साधक को सच्चा गुरु ("तेरी दहलीज़") मिल जाता है, तो उसका अहंकार स्थायी रूप से झुक जाता है, और उसे किसी अन्य स्थान पर ईश्वर को खोजने की आवश्यकता नहीं रहती।',
     },
     {
         id: 'poem-94',
@@ -1738,7 +1737,7 @@ export const POETRY: Poem[] = [
             'ताकि मेरा अपना कोई रंग बाक़ी न रहे।',
         ],
         meaningEn: 'The seeker prays to be completely absorbed into the being of the Beloved. They wish for their individual identity and personality ("my own color") to be completely effaced and replaced by the divine consciousness ("Your color").',
-        meaningHi: 'साधक प्रियतम के अस्तित्व में पूरी तरह से विलीन होने की प्रार्थना करता है। वह चाहता है कि उसकी व्यक्तिगत पहचान और व्यक्तित्व ("मेरा अपना रंग") पूरी तरह से मिट जाए और उसकी जगह दिव्य चेतना ("तेरा रंग") ले ले।'
+        meaningHi: 'साधक प्रियतम के अस्तित्व में पूरी तरह से विलीन होने की प्रार्थना करता है। वह चाहता है कि उसकी व्यक्तिगत पहचान और व्यक्तित्व ("मेरा अपना रंग") पूरी तरह से मिट जाए और उसकी जगह दिव्य चेतना ("तेरा रंग") ले ले।',
     },
     {
         id: 'poem-95',
@@ -1754,7 +1753,7 @@ export const POETRY: Poem[] = [
             'मेरी हालत का राज़ तो बस तू जानता है या मैं।',
         ],
         meaningEn: 'The lover of God lives in a state that is incomprehensible to the worldly-wise. Their actions may seem like madness. Yet, in their "madness" of divine love lies a higher wisdom. Only the lover and the Beloved understand this sacred relationship.',
-        meaningHi: 'ईश्वर का प्रेमी एक ऐसी अवस्था में रहता है जो दुनिया के समझदार लोगों के लिए समझ से बाहर है। उसके कार्य पागलपन जैसे लग सकते हैं। फिर भी, उसके दिव्य प्रेम के "पागलपन" में एक उच्च ज्ञान निहित है। केवल प्रेमी और प्रियतम ही इस पवित्र रिश्ते को समझते हैं।'
+        meaningHi: 'ईश्वर का प्रेमी एक ऐसी अवस्था में रहता है जो दुनिया के समझदार लोगों के लिए समझ से बाहर है। उसके कार्य पागलपन जैसे लग सकते हैं। फिर भी, उसके दिव्य प्रेम के "पागलपन" में एक उच्च ज्ञान निहित है। केवल प्रेमी और प्रियतम ही इस पवित्र रिश्ते को समझते हैं।',
     },
     {
         id: 'poem-96',
@@ -1770,7 +1769,7 @@ export const POETRY: Poem[] = [
             'मेरा मर्ज़ भी क्या अजीब है, कि हकीम खुद ही बीमारी है।',
         ],
         meaningEn: 'The pain of separation is caused by the absence of the Beloved, yet the only cure for that pain is the Beloved Himself. This beautiful paradox captures the all-encompassing nature of God in the seeker\'s life, being both the cause of longing and its ultimate fulfillment.',
-        meaningHi: 'जुदाई का दर्द प्रियतम की अनुपस्थिति के कारण होता है, फिर भी उस दर्द का एकमात्र इलाज स्वयं प्रियतम है। यह सुंदर विरोधाभास साधक के जीवन में ईश्वर की सर्वव्यापी प्रकृति को दर्शाता है, जो तड़प का कारण भी है और उसकी अंतिम पूर्ति भी।'
+        meaningHi: 'जुदाई का दर्द प्रियतम की अनुपस्थिति के कारण होता है, फिर भी उस दर्द का एकमात्र इलाज स्वयं प्रियतम है। यह सुंदर विरोधाभास साधक के जीवन में ईश्वर की सर्वव्यापी प्रकृति को दर्शाता है, जो तड़प का कारण भी है और उसकी अंतिम पूर्ति भी।',
     },
     {
         id: 'poem-97',
@@ -1786,7 +1785,7 @@ export const POETRY: Poem[] = [
             'मेरे लिए तो तेरे कूचे का एक ज़र्रा ही काफ़ी है।',
         ],
         meaningEn: 'The poet renounces all rewards, both earthly and heavenly ("the two worlds"). The ultimate desire is not for paradise or worldly pleasure, but for the profound humility and nearness to the Beloved symbolized by the "dust from Your lane".',
-        meaningHi: 'कवि सांसारिक और स्वर्गीय ("दोनों जहान") सभी पुरस्कारों का त्याग करता है। अंतिम इच्छा स्वर्ग या सांसारिक सुख के लिए नहीं है, बल्कि "तेरे कूचे की धूल" द्वारा प्रतीक गहन विनम्रता और प्रियतम के प्रति निकटता के लिए है।'
+        meaningHi: 'कवि सांसारिक और स्वर्गीय ("दोनों जहान") सभी पुरस्कारों का त्याग करता है। अंतिम इच्छा स्वर्ग या सांसारिक सुख के लिए नहीं है, बल्कि "तेरे कूचे की धूल" द्वारा प्रतीक गहन विनम्रता और प्रियतम के प्रति निकटता के लिए है।',
     },
     {
         id: 'poem-98',
@@ -1802,7 +1801,7 @@ export const POETRY: Poem[] = [
             'इश्क़ का रास्ता वहाँ से शुरू होता है जहाँ अक़्ल की हद ख़त्म होती है।',
         ],
         meaningEn: 'This verse emphasizes that the spiritual journey of love cannot be navigated by the rational mind. The intellect has its limits. True spiritual experience and the mysteries of divine love are accessible only when one transcends logic and embraces faith and intuition.',
-        meaningHi: 'यह कविता इस बात पर जोर देती है कि प्रेम की आध्यात्मिक यात्रा को तार्किक मन से नहीं तय किया जा सकता है। बुद्धि की अपनी सीमाएँ हैं। सच्चा आध्यात्मिक अनुभव और दिव्य प्रेम के रहस्य केवल तभी सुलभ होते हैं जब कोई तर्क से परे जाकर विश्वास और अंतर्ज्ञान को अपनाता है।'
+        meaningHi: 'यह कविता इस बात पर जोर देती है कि प्रेम की आध्यात्मिक यात्रा को तार्किक मन से नहीं तय किया जा सकता है। बुद्धि की अपनी सीमाएँ हैं। सच्चा आध्यात्मिक अनुभव और दिव्य प्रेम के रहस्य केवल तभी सुलभ होते हैं जब कोई तर्क से परे जाकर विश्वास और अंतर्ज्ञान को अपनाता है।',
     },
     {
         id: 'poem-99',
@@ -1818,7 +1817,7 @@ export const POETRY: Poem[] = [
             'यार तो अक्सर वीரானों में ही रहना पसंद करता है।',
         ],
         meaningEn: 'A "broken heart" in this context is one that is broken from worldly attachments and filled with humility and longing for God. Such a heart, free from pride, becomes a suitable dwelling place for the Divine, who values humility over worldly perfection.',
-        meaningHi: 'इस संदर्भ में "टूटा हुआ दिल" वह है जो सांसारिक मोह से टूट गया है और ईश्वर के लिए विनम्रता और तड़प से भर गया है। ऐसा हृदय, जो अभिमान से मुक्त है, परमात्मा के लिए एक उपयुक्त निवास स्थान बन जाता है, जो सांसारिक पूर्णता पर विनम्रता को महत्व देता है।'
+        meaningHi: 'इस संदर्भ में "टूटा हुआ दिल" वह है जो सांसारिक मोह से टूट गया है और ईश्वर के लिए विनम्रता और तड़प से भर गया है। ऐसा हृदय, जो अभिमान से मुक्त है, परमात्मा के लिए एक उपयुक्त निवास स्थान बन जाता है, जो सांसारिक पूर्णता पर विनम्रता को महत्व देता है।',
     },
     {
         id: 'poem-100',
@@ -1826,4 +1825,14 @@ export const POETRY: Poem[] = [
         titleEn: 'The End of the Story',
         titleHi: 'कहानी का अंत',
         textEn: [
-            'The story began when "I" and "You
+            'The story began when "I" and "You" were separate,',
+            'It ends when "I" and "You" become one.'
+        ],
+        textHi: [
+            'कहानी तब शुरू हुई जब "मैं" और "तू" अलग थे,',
+            'यह तब खत्म होती है जब "मैं" और "तू" एक हो जाते हैं।'
+        ],
+        meaningEn: 'The "story" is the journey of the soul through the illusion of separation. Spiritual life begins with the recognition of a separate "I" seeking a separate "God" (the "You"). The ultimate conclusion of the journey is the experience of union (Tawhid), where all sense of duality vanishes, and the lover merges into the Beloved.',
+        meaningHi: 'यह "कहानी" अलगाव के भ्रम के माध्यम से आत्मा की यात्रा है। आध्यात्मिक जीवन एक अलग "मैं" द्वारा एक अलग "ईश्वर" ("तू") की तलाश की मान्यता के साथ शुरू होता है। यात्रा का अंतिम निष्कर्ष मिलन (तौहीद) का अनुभव है, जहाँ द्वैत की सभी भावनाएँ मिट जाती हैं, और प्रेमी प्रियतम में विलीन हो जाता है।'
+    }
+];

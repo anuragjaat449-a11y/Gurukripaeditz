@@ -1,4 +1,3 @@
-
 export const translations = {
   en: {
     // App.tsx
@@ -9,6 +8,7 @@ export const translations = {
     photoGallerySectionTitle: "Photo Gallery",
     animatedBooksSectionTitle: "Animated Spiritual Books",
     feedbackButton: "Share your feedback",
+    whatsappContact: "Contact on WhatsApp",
     viewRating: "View community rating for this app",
     toggleLanguage: "Toggle language",
     goToTop: "Go to Top",
@@ -95,6 +95,7 @@ export const translations = {
     photoGallerySectionTitle: "फोटो गैलरी",
     animatedBooksSectionTitle: "एनिमेटेड आध्यात्मिक पुस्तकें",
     feedbackButton: "अपनी प्रतिक्रिया साझा करें",
+    whatsappContact: "व्हाट्सएप पर संपर्क करें",
     viewRating: "इस ऐप के लिए सामुदायिक रेटिंग देखें",
     toggleLanguage: "भाषा बदलें",
     goToTop: "ऊपर जाएं",

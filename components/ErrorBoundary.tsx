@@ -1,18 +1,21 @@
+
 import React, { Component, ErrorInfo, ReactNode } from 'react';
 
 interface ErrorBoundaryProps {
-  children: ReactNode;
+  // Fix: Make children optional to resolve "Property 'children' is missing in type '{}'" in index.tsx
+  children?: ReactNode;
 }
 
 interface ErrorBoundaryState {
   hasError: boolean;
 }
 
-// Fixed: ErrorBoundary must extend Component and use super(props) to correctly initialize this.props and this.state for TypeScript.
+// Fix: Use named Component import and explicitly extend it to ensure proper TypeScript inference of this.state and this.props.
 class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  public state: ErrorBoundaryState = { hasError: false };
+
   constructor(props: ErrorBoundaryProps) {
     super(props);
-    this.state = { hasError: false };
   }
 
   static getDerivedStateFromError(_: Error): ErrorBoundaryState {
@@ -55,6 +58,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
       );
     }
 
+    // Fix: Accessing children from props inherited from Component.
     return this.props.children;
   }
 }
