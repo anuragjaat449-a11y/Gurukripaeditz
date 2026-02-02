@@ -13,7 +13,7 @@ interface PoetryCardProps {
   onBecameVisible?: (id: string) => void;
 }
 
-const PoetryCard: React.FC<PoetryCardProps> = ({ poem, isSeen, isFavorite, onMarkAsSeen, onToggleFavorite }) => {
+const PoetryCard: React.FC<PoetryCardProps> = React.memo(({ poem, isSeen, isFavorite, onMarkAsSeen, onToggleFavorite }) => {
   const { t, language } = useLanguage();
   const [showMeaning, setShowMeaning] = useState(false);
   // Initialize with the global language (which defaults to 'hi')
@@ -126,6 +126,6 @@ const PoetryCard: React.FC<PoetryCardProps> = ({ poem, isSeen, isFavorite, onMar
       </div>
     </div>
   );
-};
+});
 
 export default PoetryCard;

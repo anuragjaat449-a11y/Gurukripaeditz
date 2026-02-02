@@ -57,12 +57,19 @@ const App: React.FC = () => {
     }
   }, []);
 
+  // Optimization: Create a Map for O(1) poem lookup instead of O(N) .find() inside the map loop
+  const poemMap = useMemo(() => {
+      const map = new Map<string, Poem>();
+      POETRY.forEach(p => map.set(p.id, p));
+      return map;
+  }, []);
+
   // Sort Poems: Unseen (randomized) -> Seen (sorted by ID or Title)
   const sortedPoetry = useMemo(() => {
     // Poems that are NOT in the seen set
     const unseen = unseenShuffleOrder
       .filter(id => !seenPoemIds.has(id))
-      .map(id => POETRY.find(p => p.id === id))
+      .map(id => poemMap.get(id))
       .filter((p): p is Poem => !!p);
 
     // Poems that ARE in the seen set
@@ -71,7 +78,7 @@ const App: React.FC = () => {
         .sort((a, b) => a.titleEn.localeCompare(b.titleEn)); // Sort seen alphabetically so they don't jump around
         
     return [...unseen, ...seen];
-  }, [seenPoemIds, unseenShuffleOrder]);
+  }, [seenPoemIds, unseenShuffleOrder, poemMap]);
 
   const handleMarkAsSeen = useCallback((id: string) => {
     setSeenPoemIds(prev => {
