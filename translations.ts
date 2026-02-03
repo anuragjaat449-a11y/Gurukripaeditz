@@ -59,6 +59,8 @@ export const translations = {
     alreadySeen: "Seen",
     thumbsUpAria: "Mark this poem as read",
     favoriteAria: "Add to favorites",
+    shareAria: "Share this poetry with meaning",
+    copiedToClipboard: "Poetry copied to clipboard!",
 
     // IntroAnimation.tsx
     skip: "SKIP",
@@ -156,6 +158,8 @@ export const translations = {
     alreadySeen: "देखी गई",
     thumbsUpAria: "इस कविता को पढ़ा हुआ चिह्नित करें",
     favoriteAria: "पसंदीदा में जोड़ें",
+    shareAria: "अर्थ के साथ इस कविता को साझा करें",
+    copiedToClipboard: "कविता क्लिपबोर्ड पर कॉपी हो गई!",
 
     // IntroAnimation.tsx
     skip: "छोड़ें",

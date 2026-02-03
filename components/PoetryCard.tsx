@@ -34,23 +34,61 @@ const PoetryCard: React.FC<PoetryCardProps> = React.memo(({ poem, isSeen, isFavo
   const meaning = cardLanguage === 'hi' ? poem.meaningHi : poem.meaningEn;
   const hasMeaning = !!meaning;
 
+  const handleShare = async () => {
+    const poemText = text.join('\n');
+    const shareMessage = `${title}\n\n${poemText}\n\n- ${poem.author}\n\n${hasMeaning ? `${cardLanguage === 'hi' ? 'अर्थ' : 'Meaning'}:\n${meaning}` : ''}\n\nShared via GURU KRIPA SHORTZ`;
+
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: title,
+          text: shareMessage,
+        });
+      } catch (err) {
+        console.debug("Share cancelled or failed", err);
+      }
+    } else {
+      // Fallback: Copy to clipboard
+      try {
+        await navigator.clipboard.writeText(shareMessage);
+        alert(t.copiedToClipboard);
+      } catch (err) {
+        console.error("Failed to copy", err);
+      }
+    }
+  };
+
   return (
     <div ref={cardRef} className={`glass-card rounded-lg overflow-hidden group h-full flex flex-col relative p-6 text-center transition-all duration-500 ${isSeen ? 'bg-opacity-40 border-opacity-30' : 'ring-1 ring-brand-gold/10'}`}>
       
-      {/* Action Bar: Favorite & Mark Seen */}
-      <div className="absolute top-3 left-3 right-3 flex justify-between z-20">
+      {/* Action Bar: Favorite, Share & Mark Seen */}
+      <div className="absolute top-3 left-3 right-3 flex justify-between items-center z-20">
         
-        {/* Thumbs Up (Mark as Seen) */}
-        <button 
-            onClick={(e) => { e.stopPropagation(); onMarkAsSeen(); }}
-            className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110 ${isSeen ? 'text-brand-gold bg-black/10 dark:bg-white/10' : 'text-black/20 dark:text-white/20 hover:text-brand-gold'}`}
-            title={t.thumbsUpAria}
-            aria-label={t.thumbsUpAria}
-        >
-             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill={isSeen ? "currentColor" : "none"} viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5" />
-            </svg>
-        </button>
+        <div className="flex gap-1">
+            {/* Thumbs Up (Mark as Seen) */}
+            <button 
+                onClick={(e) => { e.stopPropagation(); onMarkAsSeen(); }}
+                className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110 ${isSeen ? 'text-brand-gold bg-black/10 dark:bg-white/10' : 'text-black/20 dark:text-white/20 hover:text-brand-gold'}`}
+                title={t.thumbsUpAria}
+                aria-label={t.thumbsUpAria}
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill={isSeen ? "currentColor" : "none"} viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5" />
+                </svg>
+            </button>
+
+            {/* Share Button */}
+            <button 
+                onClick={(e) => { e.stopPropagation(); handleShare(); }}
+                className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110 text-black/20 dark:text-white/20 hover:text-brand-gold"
+                title={t.shareAria}
+                aria-label={t.shareAria}
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                </svg>
+            </button>
+        </div>
 
         {/* Heart (Favorite) */}
         <button 
